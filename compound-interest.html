@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compound Interest Worked Example</title>
+
+    <style>
+        /* Global Reset to prevent layout overflow on mobile */
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: auto;
+            padding: 20px; /* Reduced from 40px for mobile safety */
+            background: #f4f4f4;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 26px;
+            margin-top: 10px;
+        }
+
+        .box {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            margin-top: 5px;
+        }
+
+        button {
+            margin-top: 20px;
+            width: 100%;
+            padding: 14px;
+            font-size: 18px;
+            cursor: pointer;
+            background-color: #003366;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background-color: #002244;
+        }
+
+        #result {
+            margin-top: 25px;
+            font-size: 24px;
+            text-align: center;
+            font-weight: bold;
+            color: darkgreen;
+            background: #e6f4ea;
+            padding: 15px;
+            border-radius: 5px;
+        }
+
+        .branding {
+            text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #dddddd;
+        }
+
+        .branding h2 {
+            margin: 0;
+            font-size: 28px;
+            color: #003366;
+        }
+
+        .branding p {
+            margin-top: 8px;
+            font-size: 15px;
+            color: #666666;
+            font-style: italic;
+        }
+
+        .about {
+            background: #f9f9f9;
+            border: 1px solid #cccccc;
+            border-radius: 8px;
+            padding: 18px;
+            margin-bottom: 25px;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .about strong {
+            display: block;
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #003366;
+        }
+
+        .about p {
+            margin: 8px 0;
+        }
+
+        #working {
+            background: #fafafa;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid #003366;
+            font-size: 15px;
+            line-height: 1.5;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 35px;
+            padding-top: 20px;
+            border-top: 1px solid #dddddd;
+            font-size: 15px;
+        }
+
+        .footer a {
+            color: #003366;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="box">
+
+    <div class="branding">
+        <h2>School Maths Investor</h2>
+        <p>Helping people understand investing through the mathematics they already know.</p>
+    </div>
+
+    <div class="about">
+        <strong>About School Maths Investor</strong>
+        <p>I'm Lee Bailey, a former maths teacher with 26 years' classroom experience and over 30 years as a private investor.</p>
+        <p>My aim is to show that the mathematics we learn at school forms the foundation of financial literacy.</p>
+        <p>Every calculator on this site is designed not just to calculate an answer, but to explain the mathematics behind it.</p>
+    </div>
+
+    <h1>Compound Interest Calculator</h1>
+
+    <!-- Pre-populated with Chapter 13 values to instantly showcase the math solver -->
+    <label>Initial Investment (£)</label>
+    <input id="principal" type="number" value="20000">
+
+    <label>Annual Return (%)</label>
+    <input id="rate" type="number" step="0.1" value="5.5">
+
+    <label>Years</label>
+    <input id="years" type="number" value="30">
+
+    <button onclick="calculate()">Calculate</button>
+
+    <div id="result"></div>
+
+    <hr style="margin-top: 30px; border: 0; border-top: 1px solid #eee;">
+
+    <h2 style="color: #003366; margin-top: 20px;">The Mathematical Steps</h2>
+    <div id="working"></div>
+
+</div>
+
+<div class="footer">
+    <p>More free calculators and articles</p>
+    <p>
+        <a href="https://schoolmathsinvestor.substack.com/" target="_blank">
+            The School Maths Investor Substack
+        </a>
+    </p>
+</div>
+
+<script>
+function calculate() {
+    let P = Number(document.getElementById("principal").value);
+    let rateInput = Number(document.getElementById("rate").value);
+    let r = rateInput / 100;
+    let t = Number(document.getElementById("years").value);
+
+    // Prevent displaying NaN calculations if fields are cleared
+    if (isNaN(P) || isNaN(r) || isNaN(t) || P <= 0 || t < 0) {
+        document.getElementById("result").innerHTML = "Please enter valid numbers.";
+        document.getElementById("working").innerHTML = "<p>Waiting for valid inputs...</p>";
+        return;
+    }
+
+    let FV = P * Math.pow(1 + r, t);
+
+    // Display formatted result
+    document.getElementById("result").innerHTML =
+        "Future Value = £" + FV.toLocaleString(undefined, {maximumFractionDigits: 0});
+
+    // Generate clear, rounding-error-free step working
+    document.getElementById("working").innerHTML =
+        "<p><b>Step 1: Formula</b></p>" +
+        "<p>FV = PV × (1 + r)<sup>t</sup></p>" +
+        "<p><i>Where PV is Present Value, r is the rate as a decimal, and t is time.</i></p>" +
+        
+        "<p><b>Step 2: Substitute values</b></p>" +
+        "<p>FV = £" + P.toLocaleString() + " × (1 + " + r.toString() + ")<sup>" + t + "</sup></p>" +
+        
+        "<p><b>Step 3: Simplify the growth multiplier</b></p>" +
+        "<p>FV = £" + P.toLocaleString() + " × " + (1 + r).toString() + "<sup>" + t + "</sup></p>" +
+        "<p>FV = £" + P.toLocaleString() + " × " + Math.pow(1 + r, t).toFixed(6) + "</p>" +
+        
+        "<p><b>Step 4: Final Answer</b></p>" +
+        "<p><b>FV = £" + FV.toLocaleString(undefined, {maximumFractionDigits: 0}) + "</b></p>";
+}
+
+// Automatically trigger on page load
+calculate();
+</script>
+
+</body>
+</html>
+</html>
