@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- The text shown in the browser tab -->
+    <title>The Free Tax Lunch Calculator</title>
+
+    <style>
+        /* ---------------------------------------------------------
+           BASIC PAGE STYLING
+           --------------------------------------------------------- */
+
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 700px;
+            margin: auto;
+            padding: 20px;
+            background: #f4f4f4;
+            color: #333333;
+        }
+
+        /* White card that contains the calculator */
+        .box {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        /* Main page heading */
+        h1 {
+            text-align: center;
+            color: #003366;
+            margin-top: 10px;
+        }
+
+        /* Branding section */
+        .branding {
+            text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #dddddd;
+        }
+
+        .branding h2 {
+            margin: 0;
+            font-size: 30px;
+            color: #003366;
+        }
+
+        .branding p {
+            margin-top: 8px;
+            font-size: 15px;
+            color: #666666;
+            font-style: italic;
+        }
+
+        /* About box */
+        .about {
+            background: #f9f9f9;
+            border: 1px solid #cccccc;
+            border-radius: 8px;
+            padding: 18px;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .about strong {
+            display: block;
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #003366;
+        }
+
+        /* Input labels */
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        /* Input boxes */
+        input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            margin-top: 5px;
+            box-sizing: border-box;
+        }
+
+        /* Calculate button */
+        button {
+            margin-top: 20px;
+            width: 100%;
+            padding: 14px;
+            font-size: 18px;
+            cursor: pointer;
+            background-color: #003366;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background-color: #002244;
+        }
+
+        /* Result cards */
+        .results {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .result-card {
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .isa {
+            background: #e6f4ea;
+            border: 1px solid #2e7d32;
+        }
+
+        .basic {
+            background: #fff8e1;
+            border: 1px solid #f9a825;
+        }
+
+        .higher {
+            background: #fdecea;
+            border: 1px solid #c62828;
+        }
+
+        .result-card h3 {
+            margin: 0 0 10px 0;
+            color: #003366;
+            font-size: 16px;
+        }
+
+        .result-value {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        /* Mathematics section */
+        #working {
+            background: #fafafa;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid #003366;
+            line-height: 1.6;
+            margin-top: 25px;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 35px;
+            padding-top: 20px;
+            border-top: 1px solid #dddddd;
+            font-size: 15px;
+        }
+
+        .footer a {
+            color: #003366;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="box">
+
+    <!-- BRANDING -->
+    <div class="branding">
+        <h2>School Maths Investor</h2>
+        <p>Helping people understand investing through the mathematics they already know.</p>
+    </div>
+
+    <!-- ABOUT THIS CALCULATOR -->
+    <div class="about">
+        <strong>About this calculator</strong>
+        <p>This calculator demonstrates the power of tax wrappers such as ISAs and pensions.</p>
+        <p>The investment is identical in all three scenarios. The only difference is the amount of return lost to tax each year.</p>
+        <p>These are illustrative examples, not personalised tax advice.</p>
+    </div>
+
+    <!-- Main heading -->
+    <h1>The Free Tax Lunch Calculator</h1>
+
+    <!-- USER INPUTS -->
+
+    <!-- Starting investment -->
+    <label for="principal">Initial Investment (£)</label>
+    <input id="principal" type="number" min="0" value="10000">
+
+    <!-- Annual investment return -->
+    <label for="rate">Annual Return (%)</label>
+    <input id="rate" type="number" step="0.1" value="8">
+
+    <!-- Number of years -->
+    <label for="years">Years</label>
+    <input id="years" type="number" min="0" value="30">
+
+    <!-- Tax drag for basic-rate example -->
+    <label for="basicTax">Tax Lost Each Year (%) – Basic-rate example</label>
+    <input id="basicTax" type="number" step="0.1" value="0.5">
+
+    <!-- Tax drag for higher-rate example -->
+    <label for="higherTax">Tax Lost Each Year (%) – Higher-rate example</label>
+    <input id="higherTax" type="number" step="0.1" value="1.0">
+
+    <!-- Calculate button -->
+    <button onclick="calculate()">Calculate</button>
+
+    <!-- RESULTS -->
+    <div class="results">
+
+        <div class="result-card isa">
+            <h3>ISA / Tax Wrapper</h3>
+            <div id="isaResult" class="result-value">£0</div>
+        </div>
+
+        <div class="result-card basic">
+            <h3>Basic-rate Example</h3>
+            <div id="basicResult" class="result-value">£0</div>
+        </div>
+
+        <div class="result-card higher">
+            <h3>Higher-rate Example</h3>
+            <div id="higherResult" class="result-value">£0</div>
+        </div>
+
+    </div>
+
+    <!-- MATHEMATICAL WORKING -->
+    <div id="working"></div>
+
+    <hr style="margin-top: 30px; border: 0; border-top: 1px solid #dddddd;">
+
+    <h2 style="color:#003366; text-align: center; margin-top: 20px;">Investment Growth</h2>
+
+    <!-- GRAPH CANVAS -->
+    <canvas id="growthChart"></canvas>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+    <p>Read the full article: <em>The Free Tax Lunch</em></p>
+    <p>
+        <a href="https://schoolmathsinvestor.substack.com/" target="_blank" rel="noopener">
+            The School Maths Investor Substack
+        </a>
+    </p>
+</div>
+
+<!-- Step 1: Chart.js Library -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+// Step 3: Holds the graph so we can redraw it
+let growthChart = null;
+
+/* ===============================================================
+   MAIN CALCULATION FUNCTION
+   =============================================================== */
+
+function calculate() {
+
+    // STEP 1: Read input values
+    let P = Number(document.getElementById("principal").value);
+    let rateInput = Number(document.getElementById("rate").value);
+    let years = Number(document.getElementById("years").value);
+    let basicTaxInput = Number(document.getElementById("basicTax").value);
+    let higherTaxInput = Number(document.getElementById("higherTax").value);
+
+    // STEP 2: Convert percentages to decimals
+    let r = rateInput / 100;
+    let basicTax = basicTaxInput / 100;
+    let higherTax = higherTaxInput / 100;
+
+    // STEP 3: Validate inputs
+    if (isNaN(P) || isNaN(r) || isNaN(years) || isNaN(basicTax) || isNaN(higherTax) || P <= 0 || years < 0) {
+        alert("Please enter valid positive numbers for all fields.");
+        return;
+    }
+
+    // STEP 4: Calculate final values
+    let isaValue = P * Math.pow(1 + r, years);
+
+    let basicReturn = r - basicTax;
+    let basicValue = P * Math.pow(1 + basicReturn, years);
+
+    let higherReturn = r - higherTax;
+    let higherValue = P * Math.pow(1 + higherReturn, years);
+
+    // STEP 5: Display main results
+    document.getElementById("isaResult").innerHTML =
+        "£" + isaValue.toLocaleString(undefined, {maximumFractionDigits: 0});
+
+    document.getElementById("basicResult").innerHTML =
+        "£" + basicValue.toLocaleString(undefined, {maximumFractionDigits: 0});
+
+    document.getElementById("higherResult").innerHTML =
+        "£" + higherValue.toLocaleString(undefined, {maximumFractionDigits: 0});
+
+    // STEP 6: Display working details
+    document.getElementById("working").innerHTML = `
+        <h2 style="color:#003366; margin-top:0;">The Mathematical Steps</h2>
+
+        <p><b>Step 1: The compound interest formula</b></p>
+        <p>FV = PV × (1 + r)<sup>t</sup></p>
+
+        <hr>
+
+        <p><b>Step 2: ISA / Tax Wrapper</b></p>
+        <p>FV = £${P.toLocaleString()} × (1 + ${r.toFixed(3)})<sup>${years}</sup></p>
+        <p>FV = £${P.toLocaleString()} × ${Math.pow(1+r, years).toFixed(4)}</p>
+        <p><b>FV = £${isaValue.toLocaleString(undefined, {maximumFractionDigits: 0})}</b></p>
+
+        <hr>
+
+        <p><b>Step 3: Basic-rate example</b></p>
+        <p>Effective return = ${(r*100).toFixed(1)}% − ${(basicTax*100).toFixed(1)}% = ${(basicReturn*100).toFixed(1)}%</p>
+        <p>FV = £${P.toLocaleString()} × (1 + ${basicReturn.toFixed(3)})<sup>${years}</sup></p>
+        <p><b>FV = £${basicValue.toLocaleString(undefined, {maximumFractionDigits: 0})}</b></p>
+
+        <hr>
+
+        <p><b>Step 4: Higher-rate example</b></p>
+        <p>Effective return = ${(r*100).toFixed(1)}% − ${(higherTax*100).toFixed(1)}% = ${(higherReturn*100).toFixed(1)}%</p>
+        <p>FV = £${P.toLocaleString()} × (1 + ${higherReturn.toFixed(3)})<sup>${years}</sup></p>
+        <p><b>FV = £${higherValue.toLocaleString(undefined, {maximumFractionDigits: 0})}</b></p>
+
+        <hr>
+
+        <p><b>What have we learnt?</b></p>
+        <ul>
+            <li>The investment was identical in all three scenarios.</li>
+            <li>The only difference was the amount of return lost to tax each year.</li>
+            <li>Small annual tax losses become very large over decades because they compound.</li>
+            <li>Tax wrappers allow compound interest to work without interruption.</li>
+        </ul>
+    `;
+
+    // Step 4: Build arrays for graph
+    let labels = [];
+    let isaData = [];
+    let basicData = [];
+    let higherData = [];
+
+    for (let year = 0; year <= years; year++) {
+        labels.push(year);
+        isaData.push(P * Math.pow(1 + r, year));
+        basicData.push(P * Math.pow(1 + basicReturn, year));
+        higherData.push(P * Math.pow(1 + higherReturn, year));
+    }
+
+    // Step 5: Delete previous graph instance
+    if (growthChart !== null) {
+        growthChart.destroy();
+    }
+
+    // Step 6: Render graph with formatted currency ticks & hover tooltips
+    const ctx = document.getElementById("growthChart").getContext("2d");
+
+    growthChart = new Chart(ctx, {
+        type: "line",
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: "ISA / Tax Wrapper",
+                    data: isaData,
+                    borderColor: "#2e7d32",
+                    backgroundColor: "#2e7d32",
+                    fill: false,
+                    tension: 0.3
+                },
+                {
+                    label: "Basic-rate Example",
+                    data: basicData,
+                    borderColor: "#f9a825",
+                    backgroundColor: "#f9a825",
+                    fill: false,
+                    tension: 0.3
+                },
+                {
+                    label: "Higher-rate Example",
+                    data: higherData,
+                    borderColor: "#c62828",
+                    backgroundColor: "#c62828",
+                    fill: false,
+                    tension: 0.3
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: "top"
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            let label = context.dataset.label || '';
+                            if (label) {
+                                label += ': ';
+                            }
+                            if (context.parsed.y !== null) {
+                                label += '£' + Math.round(context.parsed.y).toLocaleString();
+                            }
+                            return label;
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: "Years"
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: "Fund Value (£)"
+                    },
+                    ticks: {
+                        callback: function(value) {
+                            return '£' + value.toLocaleString();
+                        }
+                    }
+                }
+            }
+        }
+    });
+}
+
+// Run the calculation automatically on page load
+calculate();
+</script>
+
+</body>
+</html>
