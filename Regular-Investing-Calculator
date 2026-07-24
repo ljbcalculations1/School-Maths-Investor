@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Compound Interest Worked Example</title>
+    <title>Regular Investing Calculator</title>
 
     <style>
         /* Global Reset to prevent layout overflow on mobile */
@@ -182,7 +182,7 @@
 
 </div>
 
-<h1>Compound Interest Calculator</h1>
+<h1>Regular Investing Calculator</h1>
 
 <div class="box">
 
@@ -196,9 +196,18 @@
         <p>I'm Lee Bailey, a former maths teacher with 26 years' classroom experience and over 30 years as a private investor.</p>
         <p>My aim is to show that the mathematics we learn at school forms the foundation of financial literacy.</p>
         <p>Every calculator on this site is designed not just to calculate an answer, but to explain the mathematics behind it.</p>
+<p>
+
+Discover what would have happened if you had invested
+the same amount every month for 10 years.
+
+This calculator uses real historical global equity returns,
+adjusted for inflation, to show the actual outcome.
+
+</p>
     </div>
 
-    <h1>Compound Interest Calculator</h1>
+    <h1>Regular Investing Calculator</h1>
 
     <!-- Pre-populated with Chapter 13 values to instantly showcase the math solver -->
     <label>Initial Investment (£)</label>
