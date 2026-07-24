@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Interactive Calculators | School Maths Investor</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial, Helvetica, sans-serif;
+    background:#f5f7fa;
+    color:#333;
+}
+
+/* HERO */
+
+.hero{
+    background:white;
+    text-align:center;
+    padding:80px 20px;
+}
+
+.hero h1{
+    color:#003366;
+    font-size:56px;
+    margin-bottom:20px;
+}
+
+.hero p{
+    font-size:22px;
+    color:#666;
+    max-width:900px;
+    margin:auto;
+    line-height:1.7;
+}
+
+/* HOME BUTTON */
+
+.home{
+    margin-top:40px;
+}
+
+.home a{
+    display:inline-block;
+    background:#003366;
+    color:white;
+    text-decoration:none;
+    padding:15px 30px;
+    border-radius:8px;
+    font-weight:bold;
+}
+
+.home a:hover{
+    background:#0055aa;
+}
+
+/* GRID */
+
+.container{
+
+    max-width:1200px;
+    margin:70px auto;
+    padding:0 20px;
+
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+    gap:35px;
+
+}
+
+.card{
+
+    background:white;
+    border-radius:12px;
+    padding:35px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.08);
+
+    transition:.3s;
+
+}
+
+.card:hover{
+
+    transform:translateY(-8px);
+
+}
+
+.icon{
+
+    font-size:55px;
+
+}
+
+.card h2{
+
+    color:#003366;
+
+}
+
+.card p{
+
+    line-height:1.7;
+
+    color:#555;
+
+}
+
+.card ul{
+
+    line-height:2;
+
+    margin-bottom:30px;
+
+}
+
+.button{
+
+    display:inline-block;
+    background:#003366;
+    color:white;
+    text-decoration:none;
+    padding:12px 22px;
+    border-radius:6px;
+    font-weight:bold;
+
+}
+
+.button:hover{
+
+    background:#0055aa;
+
+}
+
+/* FOOTER */
+
+footer{
+
+    text-align:center;
+    padding:40px;
+    color:#666;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+<section class="hero">
+
+<h1>Interactive Investing Calculators</h1>
+
+<p>
+
+Learn investing by experimenting with real numbers.
+
+Every calculator is based on mathematics taught at school and shows
+how those ideas apply to real investing decisions.
+
+</p>
+
+<div class="home">
+
+<a href="index.html">
+
+← Return to Home
+
+</a>
+
+</div>
+
+</section>
+
+
+
+<div class="container">
+
+
+<!-- Compound Interest -->
+
+<div class="card">
+
+<div class="icon">📈</div>
+
+<h2>Compound Interest</h2>
+
+<p>
+
+See how money grows over time using the most important equation in
+personal finance.
+
+</p>
+
+<ul>
+
+<li>Growth over time</li>
+
+<li>Effect of higher returns</li>
+
+<li>The power of compounding</li>
+
+</ul>
+
+<a class="button"
+href="calculators/compound-interest.html">
+
+Launch Calculator →
+
+</a>
+
+</div>
+
+
+
+<!-- Free Tax Lunch -->
+
+<div class="card">
+
+<div class="icon">💷</div>
+
+<h2>The Free Tax Lunch</h2>
+
+<p>
+
+Compare investing inside and outside tax wrappers and see how tax
+reduces long-term wealth.
+
+</p>
+
+<ul>
+
+<li>ISA benefits</li>
+
+<li>Tax drag</li>
+
+<li>Long-term comparison</li>
+
+</ul>
+
+<a class="button"
+href="calculators/free-tax-lunch.html">
+
+Launch Calculator →
+
+</a>
+
+</div>
+
+
+
+<!-- Inflation -->
+
+<div class="card">
+
+<div class="icon">🛒</div>
+
+<h2>Inflation</h2>
+
+<p>
+
+Discover how inflation quietly reduces purchasing power over time.
+
+</p>
+
+<ul>
+
+<li>Nominal vs Real</li>
+
+<li>Purchasing power</li>
+
+<li>Future value</li>
+
+</ul>
+
+<a class="button" href="#">
+
+Coming Soon
+
+</a>
+
+</div>
+
+
+
+<!-- Pound Cost Averaging -->
+
+<div class="card">
+
+<div class="icon">📅</div>
+
+<h2>Pound Cost Averaging</h2>
+
+<p>
+
+See how regular investing buys different numbers of units as prices
+change.
+
+</p>
+
+<ul>
+
+<li>Monthly investing</li>
+
+<li>Average purchase price</li>
+
+<li>Market volatility</li>
+
+</ul>
+
+<a class="button" href="#">
+
+Coming Soon
+
+</a>
+
+</div>
+
+
+
+<!-- Retirement -->
+
+<div class="card">
+
+<div class="icon">🏖️</div>
+
+<h2>Retirement Income</h2>
+
+<p>
+
+Experiment with withdrawals and see how spending affects the longevity
+of a portfolio.
+
+</p>
+
+<ul>
+
+<li>Withdrawals</li>
+
+<li>Portfolio growth</li>
+
+<li>Sustainable spending</li>
+
+</ul>
+
+<a class="button" href="#">
+
+Coming Soon
+
+</a>
+
+</div>
+
+
+
+<!-- Probability -->
+
+<div class="card">
+
+<div class="icon">🎲</div>
+
+<h2>Probability & Risk</h2>
+
+<p>
+
+Understand expected returns, volatility and why investing outcomes vary.
+
+</p>
+
+<ul>
+
+<li>Risk</li>
+
+<li>Expected return</li>
+
+<li>Variance</li>
+
+</ul>
+
+<a class="button" href="#">
+
+Coming Soon
+
+</a>
+
+</div>
+
+</div>
+
+
+<footer>
+
+<p>
+
+School Maths Investor
+
+<br><br>
+
+Helping people understand investing through the mathematics they
+already know.
+
+</p>
+
+</footer>
+
+
+</body>
+</html>
