@@ -419,43 +419,43 @@ String(document.getElementById("month").value).padStart(2,"0");
 
 // Run the investment simulation
 
-// Run the investment simulation
+// Find where the investment journey starts
 
-let portfolio = 0;
+let startDate = startYear + "-" +
+String(document.getElementById("month").value).padStart(2,"0");
 
-let monthsInvested = 0;
 
-
-// Find the starting point selected by the user
+// Find matching position in historical data
 
 let startIndex = getStartingIndex(startDate);
 
 
-// Check that the date exists
+// Check enough data exists
 
 if(startIndex === -1){
 
-    document.getElementById("portfolio").innerHTML =
-    "Start date not available";
+    document.getElementById("working").innerHTML =
+    "<p>Sorry, this start date is not available.</p>";
 
     return;
 
 }
 
-
-// Check that we have 120 months of data
 
 if(startIndex + 120 > globalEquityReturns.length){
 
-    document.getElementById("portfolio").innerHTML =
-    "Not enough historical data yet";
+    document.getElementById("working").innerHTML =
+    "<p>Not enough historical data available for a full 10 year journey.</p>";
 
     return;
 
 }
 
 
-// Apply 120 monthly returns
+// Run investment simulation
+
+let portfolio = 0;
+
 
 for(let i=startIndex; i<startIndex+120; i++){
 
@@ -463,10 +463,7 @@ for(let i=startIndex; i<startIndex+120; i++){
 
     portfolio *= (1 + globalEquityReturns[i].return);
 
-    monthsInvested++;
-
 }
-
 
 // Calculate growth
 
