@@ -2,9 +2,10 @@
 //
 // Historical global equity investment journey data
 //
-// Returns are monthly real returns:
-// - adjusted for inflation
-// - including reinvested dividends
+// Methodology:
+// Global all-cap equity portfolio
+// Total returns including reinvested dividends
+// Monthly returns adjusted for inflation
 //
 // This dataset is used to demonstrate the effect
 // of regular investing over 10-year periods.
@@ -14,6 +15,5 @@ const globalEquityReturns = [
   // =================================
   // 1970s
   // =================================
-
 
 ];
