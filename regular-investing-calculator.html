@@ -409,18 +409,24 @@ let multiple = portfolio / contributions;
 
 // Display results
 
+// Display simulation results
+
 document.getElementById("portfolio").innerHTML =
-"£" + portfolio.toLocaleString(undefined,
-{maximumFractionDigits:0});
+    "£" + portfolio.toLocaleString(undefined,
+    {maximumFractionDigits:0});
 
 
 document.getElementById("growth").innerHTML =
-"£" + growth.toLocaleString(undefined,
-{maximumFractionDigits:0});
+    "£" + growth.toLocaleString(undefined,
+    {maximumFractionDigits:0});
+
+
+document.getElementById("annual").innerHTML =
+    "Data calculation coming next";
 
 
 document.getElementById("multiple").innerHTML =
-multiple.toFixed(2) + " times";
+    multiple.toFixed(2) + " times";
 
 
     document.getElementById("contributions").innerHTML =
