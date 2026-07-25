@@ -373,9 +373,54 @@ function calculate() {
     }
 
 
-    let contributions = monthly * 120;
+   let contributions = monthly * 120;
 
-    console.log(globalEquityReturns);
+
+// Find the starting point in the data
+
+let startDate = startYear + "-" + 
+String(document.getElementById("month").value).padStart(2,"0");
+
+
+// Run the investment simulation
+
+let portfolio = 0;
+
+let monthsInvested = 0;
+
+
+for(let i=0; i<globalEquityReturns.length; i++){
+
+    portfolio += monthly;
+
+    portfolio *= (1 + globalEquityReturns[i].return);
+
+    monthsInvested++;
+
+}
+
+
+// Calculate growth
+
+let growth = portfolio - contributions;
+
+let multiple = portfolio / contributions;
+
+
+// Display results
+
+document.getElementById("portfolio").innerHTML =
+"£" + portfolio.toLocaleString(undefined,
+{maximumFractionDigits:0});
+
+
+document.getElementById("growth").innerHTML =
+"£" + growth.toLocaleString(undefined,
+{maximumFractionDigits:0});
+
+
+document.getElementById("multiple").innerHTML =
+multiple.toFixed(2) + " times";
 
 
     document.getElementById("contributions").innerHTML =
