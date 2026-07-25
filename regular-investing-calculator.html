@@ -411,6 +411,10 @@ let multiple = portfolio / contributions;
 
 // Display simulation results
 
+document.getElementById("contributions").innerHTML =
+    "£" + contributions.toLocaleString();
+
+
 document.getElementById("portfolio").innerHTML =
     "£" + portfolio.toLocaleString(undefined,
     {maximumFractionDigits:0});
@@ -427,11 +431,7 @@ document.getElementById("annual").innerHTML =
 
 document.getElementById("multiple").innerHTML =
     multiple.toFixed(2) + " times";
-
-
-   document.getElementById("contributions").innerHTML =
-    "£" + contributions.toLocaleString();
-
+    
     document.getElementById("working").innerHTML =
 
     "<p><b>Step 1: Regular investment formula</b></p>" +
