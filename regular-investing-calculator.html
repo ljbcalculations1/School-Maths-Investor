@@ -503,10 +503,15 @@ document.getElementById("multiple").innerHTML =
     contributions.toLocaleString() +
     "</p>" +
 
-    "<p><b>Step 4: Future value</b></p>" +
+    "<p><b>Step 4: Applying market returns</b></p>" +
 
-    "<p>The next stage will apply the actual monthly returns from a global equity portfolio.</p>";
+"<p>Each month your contribution is added and the portfolio return is applied.</p>" +
 
+"<p>The calculation follows:</p>" +
+
+"<p><b>New Portfolio Value = (Previous Value + Monthly Investment) × (1 + Monthly Return)</b></p>" +
+
+"<p>The calculator repeats this process for 120 months.</p>";
 }
 // Automatically trigger on page load
     const year = document.getElementById("year");
