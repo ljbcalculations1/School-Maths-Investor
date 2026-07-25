@@ -458,6 +458,11 @@ if(startIndex + 120 > globalEquityReturns.length){
 
 }
 
+    document.getElementById("startDisplay").innerHTML = startDate;
+
+document.getElementById("endDisplay").innerHTML =
+    globalEquityReturns[startIndex + 119].date;
+
 
 // Run investment simulation
 
