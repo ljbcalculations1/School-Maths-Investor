@@ -67,3 +67,5 @@ return:0.028
 }
 
 ];
+
+console.log("Global equity data loaded:", globalEquityReturns.length, "months");
