@@ -611,6 +611,14 @@ globalEquityReturns[globalEquityReturns.length-1].date +
 globalEquityReturns.length +
 " monthly returns)";
 
+    document.getElementById("dataRange").innerHTML =
+globalEquityReturns[0].date +
+" to " +
+globalEquityReturns[globalEquityReturns.length-1].date +
+" (" +
+globalEquityReturns.length +
+" monthly returns)";
+
 calculate();
 </script>
 
