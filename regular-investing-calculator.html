@@ -339,6 +339,21 @@ function calculate() {
 }
 
 // Automatically trigger on page load
+    const year = document.getElementById("year");
+
+for(let y=1970;y<=2016;y++){
+
+    let option=document.createElement("option");
+
+    option.value=y;
+
+    option.text=y;
+
+    year.appendChild(option);
+
+}
+
+year.value=2000;
 calculate();
 </script>
 
