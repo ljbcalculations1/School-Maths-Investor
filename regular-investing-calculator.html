@@ -352,6 +352,26 @@ console.log(globalEquityReturns);
 </script>
 
 <script>
+
+
+function getStartingIndex(startDate){
+
+    for(let i = 0; i < globalEquityReturns.length; i++){
+
+        if(globalEquityReturns[i].date === startDate){
+
+            return i;
+
+        }
+
+    }
+
+    return -1;
+
+}
+
+
+
 function calculate() {
 
     let monthly = Number(document.getElementById("monthly").value);
