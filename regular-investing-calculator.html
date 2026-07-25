@@ -404,12 +404,45 @@ String(document.getElementById("month").value).padStart(2,"0");
 
 // Run the investment simulation
 
+// Run the investment simulation
+
 let portfolio = 0;
 
 let monthsInvested = 0;
 
 
-for(let i=0; i<120; i++){
+// Find the starting point selected by the user
+
+let startIndex = getStartingIndex(startDate);
+
+
+// Check that the date exists
+
+if(startIndex === -1){
+
+    document.getElementById("portfolio").innerHTML =
+    "Start date not available";
+
+    return;
+
+}
+
+
+// Check that we have 120 months of data
+
+if(startIndex + 120 > globalEquityReturns.length){
+
+    document.getElementById("portfolio").innerHTML =
+    "Not enough historical data yet";
+
+    return;
+
+}
+
+
+// Apply 120 monthly returns
+
+for(let i=startIndex; i<startIndex+120; i++){
 
     portfolio += monthly;
 
