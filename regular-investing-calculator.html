@@ -347,41 +347,72 @@ Calculate
 
 <script>
 function calculate() {
-    let P = Number(document.getElementById("principal").value);
-    let rateInput = Number(document.getElementById("rate").value);
-    let r = rateInput / 100;
-    let t = Number(document.getElementById("years").value);
 
-    // Prevent displaying NaN calculations if fields are cleared
-    if (isNaN(P) || isNaN(r) || isNaN(t) || P <= 0 || t < 0) {
-        document.getElementById("result").innerHTML = "Please enter valid numbers.";
-        document.getElementById("working").innerHTML = "<p>Waiting for valid inputs...</p>";
+    let monthly = Number(document.getElementById("monthly").value);
+
+    let startMonth =
+        document.getElementById("month").selectedOptions[0].text;
+
+    let startYear =
+        document.getElementById("year").value;
+
+
+    if (isNaN(monthly) || monthly <= 0) {
+
+        document.getElementById("result").innerHTML =
+        "Please enter a valid monthly investment.";
+
         return;
+
     }
 
-    let FV = P * Math.pow(1 + r, t);
 
-    // Display formatted result
-    document.getElementById("result").innerHTML =
-        "Future Value = £" + FV.toLocaleString(undefined, {maximumFractionDigits: 0});
+    let contributions = monthly * 120;
 
-    // Generate clear, rounding-error-free step working
+
+    document.getElementById("contributions").innerHTML =
+        "£" + contributions.toLocaleString();
+
+
+    document.getElementById("portfolio").innerHTML =
+        "Historical data to be added";
+
+
+    document.getElementById("growth").innerHTML =
+        "-";
+
+
+    document.getElementById("annual").innerHTML =
+        "-";
+
+
+    document.getElementById("multiple").innerHTML =
+        "-";
+
+
     document.getElementById("working").innerHTML =
-        "<p><b>Step 1: Formula</b></p>" +
-        "<p>FV = PV × (1 + r)<sup>t</sup></p>" +
-        "<p><i>Where PV is Present Value, r is the rate as a decimal, and t is time.</i></p>" +
-        
-        "<p><b>Step 2: Substitute values</b></p>" +
-        "<p>FV = £" + P.toLocaleString() + " × (1 + " + r.toString() + ")<sup>" + t + "</sup></p>" +
-        
-        "<p><b>Step 3: Simplify the growth multiplier</b></p>" +
-        "<p>FV = £" + P.toLocaleString() + " × " + (1 + r).toString() + "<sup>" + t + "</sup></p>" +
-        "<p>FV = £" + P.toLocaleString() + " × " + Math.pow(1 + r, t).toFixed(6) + "</p>" +
-        
-        "<p><b>Step 4: Final Answer</b></p>" +
-        "<p><b>FV = £" + FV.toLocaleString(undefined, {maximumFractionDigits: 0}) + "</b></p>";
-}
 
+    "<p><b>Step 1: Regular investment formula</b></p>" +
+
+    "<p>You invest £" + monthly.toLocaleString() +
+    " every month for 10 years.</p>" +
+
+    "<p><b>Step 2: Number of investments</b></p>" +
+
+    "<p>10 years × 12 months = 120 investments</p>" +
+
+    "<p><b>Step 3: Total contributions</b></p>" +
+
+    "<p>£" + monthly.toLocaleString() +
+    " × 120 = £" +
+    contributions.toLocaleString() +
+    "</p>" +
+
+    "<p><b>Step 4: Future value</b></p>" +
+
+    "<p>The next stage will apply the actual monthly returns from a global equity portfolio.</p>";
+
+}
 // Automatically trigger on page load
     const year = document.getElementById("year");
 
