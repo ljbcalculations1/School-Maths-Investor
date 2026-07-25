@@ -612,13 +612,22 @@ globalEquityReturns[globalEquityReturns.length-1].date +
 globalEquityReturns.length +
 " monthly returns)";
 
-    document.getElementById("dataRange").innerHTML =
+    if (globalEquityReturns.length > 0) {
+
+document.getElementById("dataRange").innerHTML =
 globalEquityReturns[0].date +
 " to " +
 globalEquityReturns[globalEquityReturns.length-1].date +
 " (" +
 globalEquityReturns.length +
 " monthly returns)";
+
+} else {
+
+document.getElementById("dataRange").innerHTML =
+"No historical data loaded yet.";
+
+}
 
 calculate();
 </script>
