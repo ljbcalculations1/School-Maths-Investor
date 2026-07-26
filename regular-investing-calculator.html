@@ -579,9 +579,18 @@ document.getElementById("multiple").innerHTML =
 
 }
 // Automatically trigger on page load
-    const year = document.getElementById("year");
+   const year = document.getElementById("year");
 
-for(let y=1970;y<=2015;y++){
+let firstYear = Number(globalEquityReturns[0].date.substring(0,4));
+
+let lastAvailableIndex = globalEquityReturns.length - investmentPeriod;
+
+let lastYear = Number(
+    globalEquityReturns[lastAvailableIndex].date.substring(0,4)
+);
+
+
+for(let y=firstYear; y<=lastYear; y++){
 
     let option=document.createElement("option");
 
