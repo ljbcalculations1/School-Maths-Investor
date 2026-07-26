@@ -581,7 +581,9 @@ document.getElementById("multiple").innerHTML =
 
 "<p><b>New Portfolio Value = (Previous Value + Monthly Investment) × (1 + Monthly Return)</b></p>" +
 
-"<p>The calculator repeats this process for 120 months.</p>";
+"<p>" + investmentPeriod/12 + 
+" year × 12 months = " + investmentPeriod + 
+" investments</p>" +
 }
 // Automatically trigger on page load
     const year = document.getElementById("year");
