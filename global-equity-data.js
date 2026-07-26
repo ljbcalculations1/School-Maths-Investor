@@ -1,8 +1,8 @@
 // School Maths Investor
 //
 // Test dataset:
-// Global equity monthly real returns
-// Inflation adjusted
+// Global equity monthly real returns MSCI ACWI GBP Total Return
+// Inflation adjusted CPIH INDEX 00: ALL ITEMS 2015=100
 
 const globalEquityReturns = [
 
