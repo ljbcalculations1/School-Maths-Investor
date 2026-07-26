@@ -545,8 +545,12 @@ document.getElementById("growth").innerHTML =
     {maximumFractionDigits:0});
 
 
+let annualReturn =
+    Math.pow(portfolio / contributions, 1 / (investmentPeriod / 12)) - 1;
+
+
 document.getElementById("annual").innerHTML =
-    "Data calculation coming next";
+    (annualReturn * 100).toFixed(2) + "%";
 
 
 document.getElementById("multiple").innerHTML =
