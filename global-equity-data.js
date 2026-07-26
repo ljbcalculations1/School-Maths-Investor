@@ -1,8 +1,18 @@
 // School Maths Investor
 //
-// Test dataset:
-// Global equity monthly real returns MSCI ACWI GBP Total Return
-// Inflation adjusted CPIH INDEX 00: ALL ITEMS 2015=100
+// Historical dataset:
+//
+// Source:
+// MSCI ACWI GBP Total Return Index
+//
+// Inflation adjustment:
+// UK CPIH All Items Index (2015=100)
+//
+// Method:
+// Monthly real returns calculated from index ratios
+//
+// First available return:
+// February 1988
 
 const globalEquityReturns = [
 
