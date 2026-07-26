@@ -561,16 +561,13 @@ document.getElementById("multiple").innerHTML =
 "<p><b>Step 1: Regular investment formula</b></p>" +
 
 "<p>You invest £" + monthly.toLocaleString() +
-" every month for " + investmentPeriod/12 + 
-((investmentPeriod/12 === 1) ? " year." : " years.") + "</p>" +
+" every month for " + (investmentPeriod/12) + " years.</p>" +
 
 "<p><b>Step 2: Number of investments</b></p>" +
 
-"<p>" + investmentPeriod/12 + 
-" years × 12 months = " + investmentPeriod + 
+"<p>" + (investmentPeriod/12) +
+" years × 12 months = " + investmentPeriod +
 " investments</p>" +
-
-
 
 "<p><b>Step 3: Total contributions</b></p>" +
 
@@ -578,7 +575,6 @@ document.getElementById("multiple").innerHTML =
 " × " + investmentPeriod +
 " = £" + contributions.toLocaleString() +
 "</p>" +
-
 "<p><b>Step 4: Applying market returns</b></p>" +
 
 "<p>Each month your contribution is added and the portfolio return is applied.</p>" +
