@@ -553,37 +553,32 @@ document.getElementById("annual").innerHTML =
 document.getElementById("multiple").innerHTML =
     multiple.toFixed(2) + " times";
     
-    document.getElementById("working").innerHTML =
+  document.getElementById("working").innerHTML =
 
-    "<p><b>Step 1: Regular investment formula</b></p>" +
+"<p><b>Step 1: Regular investment formula</b></p>" +
 
 "<p>You invest £" + monthly.toLocaleString() +
 " every month for " + investmentPeriod/12 + " years.</p>" +
 
-    "<p><b>Step 2: Number of investments</b></p>" +
+"<p><b>Step 2: Number of investments</b></p>" +
 
-   "<p>" + investmentPeriod/12 + 
-" years × 12 months = " + investmentPeriod + 
+"<p>" + investmentPeriod/12 +
+" years × 12 months = " + investmentPeriod +
 " investments</p>" +
 
-    "<p><b>Step 3: Total contributions</b></p>" +
+"<p><b>Step 3: Total contributions</b></p>" +
 
-    "<p>£" + monthly.toLocaleString() +
-   " × " + investmentPeriod + " = £" +
-    contributions.toLocaleString() +
-    "</p>" +
+"<p>£" + monthly.toLocaleString() +
+" × " + investmentPeriod +
+" = £" + contributions.toLocaleString() +
+"</p>" +
 
-    "<p><b>Step 4: Applying market returns</b></p>" +
+"<p><b>Step 4: Applying market returns</b></p>" +
 
 "<p>Each month your contribution is added and the portfolio return is applied.</p>" +
 
-"<p>The calculation follows:</p>" +
+"<p><b>New Portfolio Value = (Previous Value + Monthly Investment) × (1 + Monthly Return)</b></p>";
 
-"<p><b>New Portfolio Value = (Previous Value + Monthly Investment) × (1 + Monthly Return)</b></p>" +
-
-"<p>" + investmentPeriod/12 + 
-" years × 12 months = " + investmentPeriod + 
-" investments</p>" ;
 }
 // Automatically trigger on page load
     const year = document.getElementById("year");
