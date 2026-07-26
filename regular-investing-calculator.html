@@ -505,7 +505,7 @@ if(startIndex + investmentPeriod > globalEquityReturns.length){
     document.getElementById("startDisplay").innerHTML = startDate;
 
 document.getElementById("endDisplay").innerHTML =
-    globalEquityReturns[startIndex + 11].date;
+    globalEquityReturns[startIndex + investmentPeriod - 1].date;
 
 
 // Run investment simulation
