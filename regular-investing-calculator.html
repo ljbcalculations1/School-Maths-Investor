@@ -452,13 +452,17 @@ function calculate() {
 
     if (isNaN(monthly) || monthly <= 0) {
 
-        document.getElementById("result").innerHTML =
-        "Please enter a valid monthly investment.";
+    document.getElementById("result").innerHTML =
+    "Please enter a valid monthly investment.";
 
-        return;
+    return;
 
-    }
+}
 
+
+let investmentPeriod = 12;
+
+let contributions = monthly * investmentPeriod;
 
   
 
