@@ -540,84 +540,54 @@ for(let i = startIndex; i < startIndex + investmentPeriod; i++){
     });
 
 }
-    console.log(chartData);
+   console.log(chartData);
 
-    const ctx = document.getElementById('investmentChart').getContext('2d');
-
-
+const ctx = document.getElementById('investmentChart').getContext('2d');
 
 new Chart(ctx, {
-
     type: 'line',
-
     data: {
-
         labels: chartData.map(p => p.date),
-
         datasets: [{
-
             label: 'Portfolio Value (£)',
-
-            data: chartData.map(p => p.portfolio),
-
+            // Explicitly cast to Number to prevent scale breaking on string data
+            data: chartData.map(p => Number(p.portfolio)), 
             borderWidth: 3,
-
             pointRadius: 0,
-
             tension: 0.25
-
         }]
-
     },
-
     options: {
-
         responsive: true,
-
         maintainAspectRatio: false,
-
         plugins: {
-
             title: {
-
                 display: true,
-
                 text: 'Historical Investment Journey'
-
             }
-
         },
-
         scales: {
-
             x: {
-
                 ticks: {
-
                     maxTicksLimit: 10
-
                 }
-
             },
-
             y: {
-
+                beginAtZero: false, // Allows chart to focus on actual performance range
+                grace: '5%',       // Adds top/bottom padding so peak/trough points aren't cut off
                 ticks: {
-
-                    callback: function(value){
-
-                        return "£" + value.toLocaleString();
-
+                    callback: function(value) {
+                        // Formats ticks cleanly as £1,000 currency values
+                        return new Intl.NumberFormat('en-GB', {
+                            style: 'currency',
+                            currency: 'GBP',
+                            maximumFractionDigits: 0
+                        }).format(value);
                     }
-
                 }
-
             }
-
         }
-
     }
-
 });
 
 // Calculate growth
