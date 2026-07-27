@@ -544,23 +544,27 @@ for(let i = startIndex; i < startIndex + investmentPeriod; i++){
 
     const ctx = document.getElementById('investmentChart').getContext('2d');
 
+const ctx = document.getElementById('investmentChart').getContext('2d');
+
 new Chart(ctx, {
 
     type: 'line',
 
     data: {
 
-        labels: chartData.map(point => point.date),
+        labels: chartData.map(p => p.date),
 
         datasets: [{
 
-            label: 'Portfolio Value',
+            label: 'Portfolio Value (£)',
 
-            data: chartData.map(point => point.portfolio),
+            data: chartData.map(p => p.portfolio),
 
-            borderWidth: 2,
+            borderWidth: 3,
 
-            tension: 0.2
+            pointRadius: 0,
+
+            tension: 0.25
 
         }]
 
@@ -570,11 +574,43 @@ new Chart(ctx, {
 
         responsive: true,
 
+        maintainAspectRatio: false,
+
         plugins: {
 
-            legend: {
+            title: {
 
-                display: true
+                display: true,
+
+                text: 'Historical Investment Journey'
+
+            }
+
+        },
+
+        scales: {
+
+            x: {
+
+                ticks: {
+
+                    maxTicksLimit: 10
+
+                }
+
+            },
+
+            y: {
+
+                ticks: {
+
+                    callback: function(value){
+
+                        return "£" + value.toLocaleString();
+
+                    }
+
+                }
 
             }
 
