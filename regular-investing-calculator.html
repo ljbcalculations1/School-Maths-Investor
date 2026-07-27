@@ -511,12 +511,27 @@ document.getElementById("endDisplay").innerHTML =
 
 let portfolio = 0;
 
+// Store the monthly investment journey
+let chartData = [];
 
-for(let i=startIndex; i<startIndex+investmentPeriod; i++){
+for(let i = startIndex; i < startIndex + investmentPeriod; i++){
 
+    // Add this month's investment
     portfolio += monthly;
 
+    // Apply this month's investment return
     portfolio *= (1 + globalEquityReturns[i].return);
+
+    // Save this month's results
+    chartData.push({
+
+        date: globalEquityReturns[i].date,
+
+        portfolio: portfolio,
+
+        contributions: (i - startIndex + 1) * monthly
+
+    });
 
 }
 
