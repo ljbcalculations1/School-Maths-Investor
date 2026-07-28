@@ -607,7 +607,7 @@ if (investmentChart) {
     options: {
         responsive: true,
         maintainAspectRatio: true,
-        plugins: {
+       plugins: {
 
     title: {
 
@@ -616,6 +616,46 @@ if (investmentChart) {
         text: 'Your Historical Investment Journey'
 
     },
+
+    tooltip: {
+
+        callbacks: {
+
+            afterBody: function(context) {
+
+                const index = context[0].dataIndex;
+
+                const portfolio = chartData[index].portfolio;
+
+                const contributions = chartData[index].contributions;
+
+                const growth = portfolio - contributions;
+
+                return [
+
+                    "",
+
+                    "Investment Growth: " +
+
+                    growth.toLocaleString("en-GB", {
+
+                        style: "currency",
+
+                        currency: "GBP",
+
+                        maximumFractionDigits: 0
+
+                    })
+
+                ];
+
+            }
+
+        }
+
+    }
+
+},
 
     tooltip: {
 
