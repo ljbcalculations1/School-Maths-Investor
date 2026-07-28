@@ -554,7 +554,11 @@ console.log(
 
 const ctx = document.getElementById('investmentChart').getContext('2d');
 
-investmentChart = new Chart(ctx, {
+if (investmentChart) {
+    investmentChart.destroy();
+}
+    
+    investmentChart = new Chart(ctx, {
     type: 'line',
     data: {
         labels: chartData.map(p => p.date),
