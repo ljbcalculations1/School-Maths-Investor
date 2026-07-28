@@ -600,11 +600,44 @@ if (investmentChart) {
         responsive: true,
         maintainAspectRatio: true,
         plugins: {
-            title: {
-                display: true,
-                text: 'Historical Portfolio Value vs Contributions'
+
+    title: {
+
+        display: true,
+
+        text: 'Historical Investment Journey'
+
+    },
+
+    tooltip: {
+
+        callbacks: {
+
+            afterBody: function(context){
+
+                const index = context[0].dataIndex;
+
+                const portfolio = chartData[index].portfolio;
+
+                const contributions = chartData[index].contributions;
+
+                const growth = portfolio - contributions;
+
+                return [
+                    "",
+                    "Investment Growth: £" +
+                    growth.toLocaleString(undefined,{
+                        maximumFractionDigits:0
+                    })
+                ];
+
             }
-        },
+
+        }
+
+    }
+
+},
         scales: {
             x: {
                 ticks: {
