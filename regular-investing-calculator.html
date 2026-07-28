@@ -541,6 +541,10 @@ for(let i = startIndex; i < startIndex + investmentPeriod; i++){
 
 }
    console.log(chartData);
+console.log(
+    Math.min(...chartData.map(p => p.portfolio)),
+    Math.max(...chartData.map(p => p.portfolio))
+);
 
 const ctx = document.getElementById('investmentChart').getContext('2d');
 
