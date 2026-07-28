@@ -548,6 +548,10 @@ console.log(
     Math.max(...chartData.map(p => p.portfolio))
 );
 
+    if (investmentChart) {
+    investmentChart.destroy();
+}
+
 const ctx = document.getElementById('investmentChart').getContext('2d');
 
 new Chart(ctx, {
