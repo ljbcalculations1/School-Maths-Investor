@@ -552,14 +552,39 @@ new Chart(ctx, {
     type: 'line',
     data: {
         labels: chartData.map(p => p.date),
-        datasets: [{
-            label: 'Portfolio Value (£)',
-            // Explicitly cast to Number to prevent scale breaking on string data
-            data: chartData.map(p => Number(p.portfolio)), 
-            borderWidth: 3,
-            pointRadius: 0,
-            tension: 0.25
-        }]
+        datasets: [
+
+{
+
+    label: 'Portfolio Value (£)',
+
+    data: chartData.map(p => p.portfolio),
+
+    borderWidth: 3,
+
+    pointRadius: 0,
+
+    tension: 0.25
+
+},
+
+{
+
+    label: 'Total Contributions (£)',
+
+    data: chartData.map(p => p.contributions),
+
+    borderWidth: 3,
+
+    pointRadius: 0,
+
+    tension: 0,
+
+    borderDash: [8,5]
+
+}
+
+]
     },
     options: {
         responsive: true,
