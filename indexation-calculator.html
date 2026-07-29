@@ -223,7 +223,7 @@
 
         <!-- BRANDING -->
         <div class="branding">
-            2. School Maths Investor
+            <h2>School Maths Investor</h2>
             <p>Helping people understand investing through the mathematics they already know.</p>
         </div>
 
@@ -311,7 +311,7 @@
 
         <hr style="margin-top: 30px; border: 0; border-top: 1px solid #dddddd;">
 
-        <h2 style="color:#003366; text-align: center; margin-top: 20px;">Nominal Wealth vs Real Purchasing Power</h2>
+        <h2 style="color:#003366; text-align: center; margin-top: 20px;">The Decline of Real Wealth</h2>
 
         <!-- GRAPH CANVAS -->
         <canvas id="growthChart"></canvas>
@@ -408,26 +408,27 @@
                 <p>You have lost <b>${itemsLost.toFixed(1)} ${itemName} (${pctLoss.toFixed(1)}% of your purchasing power)</b> purely due to tax on inflation!</p>
             `;
 
-            // Year-by-year dataset for Chart
+            // Year-by-year dataset for Chart IN TERMS OF ITEMS
             let labels = [];
-            let dataGross = [];
-            let dataTarget = [];
-            let dataNet = [];
+            let dataGrossItems = [];
+            let dataTargetItems = [];
+            let dataNetItems = [];
 
             for (let year = 0; year <= years; year++) {
                 labels.push("Year " + year);
                 
+                // Money values for this year
                 let valG = P * Math.pow(1 + returnRate, year);
                 let priceT = itemPrice0 * Math.pow(1 + inflationRate, year);
-                let targetNeed = initialItems * priceT; // Cost needed to maintain initial purchasing power
                 
                 let gainT = Math.max(0, valG - P);
                 let taxT = gainT * taxRate;
                 let valN = valG - taxT;
 
-                dataGross.push(valG);
-                dataTarget.push(targetNeed);
-                dataNet.push(valN);
+                // Convert money to items (purchasing power)
+                dataGrossItems.push(valG / priceT);
+                dataTargetItems.push(initialItems); // Target is always the starting amount of items
+                dataNetItems.push(valN / priceT);
             }
 
             // Destroy existing chart instance
@@ -444,8 +445,8 @@
                     labels: labels,
                     datasets: [
                         {
-                            label: "Gross Portfolio Value (£)",
-                            data: dataGross,
+                            label: "Gross Purchasing Power (Before Tax)",
+                            data: dataGrossItems,
                             borderColor: "#005EB8",
                             backgroundColor: "#005EB8",
                             fill: false,
@@ -453,8 +454,8 @@
                             borderWidth: 2
                         },
                         {
-                            label: "Value Needed to Maintain Purchasing Power (£)",
-                            data: dataTarget,
+                            label: "Wealth Maintenance Benchmark",
+                            data: dataTargetItems,
                             borderColor: "#f9a825",
                             backgroundColor: "#f9a825",
                             fill: false,
@@ -463,8 +464,8 @@
                             borderWidth: 2
                         },
                         {
-                            label: "Net After-Tax Value (£)",
-                            data: dataNet,
+                            label: "Actual Wealth (After-Tax Purchasing Power)",
+                            data: dataNetItems,
                             borderColor: "#c62828",
                             backgroundColor: "#c62828",
                             fill: false,
@@ -487,7 +488,8 @@
                                         label += ': ';
                                     }
                                     if (context.parsed.y !== null) {
-                                        label += '£' + Math.round(context.parsed.y).toLocaleString();
+                                        // Display as items instead of £
+                                        label += Math.round(context.parsed.y).toLocaleString() + ' ' + itemName;
                                     }
                                     return label;
                                 }
@@ -504,11 +506,13 @@
                         y: {
                             title: {
                                 display: true,
-                                text: "Value (£)"
+                                // Dynamic Y-axis title
+                                text: "Purchasing Power (" + itemName + ")"
                             },
                             ticks: {
                                 callback: function(value) {
-                                    return '£' + value.toLocaleString();
+                                    // Remove the £ sign from ticks
+                                    return value.toLocaleString();
                                 }
                             }
                         }
