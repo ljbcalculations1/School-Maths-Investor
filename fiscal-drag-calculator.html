@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>The Fiscal Drag Calculator</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 750px;
+            margin: auto;
+            padding: 20px;
+            background: #f4f4f4;
+            color: #333333;
+        }
+
+        .navigation {
+            background: #003366;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+        }
+
+        .navigation a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            margin-right: 25px;
+        }
+
+        .navigation a:hover {
+            text-decoration: underline;
+        }
+
+        .box {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #003366;
+            margin-top: 10px;
+        }
+
+        .branding {
+            text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #dddddd;
+        }
+
+        .branding h2 {
+            margin: 0;
+            font-size: 30px;
+            color: #003366;
+        }
+
+        .branding p {
+            margin-top: 8px;
+            font-size: 15px;
+            color: #666666;
+            font-style: italic;
+        }
+
+        .about {
+            background: #f9f9f9;
+            border: 1px solid #cccccc;
+            border-radius: 8px;
+            padding: 18px;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .about strong {
+            display: block;
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #003366;
+        }
+
+        .input-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        @media (max-width: 600px) {
+            .input-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        label {
+            display: block;
+            margin-top: 12px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            font-size: 15px;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            margin-top: 4px;
+        }
+
+        button {
+            margin-top: 25px;
+            width: 100%;
+            padding: 14px;
+            font-size: 18px;
+            cursor: pointer;
+            background-color: #003366;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background-color: #002244;
+        }
+
+        /* Result cards */
+        .results {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .result-card {
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .card-gross {
+            background: #eef6fc;
+            border: 1px solid #005EB8;
+        }
+
+        .card-tax {
+            background: #fdecea;
+            border: 1px solid #c62828;
+        }
+
+        .card-purchasing {
+            background: #fff8e1;
+            border: 1px solid #f9a825;
+        }
+
+        .card-loss {
+            background: #f2f2f2;
+            border: 1px solid #666666;
+        }
+
+        .result-card h3 {
+            margin: 0 0 8px 0;
+            color: #003366;
+            font-size: 14px;
+        }
+
+        .result-value {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .result-subtext {
+            font-size: 12px;
+            color: #555555;
+            margin-top: 5px;
+        }
+
+        #working {
+            background: #fafafa;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid #003366;
+            line-height: 1.6;
+            margin-top: 25px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 35px;
+            padding-top: 20px;
+            border-top: 1px solid #dddddd;
+            font-size: 15px;
+        }
+
+        .footer a {
+            color: #003366;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="navigation">
+        <a href="index.html">🏠 Home</a>
+        <a href="calculators.html">🧮 All Calculators</a>
+    </div>
+
+    <div class="box">
+
+        <!-- BRANDING -->
+        <div class="branding">
+            <h2>School Maths Investor</h2>
+            <p>Helping people understand investing through the mathematics they already know.</p>
+        </div>
+
+        <!-- ABOUT THIS CALCULATOR -->
+        <div class="about">
+            <strong>About this calculator: The "Fiscal Drag" Trap</strong>
+            <p>When inflation pushes up wages and the cost of living, but the government freezes tax bands, you get pushed into higher tax brackets without actually getting richer. This is known as "Fiscal Drag".</p>
+            <p>This calculator shows how keeping tax thresholds static during inflation results in a massive, hidden cut to your real living standards.</p>
+        </div>
+
+        <h1>The Fiscal Drag Calculator</h1>
+
+        <!-- INPUTS -->
+        <div class="input-grid">
+            <div>
+                <label for="salary">Initial Salary (£)</label>
+                <input id="salary" type="number" min="1" value="50000">
+            </div>
+
+            <div>
+                <label for="years">Time Period (Years)</label>
+                <input id="years" type="number" min="1" max="50" value="10">
+            </div>
+
+            <div>
+                <label for="wageGrowth">Annual Wage Growth (%)</label>
+                <input id="wageGrowth" type="number" step="0.1" value="7.18">
+            </div>
+
+            <div>
+                <label for="inflation">Annual Inflation Rate (%)</label>
+                <input id="inflation" type="number" step="0.1" value="7.18">
+            </div>
+
+            <div>
+                <label for="allowance">Personal Allowance Limit (£)</label>
+                <input id="allowance" type="number" step="100" value="20000">
+            </div>
+
+            <div>
+                <label for="higherThreshold">Higher Rate Limit (£)</label>
+                <input id="higherThreshold" type="number" step="100" value="50000">
+            </div>
+
+            <div>
+                <label for="basicRate">Basic Tax Rate (%)</label>
+                <input id="basicRate" type="number" step="1" value="20">
+            </div>
+
+            <div>
+                <label for="higherRate">Higher Tax Rate (%)</label>
+                <input id="higherRate" type="number" step="1" value="40">
+            </div>
+
+            <div>
+                <label for="itemName">Benchmark Item Name</label>
+                <input id="itemName" type="text" value="Potatoes">
+            </div>
+
+            <div>
+                <label for="itemPrice">Starting Price per Item (£)</label>
+                <input id="itemPrice" type="number" step="0.01" value="1.00">
+            </div>
+        </div>
+
+        <!-- CALCULATE BUTTON -->
+        <button onclick="calculate()">Calculate Purchasing Power</button>
+
+        <!-- RESULTS -->
+        <div class="results">
+
+            <div class="result-card card-gross">
+                <h3>Future Gross Salary</h3>
+                <div id="grossVal" class="result-value">£0</div>
+                <div id="grossItems" class="result-subtext">0 items</div>
+            </div>
+
+            <div class="result-card card-tax">
+                <h3>Future Tax Bill</h3>
+                <div id="taxVal" class="result-value">£0</div>
+                <div id="taxSub" class="result-subtext">Frozen Tax Bands</div>
+            </div>
+
+            <div class="result-card card-purchasing">
+                <h3>After-Tax Purchasing Power</h3>
+                <div id="netItems" class="result-value">0 items</div>
+                <div id="netVal" class="result-subtext">£0 take-home</div>
+            </div>
+
+            <div class="result-card card-loss">
+                <h3>Real Wealth Loss</h3>
+                <div id="lossItems" class="result-value">0 items</div>
+                <div id="lossPct" class="result-subtext">0% loss</div>
+            </div>
+
+        </div>
+
+        <!-- MATHEMATICAL WORKING -->
+        <div id="working"></div>
+
+        <hr style="margin-top: 30px; border: 0; border-top: 1px solid #dddddd;">
+
+        <h2 style="color:#003366; text-align: center; margin-top: 20px;">The Impact on Real Living Standards</h2>
+
+        <!-- GRAPH CANVAS -->
+        <canvas id="growthChart"></canvas>
+
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+        <p>Read more articles and insights</p>
+        <p>
+            <a href="https://schoolmathsinvestor.substack.com/" target="_blank" rel="noopener">
+                The School Maths Investor Substack
+            </a>
+        </p>
+    </div>
+
+    <!-- Chart.js Library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        let growthChart = null;
+
+        function calcTax(income, allowance, higherThreshold, basicRate, higherRate) {
+            let tax = 0;
+            let basicTax = 0;
+            let higherTax = 0;
+
+            if (income > allowance) {
+                let taxableBasic = Math.min(income, higherThreshold) - allowance;
+                basicTax = taxableBasic * basicRate;
+                tax += basicTax;
+            }
+
+            if (income > higherThreshold) {
+                let taxableHigher = income - higherThreshold;
+                higherTax = taxableHigher * higherRate;
+                tax += higherTax;
+            }
+
+            return { total: tax, basic: basicTax, higher: higherTax };
+        }
+
+        function calculate() {
+            // Read inputs
+            let S = Number(document.getElementById("salary").value);
+            let years = Number(document.getElementById("years").value);
+            let wageGrowth = Number(document.getElementById("wageGrowth").value) / 100;
+            let inflationRate = Number(document.getElementById("inflation").value) / 100;
+            
+            let allowance = Number(document.getElementById("allowance").value);
+            let higherThreshold = Number(document.getElementById("higherThreshold").value);
+            let basicRate = Number(document.getElementById("basicRate").value) / 100;
+            let higherRate = Number(document.getElementById("higherRate").value) / 100;
+
+            let itemName = document.getElementById("itemName").value || "items";
+            let itemPrice0 = Number(document.getElementById("itemPrice").value);
+
+            // Validation
+            if (isNaN(S) || S <= 0 || isNaN(years) || years <= 0 || isNaN(itemPrice0) || itemPrice0 <= 0) {
+                alert("Please enter valid positive numbers.");
+                return;
+            }
+
+            // --- Year 0 Calculations ---
+            let tax0_breakdown = calcTax(S, allowance, higherThreshold, basicRate, higherRate);
+            let net0 = S - tax0_breakdown.total;
+            let items0 = net0 / itemPrice0;
+            let grossItems0 = S / itemPrice0;
+
+            // --- Year T Calculations ---
+            let ST = S * Math.pow(1 + wageGrowth, years);
+            let finalItemPrice = itemPrice0 * Math.pow(1 + inflationRate, years);
+            
+            let taxT_breakdown = calcTax(ST, allowance, higherThreshold, basicRate, higherRate);
+            let netT = ST - taxT_breakdown.total;
+            
+            let grossItemsT = ST / finalItemPrice;
+            let netItemsT = netT / finalItemPrice;
+            
+            let itemsLost = items0 - netItemsT;
+            let pctLoss = (itemsLost / items0) * 100;
+
+            // Handle edge case where wage growth actually outpaces tax drag and inflation
+            let isLoss = itemsLost >= 0;
+            let lossText = isLoss ? "-" + Math.round(itemsLost).toLocaleString() : "+" + Math.round(Math.abs(itemsLost)).toLocaleString();
+            let lossPctText = isLoss ? "-" + pctLoss.toFixed(1) + "% real wealth loss" : "+" + Math.abs(pctLoss).toFixed(1) + "% gain";
+
+            // Update Result Cards UI
+            document.getElementById("grossVal").innerText = "£" + Math.round(ST).toLocaleString();
+            document.getElementById("grossItems").innerText = Math.round(grossItemsT).toLocaleString() + " " + itemName + " gross";
+
+            document.getElementById("taxVal").innerText = "£" + Math.round(taxT_breakdown.total).toLocaleString();
+            
+            // Calculate effective tax rates
+            let effTax0 = (tax0_breakdown.total / S) * 100;
+            let effTaxT = (taxT_breakdown.total / ST) * 100;
+            document.getElementById("taxSub").innerText = "Effective rate up from " + effTax0.toFixed(1) + "% to " + effTaxT.toFixed(1) + "%";
+
+            document.getElementById("netItems").innerText = Math.round(netItemsT).toLocaleString() + " " + itemName;
+            document.getElementById("netVal").innerText = "£" + Math.round(netT).toLocaleString() + " take-home";
+
+            document.getElementById("lossItems").innerText = lossText + " " + itemName;
+            document.getElementById("lossPct").innerText = lossPctText;
+
+            // Dynamic breakdown formatting logic
+            let taxBreakdown0HTML = `£0 on the first £${allowance.toLocaleString()}`;
+            if (S > allowance) taxBreakdown0HTML += `<br>• (£${Math.min(S, higherThreshold).toLocaleString()} - £${allowance.toLocaleString()}) × ${(basicRate*100).toFixed(0)}% = £${tax0_breakdown.basic.toLocaleString()}`;
+            if (S > higherThreshold) taxBreakdown0HTML += `<br>• (£${S.toLocaleString()} - £${higherThreshold.toLocaleString()}) × ${(higherRate*100).toFixed(0)}% = £${tax0_breakdown.higher.toLocaleString()}`;
+
+            let taxBreakdownTHTML = `£0 on the first £${allowance.toLocaleString()}`;
+            if (ST > allowance) taxBreakdownTHTML += `<br>• (£${Math.min(ST, higherThreshold).toLocaleString(undefined, {maximumFractionDigits:0})} - £${allowance.toLocaleString()}) × ${(basicRate*100).toFixed(0)}% = £${Math.round(taxT_breakdown.basic).toLocaleString()}`;
+            if (ST > higherThreshold) taxBreakdownTHTML += `<br>• (£${Math.round(ST).toLocaleString()} - £${higherThreshold.toLocaleString()}) × ${(higherRate*100).toFixed(0)}% = £${Math.round(taxT_breakdown.higher).toLocaleString()}`;
+
+            // Mathematical Breakdown Text
+            document.getElementById("working").innerHTML = `
+                <h2 style="color:#003366; margin-top:0;">The Mathematical Steps</h2>
+
+                <p><b>Step 1: The Initial Tax & Take-Home</b></p>
+                <p>On a salary of £${S.toLocaleString()}, the tax bill is:<br>
+                • ${taxBreakdown0HTML}<br>
+                <b>Total Tax = £${tax0_breakdown.total.toLocaleString()}</b></p>
+                <p>You take home £${net0.toLocaleString()} — enough to buy <b>${Math.round(items0).toLocaleString()} ${itemName}</b> at £${itemPrice0.toFixed(2)} each.</p>
+
+                <hr>
+
+                <p><b>Step 2: Fast Forward ${years} Years</b></p>
+                <p>Wages have grown at ${(wageGrowth*100).toFixed(2)}% per year and inflation has been ${(inflationRate*100).toFixed(2)}% per year.</p>
+                <p>• New Gross Salary: £${S.toLocaleString()} × (1 + ${(wageGrowth*100).toFixed(2)}%)<sup>${years}</sup> = <b>£${Math.round(ST).toLocaleString()}</b></p>
+                <p>• Price of ${itemName}: £${itemPrice0.toFixed(2)} × (1 + ${(inflationRate*100).toFixed(2)}%)<sup>${years}</sup> = <b>£${finalItemPrice.toFixed(2)}</b> per item.</p>
+
+                <hr>
+
+                <p><b>Step 3: The New Tax Bill (The "Drag" Effect)</b></p>
+                <p>Because the tax bands haven't changed, much more of your new salary falls into the higher tax bracket:</p>
+                <p>• ${taxBreakdownTHTML}<br>
+                <b>Total Tax = £${Math.round(taxT_breakdown.total).toLocaleString()}</b></p>
+
+                <hr>
+
+                <p><b>Step 4: The True Cut to Living Standards</b></p>
+                <p>After tax, you take home £${Math.round(netT).toLocaleString()}. Divided by the new price of £${finalItemPrice.toFixed(2)}, this is enough for:</p>
+                <p><b>£${Math.round(netT).toLocaleString()} ÷ £${finalItemPrice.toFixed(2)} = ${Math.round(netItemsT).toLocaleString()} ${itemName}</b></p>
+                <p>Your real purchasing power has fallen from ${Math.round(items0).toLocaleString()} ${itemName} to ${Math.round(netItemsT).toLocaleString()} ${itemName}. A massive cut caused entirely by fiscal drag!</p>
+            `;
+
+            // Year-by-year dataset for Chart IN TERMS OF ITEMS
+            let labels = [];
+            let dataGrossItems = [];
+            let dataTargetItems = [];
+            let dataNetItems = [];
+
+            for (let year = 0; year <= years; year++) {
+                labels.push("Year " + year);
+                
+                // Money values for this year
+                let valG = S * Math.pow(1 + wageGrowth, year);
+                let priceT = itemPrice0 * Math.pow(1 + inflationRate, year);
+                
+                let taxYr = calcTax(valG, allowance, higherThreshold, basicRate, higherRate).total;
+                let valN = valG - taxYr;
+
+                // Convert money to items (purchasing power)
+                dataGrossItems.push(valG / priceT);
+                dataTargetItems.push(items0); // The benchmark is what your take-home bought in Year 0
+                dataNetItems.push(valN / priceT);
+            }
+
+            // Destroy existing chart instance
+            if (growthChart !== null) {
+                growthChart.destroy();
+            }
+
+            // Render Chart.js
+            const ctx = document.getElementById("growthChart").getContext("2d");
+
+            growthChart = new Chart(ctx, {
+                type: "line",
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: "Gross Purchasing Power (Before Tax)",
+                            data: dataGrossItems,
+                            borderColor: "#005EB8",
+                            backgroundColor: "#005EB8",
+                            fill: false,
+                            tension: 0.2,
+                            borderWidth: 2
+                        },
+                        {
+                            label: "Living Standards Benchmark (Initial Net Wealth)",
+                            data: dataTargetItems,
+                            borderColor: "#f9a825",
+                            backgroundColor: "#f9a825",
+                            fill: false,
+                            tension: 0.2,
+                            borderDash: [5, 5],
+                            borderWidth: 2
+                        },
+                        {
+                            label: "Actual Living Standard (After-Tax Purchasing Power)",
+                            data: dataNetItems,
+                            borderColor: "#c62828",
+                            backgroundColor: "#c62828",
+                            fill: false,
+                            tension: 0.2,
+                            borderWidth: 3
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: "top"
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        label += Math.round(context.parsed.y).toLocaleString() + ' ' + itemName;
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: "Time Period"
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: "Purchasing Power (" + itemName + ")"
+                            },
+                            ticks: {
+                                callback: function(value) {
+                                    return value.toLocaleString();
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Run calculation automatically on page load
+        calculate();
+    </script>
+
+</body>
+</html>
