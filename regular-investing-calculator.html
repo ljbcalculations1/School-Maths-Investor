@@ -425,361 +425,195 @@ console.log(globalEquityReturns);
 
 <script>
 let investmentPeriod = 120;
+let investmentChart = null;
 
-    let investmentChart = null;
-
-function getStartingIndex(startDate){
-
-    for(let i = 0; i < globalEquityReturns.length; i++){
-
-        if(globalEquityReturns[i].date === startDate){
-
+function getStartingIndex(startDate) {
+    for (let i = 0; i < globalEquityReturns.length; i++) {
+        if (globalEquityReturns[i].date === startDate) {
             return i;
-
         }
-
     }
-
     return -1;
-
 }
-
-
 
 function calculate() {
-
     let monthly = Number(document.getElementById("monthly").value);
-
-    let startMonth =
-        document.getElementById("month").selectedOptions[0].text;
-
-    let startYear =
-        document.getElementById("year").value;
-
+    let startMonth = document.getElementById("month").selectedOptions[0].text;
+    let startYear = document.getElementById("year").value;
 
     if (isNaN(monthly) || monthly <= 0) {
+        document.getElementById("result").innerHTML = "Please enter a valid monthly investment.";
+        return;
+    }
 
-    document.getElementById("result").innerHTML =
-    "Please enter a valid monthly investment.";
+    let contributions = monthly * investmentPeriod;
 
-    return;
+    // Find the starting point in the data
+    // Note: This assumes your HTML <select id="month"> uses values 0-11.
+    let startDate = startYear + "-" + String(Number(document.getElementById("month").value) + 1).padStart(2, "0");
 
-}
+    let startIndex = getStartingIndex(startDate);
 
+    // Check enough data exists
+    if (startIndex === -1) {
+        document.getElementById("working").innerHTML = "<p>Sorry, this start date is not available.</p>";
+        return;
+    }
 
-
-
-let contributions = monthly * investmentPeriod;
-
-  
-// Find the starting point in the data
-
-let startDate = startYear + "-" + 
-String(Number(document.getElementById("month").value) + 1).padStart(2,"0");
-
-
-// Run the investment simulation
-
-// Find where the investment journey starts
-
-
-// Find matching position in historical data
-
-let startIndex = getStartingIndex(startDate);
-
-
-// Check enough data exists
-
-if(startIndex === -1){
-
-    document.getElementById("working").innerHTML =
-    "<p>Sorry, this start date is not available.</p>";
-
-    return;
-
-}
-
-
-if(startIndex + investmentPeriod > globalEquityReturns.length){
-
-    document.getElementById("working").innerHTML =
-    "<p>Not enough historical data available for a full 10 year journey.</p>";
-
-    return;
-
-}
+    if (startIndex + investmentPeriod > globalEquityReturns.length) {
+        document.getElementById("working").innerHTML = "<p>Not enough historical data available for a full 10 year journey.</p>";
+        return;
+    }
 
     document.getElementById("startDisplay").innerHTML = startDate;
+    document.getElementById("endDisplay").innerHTML = globalEquityReturns[startIndex + investmentPeriod - 1].date;
 
-document.getElementById("endDisplay").innerHTML =
-    globalEquityReturns[startIndex + investmentPeriod - 1].date;
+    // Run investment simulation
+    let portfolio = 0;
+    let chartData = [];
 
+    for (let i = startIndex; i < startIndex + investmentPeriod; i++) {
+        portfolio += monthly;
+        portfolio *= (1 + globalEquityReturns[i].return);
+        
+        chartData.push({
+            date: globalEquityReturns[i].date,
+            portfolio: portfolio,
+            contributions: (i - startIndex + 1) * monthly
+        });
+    }
 
-// Run investment simulation
-
-let portfolio = 0;
-
-// Store the monthly investment journey
-let chartData = [];
-
-for(let i = startIndex; i < startIndex + investmentPeriod; i++){
-
-    // Add this month's investment
-    portfolio += monthly;
-
-    // Apply this month's investment return
-    portfolio *= (1 + globalEquityReturns[i].return);
-
-    // Save this month's results
-    chartData.push({
-
-        date: globalEquityReturns[i].date,
-
-        portfolio: portfolio,
-
-        contributions: (i - startIndex + 1) * monthly
-
-    });
-
-}
-   console.log(chartData);
-console.log(
-    Math.min(...chartData.map(p => p.portfolio)),
-    Math.max(...chartData.map(p => p.portfolio))
-);
-
+    // Charting logic
     if (investmentChart) {
-    investmentChart.destroy();
-}
+        investmentChart.destroy();
+    }
 
-const ctx = document.getElementById('investmentChart').getContext('2d');
+    const ctx = document.getElementById('investmentChart').getContext('2d');
 
-if (investmentChart) {
-    investmentChart.destroy();
-}
-    
     investmentChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: chartData.map(p => p.date),
-        datasets: [
+        type: 'line',
+        data: {
+            labels: chartData.map(p => p.date),
+            datasets: [
+                {
+                    label: 'Portfolio Value (£)',
+                    data: chartData.map(p => p.portfolio),
+                    borderColor: "#005EB8",
+                    backgroundColor: "#005EB8",
+                    borderWidth: 3,
+                    pointRadius: 0,
+                    tension: 0.25
+                },
+                {
+                    label: 'Total Contributions (£)',
+                    data: chartData.map(p => p.contributions),
+                    borderColor: "#999999",
+                    backgroundColor: "#999999",
+                    borderWidth: 3,
+                    pointRadius: 0,
+                    tension: 0,
+                    borderDash: [8, 5]
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Your Historical Investment Journey'
+                },
+                // Fixed: tooltip is now properly inside the plugins object
+                tooltip: {
+                    callbacks: {
+                        afterBody: function(context) {
+                            const index = context[0].dataIndex;
+                            const portfolio = chartData[index].portfolio;
+                            const contributions = chartData[index].contributions;
+                            const growth = portfolio - contributions;
 
-{
-
-    label: 'Portfolio Value (£)',
-
-    data: chartData.map(p => p.portfolio),
-
-    borderColor: "#005EB8",
-
-    backgroundColor: "#005EB8",
-
-    borderWidth: 3,
-
-    pointRadius: 0,
-
-    tension: 0.25
-
-},
-
-{
-
-    label: 'Total Contributions (£)',
-
-    data: chartData.map(p => p.contributions),
-
-    borderColor: "#999999",
-
-    backgroundColor: "#999999",
-
-    borderWidth: 3,
-
-    pointRadius: 0,
-
-    tension: 0,
-
-    borderDash: [8,5]
-
-}
-
-]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: true,
-      plugins: {
-
-    title: {
-
-        display: true,
-
-        text: 'Your Historical Investment Journey'
-
-    }
-
-},
-    tooltip: {
-
-        callbacks: {
-
-            afterBody: function(context){
-
-                const index = context[0].dataIndex;
-
-                const portfolio = chartData[index].portfolio;
-
-                const contributions = chartData[index].contributions;
-
-                const growth = portfolio - contributions;
-
-                return [
-                    "",
-                    "Investment Growth: £" +
-                    growth.toLocaleString(undefined,{
-                        maximumFractionDigits:0
-                    })
-                ];
-
-            }
-
-        }
-
-    }
-
-},
-        scales: {
-            x: {
-                ticks: {
-                    maxTicksLimit: 10
+                            return [
+                                "",
+                                "Investment Growth: £" + growth.toLocaleString(undefined, { maximumFractionDigits: 0 })
+                            ];
+                        }
+                    }
                 }
             },
-            y: {
-                beginAtZero: false, // Allows chart to focus on actual performance range
-                grace: '5%',       // Adds top/bottom padding so peak/trough points aren't cut off
-                ticks: {
-                    callback: function(value) {
-                        // Formats ticks cleanly as £1,000 currency values
-                        return new Intl.NumberFormat('en-GB', {
-                            style: 'currency',
-                            currency: 'GBP',
-                            maximumFractionDigits: 0
-                        }).format(value);
+            // Fixed: scales is now properly inside the options object
+            scales: {
+                x: {
+                    ticks: {
+                        maxTicksLimit: 10
+                    }
+                },
+                y: {
+                    beginAtZero: false,
+                    grace: '5%',
+                    ticks: {
+                        callback: function(value) {
+                            return new Intl.NumberFormat('en-GB', {
+                                style: 'currency',
+                                currency: 'GBP',
+                                maximumFractionDigits: 0
+                            }).format(value);
+                        }
                     }
                 }
             }
         }
+    });
+
+    // Calculate growth and multiple
+    let growth = portfolio - contributions;
+    let multiple = portfolio / contributions;
+    let annualReturn = Math.pow(portfolio / contributions, 1 / (investmentPeriod / 12)) - 1;
+
+    // Display results
+    document.getElementById("contributions").innerHTML = "£" + contributions.toLocaleString();
+    document.getElementById("portfolio").innerHTML = "£" + portfolio.toLocaleString(undefined, { maximumFractionDigits: 0 });
+    document.getElementById("growth").innerHTML = "£" + growth.toLocaleString(undefined, { maximumFractionDigits: 0 });
+    document.getElementById("annual").innerHTML = (annualReturn * 100).toFixed(2) + "%";
+    document.getElementById("multiple").innerHTML = multiple.toFixed(2) + " times";
+
+    document.getElementById("working").innerHTML =
+        "<p><b>Step 1: Regular investment formula</b></p>" +
+        "<p>You invest £" + monthly.toLocaleString() + " every month for " + (investmentPeriod / 12) + " years.</p>" +
+        "<p><b>Step 2: Number of investments</b></p>" +
+        "<p>" + (investmentPeriod / 12) + " years × 12 months = " + investmentPeriod + " investments</p>" +
+        "<p><b>Step 3: Total contributions</b></p>" +
+        "<p>£" + monthly.toLocaleString() + " × " + investmentPeriod + " = £" + contributions.toLocaleString() + "</p>" +
+        "<p><b>Step 4: Applying market returns</b></p>" +
+        "<p>Each month your contribution is added and the portfolio return is applied.</p>" +
+        "<p><b>New Portfolio Value = (Previous Value + Monthly Investment) × (1 + Monthly Return)</b></p>";
+}
+
+// Automatically trigger on page load (Wrapped in safety checks)
+if (typeof globalEquityReturns !== 'undefined' && globalEquityReturns.length >= investmentPeriod) {
+    const yearSelect = document.getElementById("year");
+    let firstYear = Number(globalEquityReturns[0].date.substring(0, 4));
+    let lastAvailableIndex = globalEquityReturns.length - investmentPeriod;
+    let lastYear = Number(globalEquityReturns[lastAvailableIndex].date.substring(0, 4));
+
+    for (let y = firstYear; y <= lastYear; y++) {
+        let option = document.createElement("option");
+        option.value = y;
+        option.text = y;
+        yearSelect.appendChild(option);
     }
-});
 
-// Calculate growth
+    yearSelect.value = 1988; // Default value
 
-let growth = portfolio - contributions;
+    document.getElementById("dataRange").innerHTML =
+        globalEquityReturns[0].date + " to " +
+        globalEquityReturns[globalEquityReturns.length - 1].date + " (" +
+        globalEquityReturns.length + " monthly returns)";
 
-let multiple = portfolio / contributions;
-
-
-// Display results
-
-// Display simulation results
-
-document.getElementById("contributions").innerHTML =
-    "£" + contributions.toLocaleString();
-
-
-document.getElementById("portfolio").innerHTML =
-    "£" + portfolio.toLocaleString(undefined,
-    {maximumFractionDigits:0});
-
-
-document.getElementById("growth").innerHTML =
-    "£" + growth.toLocaleString(undefined,
-    {maximumFractionDigits:0});
-
-
-let annualReturn =
-    Math.pow(portfolio / contributions, 1 / (investmentPeriod / 12)) - 1;
-
-
-document.getElementById("annual").innerHTML =
-    (annualReturn * 100).toFixed(2) + "%";
-
-
-document.getElementById("multiple").innerHTML =
-    multiple.toFixed(2) + " times";
-    
-  document.getElementById("working").innerHTML =
-
-"<p><b>Step 1: Regular investment formula</b></p>" +
-
-"<p>You invest £" + monthly.toLocaleString() +
-" every month for " + (investmentPeriod/12) + " years.</p>" +
-
-"<p><b>Step 2: Number of investments</b></p>" +
-
-"<p>" + (investmentPeriod/12) +
-" years × 12 months = " + investmentPeriod +
-" investments</p>" +
-
-"<p><b>Step 3: Total contributions</b></p>" +
-
-"<p>£" + monthly.toLocaleString() +
-" × " + investmentPeriod +
-" = £" + contributions.toLocaleString() +
-"</p>" +
-"<p><b>Step 4: Applying market returns</b></p>" +
-
-"<p>Each month your contribution is added and the portfolio return is applied.</p>" +
-
-"<p><b>New Portfolio Value = (Previous Value + Monthly Investment) × (1 + Monthly Return)</b></p>";
-
-}
-// Automatically trigger on page load
-   const year = document.getElementById("year");
-
-let firstYear = Number(globalEquityReturns[0].date.substring(0,4));
-
-let lastAvailableIndex = globalEquityReturns.length - investmentPeriod;
-
-let lastYear = Number(
-    globalEquityReturns[lastAvailableIndex].date.substring(0,4)
-);
-
-
-for(let y=firstYear; y<=lastYear; y++){
-
-    let option=document.createElement("option");
-
-    option.value=y;
-
-    option.text=y;
-
-    year.appendChild(option);
-
-}
-
-year.value=1988;
-
-   
-
-    if (globalEquityReturns.length > 0) {
-
-document.getElementById("dataRange").innerHTML =
-globalEquityReturns[0].date +
-" to " +
-globalEquityReturns[globalEquityReturns.length-1].date +
-" (" +
-globalEquityReturns.length +
-" monthly returns)";
-
+    calculate(); // Run initial calculation
 } else {
-
-document.getElementById("dataRange").innerHTML =
-"No historical data loaded yet.";
-
+    document.getElementById("dataRange").innerHTML = "No historical data loaded yet, or data is less than 10 years.";
 }
-
-calculate();
-</script>
 
    
 
