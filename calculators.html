@@ -1,78 +1,143 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Interactive Calculators | School Maths Investor</title>
+<title>Interactive Learning Tools | School Maths Investor</title>
 
 <style>
 
 *{
+    margin:0;
+    padding:0;
     box-sizing:border-box;
 }
 
 body{
-    margin:0;
+
     font-family:Arial, Helvetica, sans-serif;
     background:#f5f7fa;
     color:#333;
+    line-height:1.7;
+
 }
 
-/* HERO */
-
 .hero{
+
     background:white;
+    padding:90px 20px;
     text-align:center;
-    padding:80px 20px;
+    border-bottom:1px solid #e6e6e6;
+
 }
 
 .hero h1{
+
+    font-size:3.4rem;
     color:#003366;
-    font-size:56px;
     margin-bottom:20px;
+
+}
+
+.hero h2{
+
+    font-size:1.8rem;
+    color:#0066aa;
+    font-weight:normal;
+    margin-bottom:30px;
+
 }
 
 .hero p{
-    font-size:22px;
-    color:#666;
+
     max-width:900px;
     margin:auto;
-    line-height:1.7;
+    font-size:1.2rem;
+    color:#555;
+
 }
 
-/* HOME BUTTON */
+.button-group{
 
-.home{
-    margin-top:40px;
+    margin-top:45px;
+
 }
 
-.home a{
+.button{
+
     display:inline-block;
     background:#003366;
     color:white;
     text-decoration:none;
-    padding:15px 30px;
+    padding:14px 28px;
     border-radius:8px;
+    margin:10px;
     font-weight:bold;
+    transition:0.3s;
+
 }
 
-.home a:hover{
+.button:hover{
+
     background:#0055aa;
+
 }
 
-/* GRID */
-
-.container{
+section{
 
     max-width:1200px;
-    margin:70px auto;
-    padding:0 20px;
+    margin:auto;
+    padding:80px 20px;
+
+}
+
+.section-title{
+
+    color:#003366;
+    font-size:2.2rem;
+    margin-bottom:25px;
+
+}
+
+.section-intro{
+
+    max-width:900px;
+    font-size:1.15rem;
+    color:#555;
+    margin-bottom:45px;
+
+}
+
+.philosophy{
+
+    background:white;
+    border-left:6px solid #0066aa;
+    padding:35px;
+    border-radius:10px;
+    box-shadow:0 6px 18px rgba(0,0,0,.08);
+
+}
+
+.philosophy p{
+
+    margin-bottom:18px;
+    font-size:1.08rem;
+
+}
+
+.highlight{
+
+    color:#003366;
+    font-weight:bold;
+
+}
+
+.cards{
 
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+    grid-template-columns:repeat(auto-fit,minmax(340px,1fr));
     gap:35px;
 
 }
@@ -82,9 +147,8 @@ body{
     background:white;
     border-radius:12px;
     padding:35px;
-    box-shadow:0 5px 15px rgba(0,0,0,0.08);
-
-    transition:.3s;
+    box-shadow:0 6px 18px rgba(0,0,0,.08);
+    transition:0.3s;
 
 }
 
@@ -96,57 +160,88 @@ body{
 
 .icon{
 
-    font-size:55px;
+    font-size:3rem;
+    margin-bottom:20px;
 
 }
 
-.card h2{
+.card h3{
 
     color:#003366;
+    font-size:1.6rem;
+    margin-bottom:15px;
+
+}
+
+.subtitle{
+
+    color:#0066aa;
+    font-weight:bold;
+    margin-bottom:20px;
 
 }
 
 .card p{
 
-    line-height:1.7;
-
     color:#555;
+    margin-bottom:25px;
 
 }
 
 .card ul{
 
-    line-height:2;
-
+    margin-left:20px;
     margin-bottom:30px;
 
 }
 
-.button{
+.card li{
+
+    margin-bottom:10px;
+
+}
+
+.live{
 
     display:inline-block;
-    background:#003366;
+    background:#1e8e3e;
     color:white;
-    text-decoration:none;
-    padding:12px 22px;
-    border-radius:6px;
-    font-weight:bold;
+    padding:6px 12px;
+    border-radius:30px;
+    font-size:0.85rem;
+    margin-bottom:20px;
 
 }
-
-.button:hover{
-
-    background:#0055aa;
-
-}
-
-/* FOOTER */
 
 footer{
 
     text-align:center;
-    padding:40px;
+    padding:60px 20px;
+    background:white;
     color:#666;
+    border-top:1px solid #ddd;
+
+}
+
+@media(max-width:700px){
+
+.hero h1{
+
+font-size:2.3rem;
+
+}
+
+.hero h2{
+
+font-size:1.35rem;
+
+}
+
+.section-title{
+
+font-size:1.8rem;
+
+}
 
 }
 
@@ -156,27 +251,509 @@ footer{
 
 <body>
 
-
 <section class="hero">
 
-<h1>Interactive Investing Calculators</h1>
+<h1>Interactive Learning Tools</h1>
+
+<h2>Understand why investing works—so you can better judge when it works.</h2>
 
 <p>
 
-Learn investing by experimenting with real numbers.
+Interactive tools that connect the mathematics you learnt at school with investing,
+inflation, tax and real-world financial decisions.
 
-Every calculator is based on mathematics taught at school and shows
-how those ideas apply to real investing decisions.
+Rather than simply giving answers, these tools help you understand <strong>why</strong>
+the answers change.
 
 </p>
 
-<div class="home">
+<div class="button-group">
 
-<a href="index.html">
-
+<a class="button" href="index.html">
 ← Return to Home
+</a>
+
+<a class="button" href="#featured">
+Explore the Tools ↓
+</a>
+
+</div>
+
+</section>
+
+<section>
+
+<h2 class="section-title">
+Why these tools are different
+</h2>
+
+<p class="section-intro">
+
+Most financial calculators give you an answer.
+
+The School Maths Investor takes a different approach.
+
+</p>
+
+<div class="philosophy">
+
+<p>
+
+Every interactive learning tool has been created to help you explore how changing one
+assumption—such as time, investment return, inflation or tax—changes the outcome.
+
+</p>
+
+<p>
+
+The aim isn't simply to calculate a number.
+
+The aim is to understand the mathematics behind that number.
+
+</p>
+
+<p>
+
+Because when you understand
+<span class="highlight">why investing works</span>,
+you are much better placed to judge
+<span class="highlight">when it works.</span>
+
+</p>
+
+</div>
+
+</section>
+
+<section id="featured">
+
+<h2 class="section-title">
+
+Featured Learning Tools
+
+</h2>
+
+<p class="section-intro">
+
+These interactive tools are available now.
+
+</p>
+
+<div class="cards">
+
+<div class="card">
+
+<div class="live">
+
+AVAILABLE NOW
+
+</div>
+
+<div class="icon">
+
+📈
+
+</div>
+
+<h3>
+
+Compound Interest
+
+</h3>
+
+<div class="subtitle">
+
+The mathematics behind long-term investing
+
+</div>
+
+<p>
+
+Discover how exponential growth transforms small investments into substantial wealth over time.
+
+</p>
+
+<ul>
+
+<li>Time versus return</li>
+
+<li>The power of compounding</li>
+
+<li>Long-term wealth creation</li>
+
+</ul>
+
+<a class="button"
+href="compound-interest.html">
+
+Launch Learning Tool →
 
 </a>
+
+</div>
+
+<div class="card">
+
+<div class="live">
+
+AVAILABLE NOW
+
+</div>
+
+<div class="icon">
+
+💷
+
+</div>
+
+<h3>
+
+The Free Tax Lunch
+
+</h3>
+
+<div class="subtitle">
+
+Understanding tax wrappers
+
+</div>
+
+<p>
+
+Explore how ISAs and pensions can dramatically improve long-term investment outcomes.
+
+</p>
+
+<ul>
+
+<li>Tax drag</li>
+
+<li>Long-term comparisons</li>
+
+<li>The value of tax wrappers</li>
+
+</ul>
+
+<a class="button"
+href="free-tax-lunch.html">
+
+Launch Learning Tool →
+
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+    <!-- =====================================================
+LEARNING LIBRARY
+====================================================== -->
+
+<section>
+
+<h2 class="section-title">
+
+Learning Library
+
+</h2>
+
+<p class="section-intro">
+
+New calculators are added regularly as new chapters of the book and
+Substack articles are published. Every calculator is designed to help
+you connect mathematical ideas with real financial decisions.
+
+</p>
+
+<div class="cards">
+
+<div class="card">
+
+<div class="live" style="background:#f0ad4e;">
+
+IN DEVELOPMENT
+
+</div>
+
+<div class="icon">
+
+🛒
+
+</div>
+
+<h3>
+
+Inflation
+
+</h3>
+
+<div class="subtitle">
+
+Understanding purchasing power
+
+</div>
+
+<p>
+
+Discover why prices rise over time, why nominal returns can be misleading,
+and why real returns matter.
+
+</p>
+
+</div>
+
+
+<div class="card">
+
+<div class="live" style="background:#f0ad4e;">
+
+IN DEVELOPMENT
+
+</div>
+
+<div class="icon">
+
+📅
+
+</div>
+
+<h3>
+
+Regular Investing
+
+</h3>
+
+<div class="subtitle">
+
+Investing little and often
+
+</div>
+
+<p>
+
+See how regular investing behaves during rising and falling markets and
+why market volatility can sometimes work in your favour.
+
+</p>
+
+</div>
+
+
+
+<div class="card">
+
+<div class="live" style="background:#f0ad4e;">
+
+IN DEVELOPMENT
+
+</div>
+
+<div class="icon">
+
+📊
+
+</div>
+
+<h3>
+
+Platform Comparison
+
+</h3>
+
+<div class="subtitle">
+
+The long-term cost of charges
+
+</div>
+
+<p>
+
+Explore how seemingly small platform and fund charges compound over
+decades.
+
+</p>
+
+</div>
+
+
+
+<div class="card">
+
+<div class="live" style="background:#f0ad4e;">
+
+IN DEVELOPMENT
+
+</div>
+
+<div class="icon">
+
+📈
+
+</div>
+
+<h3>
+
+Single Investment
+
+</h3>
+
+<div class="subtitle">
+
+One investment through time
+
+</div>
+
+<p>
+
+Understand how investment return, inflation and timescale interact to
+produce very different outcomes.
+
+</p>
+
+</div>
+
+
+
+<div class="card">
+
+<div class="live" style="background:#f0ad4e;">
+
+IN DEVELOPMENT
+
+</div>
+
+<div class="icon">
+
+🏖️
+
+</div>
+
+<h3>
+
+Retirement Income
+
+</h3>
+
+<div class="subtitle">
+
+Managing withdrawals
+
+</div>
+
+<p>
+
+Experiment with withdrawals, investment growth and inflation to see how
+they affect retirement income.
+
+</p>
+
+</div>
+
+
+
+<div class="card">
+
+<div class="live" style="background:#f0ad4e;">
+
+IN DEVELOPMENT
+
+</div>
+
+<div class="icon">
+
+🎲
+
+</div>
+
+<h3>
+
+Probability & Risk
+
+</h3>
+
+<div class="subtitle">
+
+Understanding uncertainty
+
+</div>
+
+<p>
+
+Explore expected return, volatility and probability to understand why
+investment outcomes differ.
+
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+LEARNING JOURNEY
+====================================================== -->
+
+<section>
+
+<h2 class="section-title">
+
+Your Learning Journey
+
+</h2>
+
+<p class="section-intro">
+
+Every calculator follows the same learning process.
+
+</p>
+
+<div class="philosophy">
+
+<p>
+
+📖 <strong>Read the idea</strong>
+
+</p>
+
+<p style="text-align:center;font-size:2rem;">
+
+↓
+
+</p>
+
+<p>
+
+🧮 <strong>Experiment with the numbers</strong>
+
+</p>
+
+<p style="text-align:center;font-size:2rem;">
+
+↓
+
+</p>
+
+<p>
+
+💡 <strong>Understand the mathematics</strong>
+
+</p>
+
+<p style="text-align:center;font-size:2rem;">
+
+↓
+
+</p>
+
+<p>
+
+🌍 <strong>Apply it to real life.</strong>
+
+</p>
 
 </div>
 
@@ -184,235 +761,78 @@ how those ideas apply to real investing decisions.
 
 
 
-<div class="container">
+<!-- =====================================================
+ABOUT
+====================================================== -->
 
+<section>
 
-<!-- Compound Interest -->
+<h2 class="section-title">
 
-<div class="card">
+About The School Maths Investor
 
-<div class="icon">📈</div>
+</h2>
 
-<h2>Compound Interest</h2>
-
-<p>
-
-See how money grows over time using the most important equation in
-personal finance.
-
-</p>
-
-<ul>
-
-<li>Growth over time</li>
-
-<li>Effect of higher returns</li>
-
-<li>The power of compounding</li>
-
-</ul>
-
-<a class="button"
-href="compound-interest.html">
-
-Launch Calculator →
-
-</a>
-
-</div>
-
-
-
-<!-- Free Tax Lunch -->
-
-<div class="card">
-
-<div class="icon">💷</div>
-
-<h2>The Free Tax Lunch</h2>
+<div class="philosophy">
 
 <p>
 
-Compare investing inside and outside tax wrappers and see how tax
-reduces long-term wealth.
+The School Maths Investor was created to help bridge the financial advice
+gap by connecting school mathematics with real financial decisions.
 
 </p>
-
-<ul>
-
-<li>ISA benefits</li>
-
-<li>Tax drag</li>
-
-<li>Long-term comparison</li>
-
-</ul>
-
-<a class="button"
-href="free-tax-lunch.html">
-
-Launch Calculator →
-
-</a>
-
-</div>
-
-
-
-<!-- Inflation -->
-
-<div class="card">
-
-<div class="icon">🛒</div>
-
-<h2>Inflation</h2>
 
 <p>
 
-Discover how inflation quietly reduces purchasing power over time.
+Whether you're learning about investing for the first time, improving
+your financial literacy or simply curious about how mathematics explains
+the world around us, these interactive calculators are designed to help
+you build understanding rather than memorise rules.
 
 </p>
-
-<ul>
-
-<li>Nominal vs Real</li>
-
-<li>Purchasing power</li>
-
-<li>Future value</li>
-
-</ul>
-
-<a class="button" href="#">
-
-Coming Soon
-
-</a>
-
-</div>
-
-
-
-<!-- Pound Cost Averaging -->
-
-<div class="card">
-
-<div class="icon">📅</div>
-
-<h2>Pound Cost Averaging</h2>
 
 <p>
 
-See how regular investing buys different numbers of units as prices
-change.
+<strong>
+
+Helping people understand why investing works—so they can better judge
+when it works.
+
+</strong>
 
 </p>
 
-<ul>
-
-<li>Monthly investing</li>
-
-<li>Average purchase price</li>
-
-<li>Market volatility</li>
-
-</ul>
-
-<a class="button" href="#">
-
-Coming Soon
-
-</a>
-
 </div>
 
+</section>
 
-
-<!-- Retirement -->
-
-<div class="card">
-
-<div class="icon">🏖️</div>
-
-<h2>Retirement Income</h2>
-
-<p>
-
-Experiment with withdrawals and see how spending affects the longevity
-of a portfolio.
-
-</p>
-
-<ul>
-
-<li>Withdrawals</li>
-
-<li>Portfolio growth</li>
-
-<li>Sustainable spending</li>
-
-</ul>
-
-<a class="button" href="#">
-
-Coming Soon
-
-</a>
-
-</div>
-
-
-
-<!-- Probability -->
-
-<div class="card">
-
-<div class="icon">🎲</div>
-
-<h2>Probability & Risk</h2>
-
-<p>
-
-Understand expected returns, volatility and why investing outcomes vary.
-
-</p>
-
-<ul>
-
-<li>Risk</li>
-
-<li>Expected return</li>
-
-<li>Variance</li>
-
-</ul>
-
-<a class="button" href="#">
-
-Coming Soon
-
-</a>
-
-</div>
-
-</div>
 
 
 <footer>
 
-<p>
+<h2 style="color:#003366;margin-bottom:20px;">
 
 School Maths Investor
 
-<br><br>
+</h2>
 
-Helping people understand investing through the mathematics they
-already know.
+<p>
+
+Helping people understand why investing works—so they can better judge
+when it works.
+
+</p>
+
+<br>
+
+<p>
+
+© 2026 School Maths Investor
 
 </p>
 
 </footer>
 
-
 </body>
+
 </html>
