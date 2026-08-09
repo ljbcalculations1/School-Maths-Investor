@@ -278,17 +278,17 @@
         <input id="tradesPerYear" type="number" min="0" value="4">
 
         <!-- PLATFORM COMPARISON GRID -->
-        <div class="section-title">2. Platform Fee Breakdown</div>
+        <div class="section-title">2. Fee Breakdown</div>
 
         <div class="platform-grid">
             
             <!-- PLATFORM A -->
             <div class="platform-card plat-a">
                 <h3>Platform A</h3>
-                <label for="nameA">Platform Name</label>
+                <label for="nameA">Name</label>
                 <input id="nameA" type="text" value="Percentage Fee Platform">
 
-                <label for="pctA">Annual Platform Fee (%)</label>
+                <label for="pctA">Annual Fee (%)</label>
                 <input id="pctA" type="number" step="0.01" value="0.45">
 
                 <label for="fixedA">Fixed Annual Fee (£/year)</label>
@@ -299,12 +299,12 @@
             </div>
 
             <!-- PLATFORM B -->
-            <div class="platform-card plat-b">
+            <div class="card plat-b">
                 <h3>Platform B</h3>
-                <label for="nameB">Platform Name</label>
+                <label for="nameB">Name</label>
                 <input id="nameB" type="text" value="Flat Fee Platform">
 
-                <label for="pctB">Annual Platform Fee (%)</label>
+                <label for="pctB">Annual Fee (%)</label>
                 <input id="pctB" type="number" step="0.01" value="0.00">
 
                 <label for="fixedB">Fixed Annual Fee (£/year)</label>
@@ -317,19 +317,19 @@
         </div>
 
         <!-- CALCULATE BUTTON -->
-        <button onclick="calculate()">Compare Platforms</button>
+        <button onclick="calculate()">Compare</button>
 
         <!-- RESULTS -->
         <div class="results">
 
             <div class="result-card card-a">
-                <h3 id="cardTitleA">Platform A</h3>
+                <h3 id="cardTitleA">A</h3>
                 <div id="resultValA" class="result-value">£0</div>
                 <div id="feesA" class="result-subtext">Total Fees Paid: £0</div>
             </div>
 
             <div class="result-card card-b">
-                <h3 id="cardTitleB">Platform B</h3>
+                <h3 id="cardTitleB">B</h3>
                 <div id="resultValB" class="result-value">£0</div>
                 <div id="feesB" class="result-subtext">Total Fees Paid: £0</div>
             </div>
