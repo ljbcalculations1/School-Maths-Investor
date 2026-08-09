@@ -458,7 +458,7 @@
             } else if (valB > valA) {
                 document.getElementById("winnerVal").innerText = nameB;
                 document.getElementById("winnerVal").style.color = "#E65100";
-                document.getElementById("diffVal").innerText = nameB + " leaves you £" + Math.round(diff).toLocaleString() + " better off";
+               document.getElementById("diffVal").innerText = "Under these assumptions, " + nameB + " produces a projected portfolio £" + Math.round(diff).toLocaleString() + " higher";
             } else {
                 document.getElementById("winnerVal").innerText = "Equal Cost";
                 document.getElementById("winnerVal").style.color = "#003366";
