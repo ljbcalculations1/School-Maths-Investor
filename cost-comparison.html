@@ -112,7 +112,7 @@
             margin-top: 4px;
         }
 
-        .platform-grid {
+        .comparison-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 20px;
@@ -120,27 +120,27 @@
         }
 
         @media (max-width: 600px) {
-            .platform-grid {
+            .comparison-grid {
                 grid-template-columns: 1fr;
             }
         }
 
-        .platform-card {
+        .option-card {
             background: #fcfcfc;
             border: 1px solid #e0e0e0;
             border-radius: 8px;
             padding: 15px;
         }
 
-        .platform-card.plat-a {
+        .option-card.opt-a {
             border-top: 4px solid #005EB8;
         }
 
-        .platform-card.plat-b {
+        .option-card.opt-b {
             border-top: 4px solid #E65100;
         }
 
-        .platform-card h3 {
+        .option-card h3 {
             margin-top: 0;
             color: #003366;
         }
@@ -277,16 +277,16 @@
         <label for="tradesPerYear">Switching / Dealing Frequency (Trades per Year)</label>
         <input id="tradesPerYear" type="number" min="0" value="4">
 
-        <!-- PLATFORM COMPARISON GRID -->
+        <!-- COMPARISON GRID -->
         <div class="section-title">2. Fee Breakdown</div>
 
-        <div class="platform-grid">
+        <div class="comparison-grid">
             
-            <!-- PLATFORM A -->
-            <div class="platform-card plat-a">
-                <h3>Platform A</h3>
+            <!-- OPTION A -->
+            <div class="option-card opt-a">
+                <h3>Option A</h3>
                 <label for="nameA">Name</label>
-                <input id="nameA" type="text" value="Percentage Fee Platform">
+                <input id="nameA" type="text" value="Percentage Fee Option">
 
                 <label for="pctA">Annual Fee (%)</label>
                 <input id="pctA" type="number" step="0.01" value="0.45">
@@ -298,11 +298,11 @@
                 <input id="tradeA" type="number" min="0" value="0">
             </div>
 
-            <!-- PLATFORM B -->
-            <div class="card plat-b">
-                <h3>Platform B</h3>
+            <!-- OPTION B -->
+            <div class="option-card opt-b">
+                <h3>Option B</h3>
                 <label for="nameB">Name</label>
-                <input id="nameB" type="text" value="Flat Fee Platform">
+                <input id="nameB" type="text" value="Flat Fee Option">
 
                 <label for="pctB">Annual Fee (%)</label>
                 <input id="pctB" type="number" step="0.01" value="0.00">
@@ -357,8 +357,8 @@
     <!-- IMPORTANT INFORMATION -->
     <div class="about" style="margin-top:30px;">
         <strong>Important information</strong>
-        <p>This calculator is provided for educational and illustrative purposes only. It is designed to demonstrate the mathematical effect of investment platform fees and is not financial advice or a recommendation to use or avoid any particular investment platform.</p>
-        <p>The calculations use the assumptions entered by the user and simplify real-world investment costs. Actual platform charges, investment returns and other costs may differ. The calculator does not take account of every possible charge, tax, investment cost, contribution, withdrawal or change in fee structure.</p>
+        <p>This calculator is provided for educational and illustrative purposes only. It is designed to demonstrate the mathematical effect of investment fees and is not financial advice or a recommendation to use or avoid any particular provider or product.</p>
+        <p>The calculations use the assumptions entered by the user and simplify real-world investment costs. Actual charges, investment returns and other costs may differ. The calculator does not take account of every possible charge, tax, investment cost, contribution, withdrawal or change in fee structure.</p>
         <p>The results are projections based on the assumptions entered and are not predictions of future investment performance. You should consider your own circumstances and, where appropriate, seek professional financial advice before making investment decisions.</p>
     </div>
 
@@ -384,12 +384,12 @@
             let rateInput = Number(document.getElementById("rate").value);
             let tradesPerYear = Number(document.getElementById("tradesPerYear").value);
 
-            let nameA = document.getElementById("nameA").value || "Platform A";
+            let nameA = document.getElementById("nameA").value || "Option A";
             let pctA = Number(document.getElementById("pctA").value) / 100;
             let fixedA = Number(document.getElementById("fixedA").value);
             let tradeA = Number(document.getElementById("tradeA").value);
 
-            let nameB = document.getElementById("nameB").value || "Platform B";
+            let nameB = document.getElementById("nameB").value || "Option B";
             let pctB = Number(document.getElementById("pctB").value) / 100;
             let fixedB = Number(document.getElementById("fixedB").value);
             let tradeB = Number(document.getElementById("tradeB").value);
@@ -460,7 +460,7 @@
             } else {
                 document.getElementById("winnerVal").innerText = "Equal Cost";
                 document.getElementById("winnerVal").style.color = "#003366";
-                document.getElementById("diffVal").innerText = "Both platforms yield identical net results";
+                document.getElementById("diffVal").innerText = "Both options yield identical net results";
             }
 
             document.getElementById("working").innerHTML = `
@@ -468,21 +468,21 @@
 
                 <p><b>Step 1: Gross Compound Growth (Zero-Fee Benchmark)</b></p>
                 <p>Formula: FV = PV × (1 + r)<sup>t</sup></p>
-                <p>Without any platform fees, £${P.toLocaleString()} compounding at ${(r * 100).toFixed(1)}% for ${years} years would reach 
-                   <b>£${Math.round(valNoFees).toLocaleString()}</b>.</p>
+                <p>Without any fees, £${P.toLocaleString()} compounding at ${(r * 100).toFixed(1)}% for ${years} years would reach 
+                    <b>£${Math.round(valNoFees).toLocaleString()}</b>.</p>
 
                 <hr>
 
                 <p><b>Step 2: Annual Fee Components</b></p>
                 <ul>
-                    <li><b>${nameA}:</b> ${(pctA * 100).toFixed(2)}% platform fee + £${fixedA}/yr fixed fee + £${annualTradeCostA}/yr in trading costs (${tradesPerYear} trades × £${tradeA}).</li>
-                    <li><b>${nameB}:</b> ${(pctB * 100).toFixed(2)}% platform fee + £${fixedB}/yr fixed fee + £${annualTradeCostB}/yr in trading costs (${tradesPerYear} trades × £${tradeB}).</li>
+                    <li><b>${nameA}:</b> ${(pctA * 100).toFixed(2)}% annual percentage fee + £${fixedA}/yr fixed fee + £${annualTradeCostA}/yr in trading costs (${tradesPerYear} trades × £${tradeA}).</li>
+                    <li><b>${nameB}:</b> ${(pctB * 100).toFixed(2)}% annual percentage fee + £${fixedB}/yr fixed fee + £${annualTradeCostB}/yr in trading costs (${tradesPerYear} trades × £${tradeB}).</li>
                 </ul>
 
                 <hr>
 
                 <p><b>Step 3: Compounding with Fee Drag</b></p>
-                <p>For each year <i>t</i>, your portfolio grows by <b>(1 + r)</b> and then platform fees are deducted:</p>
+                <p>For each year <i>t</i>, your portfolio grows by <b>(1 + r)</b> and then fees are deducted:</p>
                 <p><b>Value<sub>t</sub> = [Value<sub>t-1</sub> × (1 + r)] − Fees<sub>t</sub></b></p>
 
                 <hr>
