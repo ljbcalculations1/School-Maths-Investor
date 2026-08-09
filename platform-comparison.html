@@ -112,7 +112,6 @@
             margin-top: 4px;
         }
 
-        /* 2-Column Grid for Platform Comparison */
         .platform-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -164,7 +163,6 @@
             background-color: #002244;
         }
 
-        /* Result cards */
         .results {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -324,11 +322,11 @@
         <!-- RESULTS -->
         <div class="results">
 
-           <div class="result-card card-diff">
-    <h3>Higher Projected Portfolio</h3>
-    <div id="winnerVal" class="result-value">-</div>
-    <div id="diffVal" class="result-subtext">Difference: £0</div>
-</div>
+            <div class="result-card card-a">
+                <h3 id="cardTitleA">Platform A</h3>
+                <div id="resultValA" class="result-value">£0</div>
+                <div id="feesA" class="result-subtext">Total Fees Paid: £0</div>
+            </div>
 
             <div class="result-card card-b">
                 <h3 id="cardTitleB">Platform B</h3>
@@ -355,35 +353,15 @@
         <canvas id="growthChart"></canvas>
 
     </div>
-<!-- IMPORTANT INFORMATION -->
 
-<div class="about" style="margin-top:30px;">
+    <!-- IMPORTANT INFORMATION -->
+    <div class="about" style="margin-top:30px;">
+        <strong>Important information</strong>
+        <p>This calculator is provided for educational and illustrative purposes only. It is designed to demonstrate the mathematical effect of investment platform fees and is not financial advice or a recommendation to use or avoid any particular investment platform.</p>
+        <p>The calculations use the assumptions entered by the user and simplify real-world investment costs. Actual platform charges, investment returns and other costs may differ. The calculator does not take account of every possible charge, tax, investment cost, contribution, withdrawal or change in fee structure.</p>
+        <p>The results are projections based on the assumptions entered and are not predictions of future investment performance. You should consider your own circumstances and, where appropriate, seek professional financial advice before making investment decisions.</p>
+    </div>
 
-    <strong>Important information</strong>
-
-    <p>
-        This calculator is provided for educational and illustrative purposes only.
-        It is designed to demonstrate the mathematical effect of investment platform
-        fees and is not financial advice or a recommendation to use or avoid any
-        particular investment platform.
-    </p>
-
-    <p>
-        The calculations use the assumptions entered by the user and simplify
-        real-world investment costs. Actual platform charges, investment returns
-        and other costs may differ. The calculator does not take account of every
-        possible charge, tax, investment cost, contribution, withdrawal or change
-        in fee structure.
-    </p>
-
-    <p>
-        The results are projections based on the assumptions entered and are not
-        predictions of future investment performance. You should consider your own
-        circumstances and, where appropriate, seek professional financial advice
-        before making investment decisions.
-    </p>
-
-</div>
     <!-- FOOTER -->
     <div class="footer">
         <p>More free calculators and articles</p>
@@ -401,7 +379,6 @@
         let growthChart = null;
 
         function calculate() {
-            // Read inputs
             let P = Number(document.getElementById("principal").value);
             let years = Number(document.getElementById("years").value);
             let rateInput = Number(document.getElementById("rate").value);
@@ -419,13 +396,11 @@
 
             let r = rateInput / 100;
 
-            // Validation
             if (isNaN(P) || P <= 0 || isNaN(years) || years <= 0 || isNaN(r)) {
                 alert("Please enter valid positive values for investment amounts and years.");
                 return;
             }
 
-            // Year-by-year compounding simulation
             let labels = [];
             let dataA = [];
             let dataB = [];
@@ -441,7 +416,6 @@
             let annualTradeCostA = tradesPerYear * tradeA;
             let annualTradeCostB = tradesPerYear * tradeB;
 
-            // Year 0 initialization
             labels.push(0);
             dataA.push(valA);
             dataB.push(valB);
@@ -450,26 +424,22 @@
             for (let year = 1; year <= years; year++) {
                 labels.push(year);
 
-                // No-fee benchmark
                 valNoFees = valNoFees * (1 + r);
                 dataNoFees.push(valNoFees);
 
-                // Platform A
-                valA = valA * (1 + r); // Apply growth
-                let feeYearA = (valA * pctA) + fixedA + annualTradeCostA; // Calculate fees
-                valA = Math.max(0, valA - feeYearA); // Deduct fees
+                valA = valA * (1 + r);
+                let feeYearA = (valA * pctA) + fixedA + annualTradeCostA;
+                valA = Math.max(0, valA - feeYearA);
                 totalFeesA += feeYearA;
                 dataA.push(valA);
 
-                // Platform B
-                valB = valB * (1 + r); // Apply growth
-                let feeYearB = (valB * pctB) + fixedB + annualTradeCostB; // Calculate fees
-                valB = Math.max(0, valB - feeYearB); // Deduct fees
+                valB = valB * (1 + r);
+                let feeYearB = (valB * pctB) + fixedB + annualTradeCostB;
+                valB = Math.max(0, valB - feeYearB);
                 totalFeesB += feeYearB;
                 dataB.push(valB);
             }
 
-            // Update Result Cards UI
             document.getElementById("cardTitleA").innerText = nameA;
             document.getElementById("resultValA").innerText = "£" + Math.round(valA).toLocaleString();
             document.getElementById("feesA").innerText = "Total Fees Paid: £" + Math.round(totalFeesA).toLocaleString();
@@ -486,14 +456,13 @@
             } else if (valB > valA) {
                 document.getElementById("winnerVal").innerText = nameB;
                 document.getElementById("winnerVal").style.color = "#E65100";
-               document.getElementById("diffVal").innerText = "Under these assumptions, " + nameB + " produces a projected portfolio £" + Math.round(diff).toLocaleString() + " higher";
+                document.getElementById("diffVal").innerText = "Under these assumptions, " + nameB + " produces a projected portfolio £" + Math.round(diff).toLocaleString() + " higher";
             } else {
                 document.getElementById("winnerVal").innerText = "Equal Cost";
                 document.getElementById("winnerVal").style.color = "#003366";
                 document.getElementById("diffVal").innerText = "Both platforms yield identical net results";
             }
 
-            // Display Working Details
             document.getElementById("working").innerHTML = `
                 <h2 style="color:#003366; margin-top:0;">The Mathematical Steps</h2>
 
@@ -526,12 +495,10 @@
                 </ul>
             `;
 
-            // Destroy existing chart instance
             if (growthChart !== null) {
                 growthChart.destroy();
             }
 
-            // Render Chart.js
             const ctx = document.getElementById("growthChart").getContext("2d");
 
             growthChart = new Chart(ctx, {
@@ -613,7 +580,6 @@
             });
         }
 
-        // Run calculation automatically on page load
         calculate();
     </script>
 
