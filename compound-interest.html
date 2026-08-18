@@ -15,35 +15,25 @@
             font-family: Arial, sans-serif;
             max-width: 600px;
             margin: auto;
-            padding: 20px; /* Reduced from 40px for mobile safety */
+            padding: 20px;
             background: #f4f4f4;
         }
 
-        .navigation{
+        .navigation {
+            background: #003366;
+            padding: 15px 20px;
+        }
 
-    background:#003366;
+        .navigation a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            margin-right: 25px;
+        }
 
-    padding:15px 20px;
-
-}
-
-.navigation a{
-
-    color:white;
-
-    text-decoration:none;
-
-    font-weight:bold;
-
-    margin-right:25px;
-
-}
-
-.navigation a:hover{
-
-    text-decoration:underline;
-
-}
+        .navigation a:hover {
+            text-decoration: underline;
+        }
 
         h1 {
             text-align: center;
@@ -175,102 +165,186 @@
 
 <body>
     <div class="navigation">
-
-    <a href="index.html">🏠 Home</a>
-
-    <a href="calculators.html">🧮 All Calculators</a>
-
-</div>
-
-<h1>Compound Interest Calculator</h1>
-
-<div class="box">
-
-    <div class="branding">
-        <h2>School Maths Investor</h2>
-        <p>Helping people understand investing through the mathematics they already know.</p>
-    </div>
-
-    <div class="about">
-        <strong>About School Maths Investor</strong>
-        <p>I'm Lee Bailey, a former maths teacher with 26 years' classroom experience and over 30 years as a private investor.</p>
-        <p>My aim is to show that the mathematics we learn at school forms the foundation of financial literacy.</p>
-        <p>Every calculator on this site is designed not just to calculate an answer, but to explain the mathematics behind it.</p>
+        <a href="index.html">🏠 Home</a>
+        <a href="calculators.html">🧮 All Calculators</a>
     </div>
 
     <h1>Compound Interest Calculator</h1>
 
-    <!-- Pre-populated with Chapter 13 values to instantly showcase the math solver -->
-    <label>Initial Investment (£)</label>
-    <input id="principal" type="number" value="20000">
+    <div class="box">
+        <div class="branding">
+            <h2>School Maths Investor</h2>
+            <p>Helping people understand investing through the mathematics they already know.</p>
+        </div>
 
-    <label>Annual Return (%)</label>
-    <input id="rate" type="number" step="0.1" value="5.5">
+        <div class="about">
+            <strong>About School Maths Investor</strong>
+            <p>I'm Lee Bailey, a former maths teacher with 26 years' classroom experience and over 30 years as a private investor.</p>
+            <p>My aim is to show that the mathematics we learn at school forms the foundation of financial literacy.</p>
+            <p>Every calculator on this site is designed not just to calculate an answer, but to explain the mathematics behind it.</p>
+        </div>
 
-    <label>Years</label>
-    <input id="years" type="number" value="30">
+        <h1>Compound Interest Calculator</h1>
 
-    <button onclick="calculate()">Calculate</button>
+        <!-- Pre-populated input fields -->
+        <label>Initial Investment (£)</label>
+        <input id="principal" type="number" value="20000">
 
-    <div id="result"></div>
+        <label>Annual Return (%)</label>
+        <input id="rate" type="number" step="0.1" value="5.5">
 
-    <hr style="margin-top: 30px; border: 0; border-top: 1px solid #eee;">
+        <label>Years</label>
+        <input id="years" type="number" value="30">
 
-    <h2 style="color: #003366; margin-top: 20px;">The Mathematical Steps</h2>
-    <div id="working"></div>
+        <button onclick="calculate()">Calculate</button>
 
-</div>
+        <div id="result"></div>
 
-<div class="footer">
-    <p>More free calculators and articles</p>
-    <p>
-        <a href="https://schoolmathsinvestor.substack.com/" target="_blank">
-            The School Maths Investor Substack
-        </a>
-    </p>
-</div>
+        <hr style="margin-top: 30px; border: 0; border-top: 1px solid #eee;">
 
-<script>
-function calculate() {
-    let P = Number(document.getElementById("principal").value);
-    let rateInput = Number(document.getElementById("rate").value);
-    let r = rateInput / 100;
-    let t = Number(document.getElementById("years").value);
+        <h2 style="color: #003366; margin-top: 20px;">The Mathematical Steps</h2>
+        <div id="working"></div>
 
-    // Prevent displaying NaN calculations if fields are cleared
-    if (isNaN(P) || isNaN(r) || isNaN(t) || P <= 0 || t < 0) {
-        document.getElementById("result").innerHTML = "Please enter valid numbers.";
-        document.getElementById("working").innerHTML = "<p>Waiting for valid inputs...</p>";
-        return;
+        <hr style="margin-top: 30px; border: 0; border-top: 1px solid #dddddd;">
+
+        <h2 style="color:#003366; text-align: center; margin-top: 20px;">Investment Growth</h2>
+
+        <!-- GRAPH CANVAS -->
+        <canvas id="growthChart"></canvas>
+    </div>
+
+    <div class="footer">
+        <p>More free calculators and articles</p>
+        <p>
+            <a href="https://schoolmathsinvestor.substack.com/" target="_blank">
+                The School Maths Investor Substack
+            </a>
+        </p>
+    </div>
+
+    <!-- Chart.js Library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+    // Holds the chart instance so it can be re-rendered
+    let growthChart = null;
+
+    function calculate() {
+        let P = Number(document.getElementById("principal").value);
+        let rateInput = Number(document.getElementById("rate").value);
+        let r = rateInput / 100;
+        let t = Number(document.getElementById("years").value);
+
+        // Prevent displaying NaN calculations if fields are cleared
+        if (isNaN(P) || isNaN(r) || isNaN(t) || P <= 0 || t < 0) {
+            document.getElementById("result").innerHTML = "Please enter valid numbers.";
+            document.getElementById("working").innerHTML = "<p>Waiting for valid inputs...</p>";
+            if (growthChart !== null) {
+                growthChart.destroy();
+            }
+            return;
+        }
+
+        let FV = P * Math.pow(1 + r, t);
+
+        // Display formatted result
+        document.getElementById("result").innerHTML =
+            "Future Value = £" + FV.toLocaleString(undefined, {maximumFractionDigits: 0});
+
+        // Generate mathematical steps
+        document.getElementById("working").innerHTML =
+            "<p><b>Step 1: Formula</b></p>" +
+            "<p>FV = PV × (1 + r)<sup>t</sup></p>" +
+            "<p><i>Where PV is Present Value, r is the rate as a decimal, and t is time.</i></p>" +
+            
+            "<p><b>Step 2: Substitute values</b></p>" +
+            "<p>FV = £" + P.toLocaleString() + " × (1 + " + r.toString() + ")<sup>" + t + "</sup></p>" +
+            
+            "<p><b>Step 3: Simplify the growth multiplier</b></p>" +
+            "<p>FV = £" + P.toLocaleString() + " × " + (1 + r).toString() + "<sup>" + t + "</sup></p>" +
+            "<p>FV = £" + P.toLocaleString() + " × " + Math.pow(1 + r, t).toFixed(6) + "</p>" +
+            
+            "<p><b>Step 4: Final Answer</b></p>" +
+            "<p><b>FV = £" + FV.toLocaleString(undefined, {maximumFractionDigits: 0}) + "</b></p>";
+
+        // Build data arrays for the graph
+        let labels = [];
+        let growthData = [];
+
+        for (let year = 0; year <= t; year++) {
+            labels.push(year);
+            growthData.push(P * Math.pow(1 + r, year));
+        }
+
+        // Destroy previous graph instance before re-drawing
+        if (growthChart !== null) {
+            growthChart.destroy();
+        }
+
+        // Render line chart
+        const ctx = document.getElementById("growthChart").getContext("2d");
+
+        growthChart = new Chart(ctx, {
+            type: "line",
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        label: "Investment Value",
+                        data: growthData,
+                        borderColor: "#2e7d32",
+                        backgroundColor: "#2e7d32",
+                        fill: false,
+                        tension: 0.3
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: "top"
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed.y !== null) {
+                                    label += '£' + Math.round(context.parsed.y).toLocaleString();
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: "Years"
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: "Fund Value (£)"
+                        },
+                        ticks: {
+                            callback: function(value) {
+                                return '£' + value.toLocaleString();
+                            }
+                        }
+                    }
+                }
+            }
+        });
     }
 
-    let FV = P * Math.pow(1 + r, t);
-
-    // Display formatted result
-    document.getElementById("result").innerHTML =
-        "Future Value = £" + FV.toLocaleString(undefined, {maximumFractionDigits: 0});
-
-    // Generate clear, rounding-error-free step working
-    document.getElementById("working").innerHTML =
-        "<p><b>Step 1: Formula</b></p>" +
-        "<p>FV = PV × (1 + r)<sup>t</sup></p>" +
-        "<p><i>Where PV is Present Value, r is the rate as a decimal, and t is time.</i></p>" +
-        
-        "<p><b>Step 2: Substitute values</b></p>" +
-        "<p>FV = £" + P.toLocaleString() + " × (1 + " + r.toString() + ")<sup>" + t + "</sup></p>" +
-        
-        "<p><b>Step 3: Simplify the growth multiplier</b></p>" +
-        "<p>FV = £" + P.toLocaleString() + " × " + (1 + r).toString() + "<sup>" + t + "</sup></p>" +
-        "<p>FV = £" + P.toLocaleString() + " × " + Math.pow(1 + r, t).toFixed(6) + "</p>" +
-        
-        "<p><b>Step 4: Final Answer</b></p>" +
-        "<p><b>FV = £" + FV.toLocaleString(undefined, {maximumFractionDigits: 0}) + "</b></p>";
-}
-
-// Automatically trigger on page load
-calculate();
-</script>
-
+    // Automatically trigger on page load
+    calculate();
+    </script>
 </body>
-</html>
 </html>
