@@ -1576,7 +1576,51 @@ if (
     /* --------------------------------------------------
        Run initial calculation
     -------------------------------------------------- */
+function calculateIRR(cashFlows) {
 
+    let rate = 0.01;
+
+    for (let iteration = 0; iteration < 100; iteration++) {
+
+        let npv = 0;
+        let derivative = 0;
+
+        for (let t = 0; t < cashFlows.length; t++) {
+
+            npv +=
+                cashFlows[t] /
+                Math.pow(1 + rate, t);
+
+            if (t > 0) {
+
+                derivative -=
+                    t *
+                    cashFlows[t] /
+                    Math.pow(1 + rate, t + 1);
+
+            }
+
+        }
+
+        const newRate =
+            rate -
+            npv / derivative;
+
+        if (
+            Math.abs(newRate - rate) < 0.000000001
+        ) {
+
+            return newRate;
+
+        }
+
+        rate = newRate;
+
+    }
+
+    return rate;
+
+}
     calculate();
 
 
