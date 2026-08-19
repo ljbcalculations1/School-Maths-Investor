@@ -1049,23 +1049,30 @@ function calculate() {
         minRotation: 45,
         callback: function(value, index) {
 
-            // Show the first date
+            // First date
             if (index === 0) {
                 return chartData[index].date;
             }
 
-            // Show February each year
-            if (chartData[index].date.endsWith("-02")) {
+            // One label per year
+            if (
+                chartData[index].date.endsWith("-02") &&
+                index !== chartData.length - 1
+            ) {
                 return chartData[index].date;
             }
 
-            // Always show the final date
+            // Always show final date
             if (index === chartData.length - 1) {
                 return chartData[index].date;
             }
 
             return "";
         }
+    },
+
+    grid: {
+        display: false
     }
 },
                     y: {
