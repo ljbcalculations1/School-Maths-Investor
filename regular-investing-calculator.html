@@ -1043,14 +1043,26 @@ function calculate() {
                 scales: {
 
                     x: {
+    ticks: {
+        maxTicksLimit: 11,
+        autoSkip: true,
+        callback: function(value, index) {
+            const label = this.getLabelForValue(value);
 
-                        ticks: {
+            // Show the first date, approximately annual dates,
+            // and always show the final date.
+            if (
+                index === 0 ||
+                index === chartData.length - 1 ||
+                label.endsWith("-02")
+            ) {
+                return label;
+            }
 
-                            maxTicksLimit: 10
-
-                        }
-
-                    },
+            return "";
+        }
+    }
+},
 
                     y: {
 
