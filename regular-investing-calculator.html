@@ -1044,26 +1044,30 @@ function calculate() {
 
                     x: {
     ticks: {
-        maxTicksLimit: 11,
-        autoSkip: true,
+        autoSkip: false,
+        maxRotation: 45,
+        minRotation: 45,
         callback: function(value, index) {
-            const label = this.getLabelForValue(value);
 
-            // Show the first date, approximately annual dates,
-            // and always show the final date.
-            if (
-                index === 0 ||
-                index === chartData.length - 1 ||
-                label.endsWith("-02")
-            ) {
-                return label;
+            // Show the first date
+            if (index === 0) {
+                return chartData[index].date;
+            }
+
+            // Show February each year
+            if (chartData[index].date.endsWith("-02")) {
+                return chartData[index].date;
+            }
+
+            // Always show the final date
+            if (index === chartData.length - 1) {
+                return chartData[index].date;
             }
 
             return "";
         }
     }
 },
-
                     y: {
 
                         beginAtZero: false,
