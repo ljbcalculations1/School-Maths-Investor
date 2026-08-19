@@ -1325,118 +1325,55 @@ function calculate() {
 
 
                     scales: {
-
                         x: {
-
                             ticks: {
-
                                 autoSkip: false,
-
                                 maxRotation: 45,
-
                                 minRotation: 45,
-
-
-                                callback:
-                                    function(value, index) {
-
-
-                                        /* First date */
-
-                                        if (
-                                            index === 0
-                                        ) {
-
-                                            return chartData[
-                                                index
-                                            ].date;
-
-                                        }
-
-
-                                        /* One label per year */
-
-                                        if (
-                                            chartData[
-                                                index
-                                            ].date.endsWith("-02")
-                                        ) {
-
-                                            return chartData[
-                                                index
-                                            ].date;
-
-                                        }
-
-
-                                        /* Always show final date */
-
-                                        if (
-                                            index ===
-                                            chartData.length - 1
-                                        ) {
-
-                                            return chartData[
-                                                index
-                                            ].date;
-
-                                        }
-
-
-                                        return "";
-
+                                callback: function(value, index) {
+                                    const fullDate = chartData[index].date;
+                                    
+                                    /* First date */
+                                    if (index === 0) {
+                                        return fullDate;
                                     }
 
+                                    /* One label per year */
+                                    if (fullDate.endsWith("-01")) {
+                                        return fullDate.substring(0, 4); 
+                                    }
+
+                                    /* Always show final date */
+                                    if (index === chartData.length - 1) {
+                                        return fullDate;
+                                    }
+
+                                    return "";
+                                }
                             },
-
-
                             grid: {
-
                                 display: false
-
                             }
-
                         },
 
-
                         y: {
-
                             beginAtZero: false,
-
                             grace: "5%",
-
-
                             ticks: {
-
-                                callback:
-                                    function(value) {
-
-                                        return new Intl.NumberFormat(
-                                            "en-GB",
-                                            {
-
-                                                style:
-                                                    "currency",
-
-                                                currency:
-                                                    "GBP",
-
-                                                maximumFractionDigits:
-                                                    0
-
-                                            }
-                                        ).format(value);
-
-                                    }
-
+                                callback: function(value) {
+                                    return new Intl.NumberFormat(
+                                        "en-GB",
+                                        {
+                                            style: "currency",
+                                            currency: "GBP",
+                                            maximumFractionDigits: 0
+                                        }
+                                    ).format(value);
+                                }
                             }
-
                         }
-
                     }
-
                 }
-
             }
         );
 
