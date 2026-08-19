@@ -1,63 +1,103 @@
 <!DOCTYPE html>
-<html>
-    
-    
+<html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Regular Investing Calculator</title>
+
+    <title>Regular Investing Calculator – Historical Investment Returns | School Maths Investor</title>
+
+    <meta name="description"
+        content="What would have happened if you invested £200 every month? Explore historical regular investing using monthly MSCI ACWI global equity returns adjusted for UK inflation.">
+
+    <meta name="author" content="Lee Bailey">
 
     <style>
-        /* Global Reset to prevent layout overflow on mobile */
+
         * {
             box-sizing: border-box;
         }
 
         body {
             font-family: Arial, sans-serif;
-            max-width: 600px;
+            max-width: 900px;
             margin: auto;
-            padding: 20px; /* Reduced from 40px for mobile safety */
+            padding: 0 20px 40px;
             background: #f4f4f4;
+            color: #333;
+            line-height: 1.6;
         }
 
-        .navigation{
+        .navigation {
+            background: #003366;
+            padding: 15px 20px;
+            margin: 0 -20px 30px;
+        }
 
-    background:#003366;
+        .navigation a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            margin-right: 25px;
+        }
 
-    padding:15px 20px;
-
-}
-
-.navigation a{
-
-    color:white;
-
-    text-decoration:none;
-
-    font-weight:bold;
-
-    margin-right:25px;
-
-}
-
-.navigation a:hover{
-
-    text-decoration:underline;
-
-}
+        .navigation a:hover {
+            text-decoration: underline;
+        }
 
         h1 {
+            color: #003366;
             text-align: center;
-            font-size: 26px;
-            margin-top: 10px;
+            font-size: 32px;
+            line-height: 1.2;
+            margin: 15px 0 10px;
+        }
+
+        h2 {
+            color: #003366;
+        }
+
+        .subtitle {
+            text-align: center;
+            font-size: 19px;
+            margin: 0 auto 30px;
+            max-width: 750px;
         }
 
         .box {
             background: white;
             padding: 25px;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            box-shadow: 0 0 10px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+        }
+
+        .branding {
+            text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #dddddd;
+        }
+
+        .branding h2 {
+            margin: 0;
+            font-size: 26px;
+        }
+
+        .branding p {
+            margin-top: 8px;
+            font-size: 15px;
+            color: #666;
+            font-style: italic;
+        }
+
+        .intro {
+            background: #f9f9f9;
+            border-left: 4px solid #003366;
+            padding: 18px;
+            margin-bottom: 25px;
         }
 
         label {
@@ -67,22 +107,16 @@
             color: #333;
         }
 
-       input,
-select {
-
-    width:100%;
-
-    padding:10px;
-
-    font-size:16px;
-
-    border:1px solid #cccccc;
-
-    border-radius:5px;
-
-    margin-top:5px;
-
-}
+        input,
+        select {
+            width: 100%;
+            padding: 11px;
+            font-size: 16px;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            margin-top: 5px;
+            background: white;
+        }
 
         button {
             margin-top: 20px;
@@ -95,116 +129,93 @@ select {
             border: none;
             border-radius: 5px;
             font-weight: bold;
-            transition: background 0.2s;
         }
 
         button:hover {
             background-color: #002244;
         }
 
-        #result{
-
-    margin-top:30px;
-
-    background:white;
-
-    border:1px solid #dddddd;
-
-    border-radius:8px;
-
-    padding:20px;
-
-}
-
-#result h2{
-
-    margin-top:0;
-
-    color:#003366;
-
-    text-align:center;
-
-}
-
-.results-table{
-
-    width:100%;
-
-    border-collapse:collapse;
-
-    margin-top:15px;
-
-}
-
-.results-table td{
-
-    padding:14px;
-
-    border-bottom:1px solid #eeeeee;
-
-    font-size:18px;
-
-}
-
-.results-table td:last-child{
-
-    text-align:right;
-
-    font-weight:bold;
-
-    color:#003366;
-
-}
-        
-
-        .branding {
-            text-align: center;
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid #dddddd;
+        #result {
+            margin-top: 30px;
+            background: white;
+            border: 1px solid #dddddd;
+            border-radius: 8px;
+            padding: 20px;
         }
 
-        .branding h2 {
-            margin: 0;
-            font-size: 28px;
+        #result h2 {
+            margin-top: 0;
+            text-align: center;
+        }
+
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        .results-table td {
+            padding: 14px;
+            border-bottom: 1px solid #eeeeee;
+            font-size: 18px;
+        }
+
+        .results-table td:last-child {
+            text-align: right;
+            font-weight: bold;
             color: #003366;
         }
 
-        .branding p {
-            margin-top: 8px;
-            font-size: 15px;
-            color: #666666;
-            font-style: italic;
+        .section {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin-top: 25px;
+            box-shadow: 0 0 8px rgba(0,0,0,0.05);
         }
 
-        .about {
+        .section h2 {
+            margin-top: 0;
+        }
+
+        .formula {
+            background: #fafafa;
+            border-left: 4px solid #003366;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: Georgia, serif;
+            font-size: 17px;
+        }
+
+        .example {
+            background: #f9f9f9;
+            border: 1px solid #dddddd;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .data-box {
             background: #f9f9f9;
             border: 1px solid #cccccc;
             border-radius: 8px;
             padding: 18px;
-            margin-bottom: 25px;
-            font-size: 15px;
-            line-height: 1.6;
         }
 
-        .about strong {
-            display: block;
-            font-size: 18px;
-            margin-bottom: 10px;
+        .data-box strong {
             color: #003366;
         }
 
-        .about p {
-            margin: 8px 0;
-        }
-
-        #working {
+        .working {
             background: #fafafa;
             padding: 15px;
             border-radius: 5px;
             border-left: 4px solid #003366;
-            font-size: 15px;
-            line-height: 1.5;
+        }
+
+        canvas {
+            width: 100% !important;
+            height: auto !important;
         }
 
         .footer {
@@ -224,11 +235,47 @@ select {
         .footer a:hover {
             text-decoration: underline;
         }
+
+        @media (max-width: 600px) {
+
+            body {
+                padding: 0 12px 30px;
+            }
+
+            .navigation {
+                margin-left: -12px;
+                margin-right: -12px;
+            }
+
+            h1 {
+                font-size: 27px;
+            }
+
+            .subtitle {
+                font-size: 17px;
+            }
+
+            .box,
+            .section {
+                padding: 18px;
+            }
+
+            .results-table td {
+                font-size: 16px;
+                padding: 11px 6px;
+            }
+
+        }
+
     </style>
+
 </head>
 
 <body>
-    <div class="navigation">
+
+<!-- Navigation -->
+
+<div class="navigation">
 
     <a href="index.html">🏠 Home</a>
 
@@ -236,386 +283,998 @@ select {
 
 </div>
 
+
+<!-- Main heading -->
+
 <h1>Regular Investing Calculator</h1>
+
+<p class="subtitle">
+    <strong>What would have happened if you had invested the same amount every month?</strong>
+</p>
+
 
 <div class="box">
 
     <div class="branding">
+
         <h2>School Maths Investor</h2>
-        <p>Helping people understand investing through the mathematics they already know.</p>
+
+        <p>
+            Understanding investing through the mathematics we already know.
+        </p>
+
     </div>
 
-    <div class="about">
 
-    <strong>About School Maths Investor</strong>
+    <div class="intro">
 
-    <p>
-    I'm Lee Bailey, a former maths teacher with 26 years' classroom experience
-    and over 30 years as a private investor.
-    </p>
+        <p>
+            This free regular investing calculator lets you explore what would
+            have happened if you had invested a fixed amount every month for
+            ten years.
+        </p>
 
-    <p>
-    My aim is to show that the mathematics we learn at school forms the
-    foundation of financial literacy.
-    </p>
+        <p>
+            Rather than assuming a constant annual return, the calculator uses
+            <strong>actual historical monthly global equity returns</strong>,
+            adjusted for UK inflation.
+        </p>
 
-    <p>
-    Every calculator on this site is designed not just to calculate an answer,
-    but to explain the mathematics behind it.
-    </p>
+        <p>
+            Regular investing is sometimes called
+            <strong>pound-cost averaging</strong>.
+        </p>
 
-    <p>
-    Discover what would have happened if you had invested the same amount
-    every month for 10 years.
-    </p>
+    </div>
 
-    <p>
-    This calculator uses historical global equity returns, adjusted for inflation,
-    to show what would have happened if you had invested regularly through
-    different market conditions.
-    </p>
 
-        <div class="about">
+    <!-- Calculator -->
 
-<strong>Historical Data</strong>
+    <h2>Try the calculator</h2>
 
-<p>
-Historical data available: <span id="dataRange">Checking...</span>
-</p>
+    <label for="monthly">Monthly Investment (£)</label>
 
-</div>
+    <input
+        id="monthly"
+        type="number"
+        value="200"
+        min="10"
+        step="10"
+    >
 
-</div>
 
-    <div class="about">
+    <label for="month">Starting Month</label>
 
-<strong>About the Data</strong>
+    <select id="month">
 
-<p>
-This calculator uses historical returns from a globally diversified
-all-cap equity portfolio.
-</p>
+        <option value="0">January</option>
+        <option value="1" selected>February</option>
+        <option value="2">March</option>
+        <option value="3">April</option>
+        <option value="4">May</option>
+        <option value="5">June</option>
+        <option value="6">July</option>
+        <option value="7">August</option>
+        <option value="8">September</option>
+        <option value="9">October</option>
+        <option value="10">November</option>
+        <option value="11">December</option>
 
-<p>
-The returns include reinvested dividends and have been adjusted for
-inflation, meaning all results are shown in today's money.
-</p>
+    </select>
 
-<p>
-The purpose is not to predict future returns, but to demonstrate how
-regular investing has worked through different market environments,
-including periods of strong growth and significant market falls.
-</p>
 
-<p>
-Past performance does not guarantee future results.
-</p>
+    <label for="year">Starting Year</label>
 
-</div>
+    <select id="year"></select>
 
-   
 
-    
-    <!-- Pre-populated with Chapter 13 values to instantly showcase the math solver -->
-   <label>Monthly Investment (£)</label>
-<input id="monthly" type="number" value="200" min="10" step="10">
+    <button onclick="calculate()">
+        Calculate Investment Journey
+    </button>
 
-<label>Start Month</label>
 
-<select id="month">
-
-<option value="0">January</option>
-<option value="1" selected>February</option>
-<option value="2">March</option>
-<option value="3">April</option>
-<option value="4">May</option>
-<option value="5">June</option>
-<option value="6">July</option>
-<option value="7">August</option>
-<option value="8">September</option>
-<option value="9">October</option>
-<option value="10">November</option>
-<option value="11">December</option>
-
-</select>
-
-<label>Start Year</label>
-
-<select id="year">
-</select>
-
-<button onclick="calculate()">
-Calculate
-</button>
-
-    
+    <!-- Results -->
 
     <div id="result">
 
         <h2>Your Investment Journey</h2>
 
-<table class="results-table">
+        <table class="results-table">
 
-<tr>
-<td>Total Contributions</td>
-<td id="contributions" style="text-align:right;">-</td>
-</tr>
+            <tr>
+                <td>Total Contributions</td>
+                <td id="contributions">-</td>
+            </tr>
 
-    <tr>
-<td>Starting Date</td>
-<td id="startDisplay" style="text-align:right;">-</td>
-</tr>
+            <tr>
+                <td>Starting Date</td>
+                <td id="startDisplay">-</td>
+            </tr>
 
-<tr>
-<td>Ending Date</td>
-<td id="endDisplay" style="text-align:right;">-</td>
-</tr>
+            <tr>
+                <td>Ending Date</td>
+                <td id="endDisplay">-</td>
+            </tr>
 
-<tr>
-<td>Final Portfolio Value</td>
-<td id="portfolio" style="text-align:right;">-</td>
-</tr>
+            <tr>
+                <td>Final Portfolio Value</td>
+                <td id="portfolio">-</td>
+            </tr>
 
-<tr>
-<td>Investment Growth</td>
-<td id="growth" style="text-align:right;">-</td>
-</tr>
+            <tr>
+                <td>Investment Growth</td>
+                <td id="growth">-</td>
+            </tr>
 
-<tr>
-<td>Annualised Real Return</td>
-<td id="annual" style="text-align:right;">-</td>
-</tr>
+            <tr>
+                <td>Money Multiplied By</td>
+                <td id="multiple">-</td>
+            </tr>
 
-<tr>
-<td>Money Multiplied By</td>
-<td id="multiple" style="text-align:right;">-</td>
-</tr>
+        </table>
 
-</table>
+    </div>
+
+
+    <!-- Mathematical working -->
+
+    <hr style="margin-top:30px;border:0;border-top:1px solid #eee;">
+
+    <h2>The Mathematical Steps</h2>
+
+    <div id="working" class="working"></div>
 
 </div>
-    <hr style="margin-top: 30px; border: 0; border-top: 1px solid #eee;">
 
-    <h2 style="color: #003366; margin-top: 20px;">The Mathematical Steps</h2>
-    <div id="working"></div>
+
+<!-- Chart -->
+
+<div class="section">
+
+    <h2>See Your Investment Journey</h2>
+
+    <p>
+        The graph compares the value of your investment with the amount
+        you have actually contributed. The difference between the two
+        represents investment growth.
+    </p>
+
+    <canvas id="investmentChart" width="900" height="400"></canvas>
 
 </div>
 
-    <h2>Investment Journey</h2>
 
-<canvas id="investmentChart" width="900" height="400"></canvas>
+<!-- How it works -->
+
+<div class="section">
+
+    <h2>How does the calculation work?</h2>
+
+    <p>
+        A normal compound-interest calculation often assumes that the
+        investment earns the same return every year.
+    </p>
+
+    <p>
+        Real investments don't behave like that.
+    </p>
+
+    <p>
+        The stock market can rise strongly in one month and fall sharply
+        the next. This calculator therefore applies the actual historical
+        monthly return for each month in the investment journey.
+    </p>
+
+    <div class="formula">
+
+        <strong>New Portfolio Value</strong>
+
+        <br><br>
+
+        = (Previous Portfolio Value + Monthly Investment)
+        × (1 + Monthly Return)
+
+    </div>
+
+    <p>
+        This calculation is repeated every month for ten years.
+    </p>
+
+    <div class="example">
+
+        <strong>Simple example</strong>
+
+        <p>
+            Suppose you start with £200 and the market rises by 5%.
+        </p>
+
+        <p>
+            £200 × 1.05 = £210
+        </p>
+
+        <p>
+            If you then add another £200 and the next month's return is
+            -2%:
+        </p>
+
+        <p>
+            (£210 + £200) × 0.98 = £401.80
+        </p>
+
+        <p>
+            The calculator repeats this process using the actual historical
+            return for every month.
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- Real returns -->
+
+<div class="section">
+
+    <h2>Why use real returns?</h2>
+
+    <p>
+        Investment returns are often quoted in nominal terms. But inflation
+        reduces what your money can actually buy.
+    </p>
+
+    <p>
+        This calculator therefore adjusts the historical investment returns
+        for UK inflation.
+    </p>
+
+    <p>
+        The results are therefore expressed in
+        <strong>real terms — approximately today's purchasing power.</strong>
+    </p>
+
+    <p>
+        This makes the results easier to interpret when thinking about
+        long-term financial goals.
+    </p>
+
+</div>
+
+
+<!-- Data methodology -->
+
+<div class="section">
+
+    <h2>About the Historical Data</h2>
+
+    <div class="data-box">
+
+        <p>
+            <strong>Investment data:</strong><br>
+            MSCI ACWI GBP Total Return Index
+        </p>
+
+        <p>
+            <strong>Inflation data:</strong><br>
+            UK CPIH All Items Index (2015 = 100)
+        </p>
+
+        <p>
+            <strong>Frequency:</strong><br>
+            Monthly
+        </p>
+
+        <p>
+            <strong>Historical returns available:</strong><br>
+            <span id="dataRange">Checking...</span>
+        </p>
+
+    </div>
+
+
+    <h3>How are the real returns calculated?</h3>
+
+    <p>
+        For each month, the nominal investment return is calculated from
+        the change in the MSCI ACWI Total Return Index.
+    </p>
+
+    <div class="formula">
+
+        Nominal Return =
+        (Current Index ÷ Previous Index) − 1
+
+    </div>
+
+    <p>
+        Monthly inflation is calculated from the change in the UK CPIH index.
+    </p>
+
+    <div class="formula">
+
+        Inflation =
+        (Current CPIH ÷ Previous CPIH) − 1
+
+    </div>
+
+    <p>
+        The nominal return is then adjusted for inflation:
+    </p>
+
+    <div class="formula">
+
+        Real Return =
+        (1 + Nominal Return) ÷ (1 + Inflation) − 1
+
+    </div>
+
+    <p>
+        The resulting monthly real return is then applied to the investment
+        portfolio.
+    </p>
+
+
+    <h3>Why start in February 1988?</h3>
+
+    <p>
+        A monthly return requires the previous month's index value.
+        The first usable real return in this dataset is therefore
+        <strong>February 1988</strong>.
+    </p>
+
+
+    <p>
+        The historical data are used to demonstrate how regular investing
+        has behaved through different market conditions. They are not a
+        prediction of future investment returns.
+    </p>
+
+    <p>
+        <strong>Past performance does not guarantee future results.</strong>
+    </p>
+
+</div>
+
+
+<!-- What it demonstrates -->
+
+<div class="section">
+
+    <h2>What can this calculator teach us?</h2>
+
+    <p>
+        Regular investing demonstrates several important ideas from
+        mathematics and investing.
+    </p>
+
+    <ul>
+
+        <li>
+            Compound growth means that investment returns can themselves
+            generate further returns.
+        </li>
+
+        <li>
+            The timing of contributions matters.
+        </li>
+
+        <li>
+            Investment returns are variable rather than constant.
+        </li>
+
+        <li>
+            Inflation affects the purchasing power of investment returns.
+        </li>
+
+        <li>
+            A long investment period gives compounding more time to work.
+        </li>
+
+    </ul>
+
+    <p>
+        The aim is not simply to produce a number. It is to use mathematics
+        to understand what that number means.
+    </p>
+
+</div>
+
+
+<!-- About -->
+
+<div class="section">
+
+    <h2>About School Maths Investor</h2>
+
+    <p>
+        I'm Lee Bailey, a former maths teacher with 26 years of classroom
+        experience and more than 30 years as a private investor.
+    </p>
+
+    <p>
+        I trained as an actuary before becoming a maths teacher, and I have
+        spent much of my investing life using mathematics to understand
+        compound growth, risk, returns and investment costs.
+    </p>
+
+    <p>
+        School Maths Investor aims to show that the mathematics learned
+        at school isn't just abstract theory. It can provide a useful
+        foundation for understanding real financial decisions.
+    </p>
+
+    <p>
+        The calculators on this site are designed to show the mathematics
+        behind the answer rather than simply producing a number.
+    </p>
+
+</div>
+
+
+<!-- Footer -->
 
 <div class="footer">
-    <p>More free calculators and articles</p>
+
     <p>
-        <a href="https://schoolmathsinvestor.substack.com/" target="_blank">
-            The School Maths Investor Substack
+        <strong>Explore more School Maths Investor calculators</strong>
+    </p>
+
+    <p>
+        <a href="calculators.html">
+            View all calculators
         </a>
     </p>
+
+    <p>
+        <a
+            href="https://schoolmathsinvestor.substack.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            Read The School Maths Investor on Substack
+        </a>
+    </p>
+
 </div>
 
-     <script src="global-equity-data.js"></script>
 
-    <script>
-console.log("Data loaded:");
-console.log(globalEquityReturns);
-</script>
+<!-- Historical data -->
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="global-equity-data.js"></script>
+
+
+<!-- Chart.js -->
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 
 <script>
+
 let investmentPeriod = 120;
+
 let investmentChart = null;
 
+
+/* --------------------------------------------------
+   Find the requested starting month
+-------------------------------------------------- */
+
 function getStartingIndex(startDate) {
+
     for (let i = 0; i < globalEquityReturns.length; i++) {
+
         if (globalEquityReturns[i].date === startDate) {
+
             return i;
+
         }
+
     }
+
     return -1;
+
 }
+
+
+/* --------------------------------------------------
+   Main calculation
+-------------------------------------------------- */
 
 function calculate() {
-    let monthly = Number(document.getElementById("monthly").value);
-    let startMonth = document.getElementById("month").selectedOptions[0].text;
-    let startYear = document.getElementById("year").value;
+
+    const monthly =
+        Number(document.getElementById("monthly").value);
+
+    const monthValue =
+        Number(document.getElementById("month").value);
+
+    const startYear =
+        Number(document.getElementById("year").value);
+
 
     if (isNaN(monthly) || monthly <= 0) {
-        document.getElementById("result").innerHTML = "Please enter a valid monthly investment.";
+
+        document.getElementById("working").innerHTML =
+            "<p>Please enter a valid monthly investment.</p>";
+
         return;
+
     }
 
-    let contributions = monthly * investmentPeriod;
 
-    // Find the starting point in the data
-    // Note: This assumes your HTML <select id="month"> uses values 0-11.
-    let startDate = startYear + "-" + String(Number(document.getElementById("month").value) + 1).padStart(2, "0");
+    const contributions =
+        monthly * investmentPeriod;
 
-    let startIndex = getStartingIndex(startDate);
 
-    // Check enough data exists
+    const startDate =
+        startYear +
+        "-" +
+        String(monthValue + 1).padStart(2, "0");
+
+
+    const startIndex =
+        getStartingIndex(startDate);
+
+
     if (startIndex === -1) {
-        document.getElementById("working").innerHTML = "<p>Sorry, this start date is not available.</p>";
+
+        document.getElementById("working").innerHTML =
+            "<p>Sorry, this starting date is not available.</p>";
+
         return;
+
     }
 
-    if (startIndex + investmentPeriod > globalEquityReturns.length) {
-        document.getElementById("working").innerHTML = "<p>Not enough historical data available for a full 10 year journey.</p>";
+
+    if (
+        startIndex + investmentPeriod >
+        globalEquityReturns.length
+    ) {
+
+        document.getElementById("working").innerHTML =
+            "<p>There is not enough historical data available for a full ten-year investment journey from this date.</p>";
+
         return;
+
     }
 
-    document.getElementById("startDisplay").innerHTML = startDate;
-    document.getElementById("endDisplay").innerHTML = globalEquityReturns[startIndex + investmentPeriod - 1].date;
 
-    // Run investment simulation
+    const endingIndex =
+        startIndex + investmentPeriod - 1;
+
+
+    const endingDate =
+        globalEquityReturns[endingIndex].date;
+
+
+    document.getElementById("startDisplay").innerHTML =
+        startDate;
+
+    document.getElementById("endDisplay").innerHTML =
+        endingDate;
+
+
+    /* --------------------------------------------------
+       Run historical investment simulation
+    -------------------------------------------------- */
+
     let portfolio = 0;
+
     let chartData = [];
 
-    for (let i = startIndex; i < startIndex + investmentPeriod; i++) {
+
+    for (
+        let i = startIndex;
+        i < startIndex + investmentPeriod;
+        i++
+    ) {
+
+        const monthlyReturn =
+            globalEquityReturns[i].return;
+
+
         portfolio += monthly;
-        portfolio *= (1 + globalEquityReturns[i].return);
-        
+
+
+        portfolio *=
+            (1 + monthlyReturn);
+
+
         chartData.push({
-            date: globalEquityReturns[i].date,
-            portfolio: portfolio,
-            contributions: (i - startIndex + 1) * monthly
+
+            date:
+                globalEquityReturns[i].date,
+
+            portfolio:
+                portfolio,
+
+            contributions:
+                (i - startIndex + 1) * monthly
+
         });
+
     }
 
-    // Charting logic
+
+    /* --------------------------------------------------
+       Chart
+    -------------------------------------------------- */
+
     if (investmentChart) {
+
         investmentChart.destroy();
+
     }
 
-    const ctx = document.getElementById('investmentChart').getContext('2d');
 
-    investmentChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: chartData.map(p => p.date),
-            datasets: [
-                {
-                    label: 'Portfolio Value (£)',
-                    data: chartData.map(p => p.portfolio),
-                    borderColor: "#005EB8",
-                    backgroundColor: "#005EB8",
-                    borderWidth: 3,
-                    pointRadius: 0,
-                    tension: 0.25
-                },
-                {
-                    label: 'Total Contributions (£)',
-                    data: chartData.map(p => p.contributions),
-                    borderColor: "#999999",
-                    backgroundColor: "#999999",
-                    borderWidth: 3,
-                    pointRadius: 0,
-                    tension: 0,
-                    borderDash: [8, 5]
-                }
-            ]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: true,
-            plugins: {
-                title: {
-                    display: true,
-                    text: 'Your Historical Investment Journey'
-                },
-                // Fixed: tooltip is now properly inside the plugins object
-                tooltip: {
-                    callbacks: {
-                        afterBody: function(context) {
-                            const index = context[0].dataIndex;
-                            const portfolio = chartData[index].portfolio;
-                            const contributions = chartData[index].contributions;
-                            const growth = portfolio - contributions;
+    const ctx =
+        document
+            .getElementById("investmentChart")
+            .getContext("2d");
 
-                            return [
-                                "",
-                                "Investment Growth: £" + growth.toLocaleString(undefined, { maximumFractionDigits: 0 })
-                            ];
-                        }
+
+    investmentChart =
+        new Chart(ctx, {
+
+            type: "line",
+
+            data: {
+
+                labels:
+                    chartData.map(
+                        p => p.date
+                    ),
+
+                datasets: [
+
+                    {
+
+                        label:
+                            "Portfolio Value (£)",
+
+                        data:
+                            chartData.map(
+                                p => p.portfolio
+                            ),
+
+                        borderColor:
+                            "#005EB8",
+
+                        backgroundColor:
+                            "#005EB8",
+
+                        borderWidth: 3,
+
+                        pointRadius: 0,
+
+                        tension: 0.25
+
+                    },
+
+                    {
+
+                        label:
+                            "Total Contributions (£)",
+
+                        data:
+                            chartData.map(
+                                p => p.contributions
+                            ),
+
+                        borderColor:
+                            "#999999",
+
+                        backgroundColor:
+                            "#999999",
+
+                        borderWidth: 3,
+
+                        pointRadius: 0,
+
+                        tension: 0,
+
+                        borderDash:
+                            [8, 5]
+
                     }
-                }
+
+                ]
+
             },
-            // Fixed: scales is now properly inside the options object
-            scales: {
-                x: {
-                    ticks: {
-                        maxTicksLimit: 10
-                    }
-                },
-                y: {
-                    beginAtZero: false,
-                    grace: '5%',
-                    ticks: {
-                        callback: function(value) {
-                            return new Intl.NumberFormat('en-GB', {
-                                style: 'currency',
-                                currency: 'GBP',
-                                maximumFractionDigits: 0
-                            }).format(value);
+
+            options: {
+
+                responsive: true,
+
+                maintainAspectRatio: true,
+
+                plugins: {
+
+                    title: {
+
+                        display: true,
+
+                        text:
+                            "Your Historical Investment Journey"
+
+                    },
+
+                    tooltip: {
+
+                        callbacks: {
+
+                            afterBody:
+                                function(context) {
+
+                                    const index =
+                                        context[0].dataIndex;
+
+                                    const portfolio =
+                                        chartData[index].portfolio;
+
+                                    const contributions =
+                                        chartData[index].contributions;
+
+                                    const growth =
+                                        portfolio -
+                                        contributions;
+
+                                    return [
+
+                                        "",
+
+                                        "Investment Growth: £" +
+                                        growth.toLocaleString(
+                                            "en-GB",
+                                            {
+                                                maximumFractionDigits: 0
+                                            }
+                                        )
+
+                                    ];
+
+                                }
+
                         }
+
                     }
+
+                },
+
+                scales: {
+
+                    x: {
+
+                        ticks: {
+
+                            maxTicksLimit: 10
+
+                        }
+
+                    },
+
+                    y: {
+
+                        beginAtZero: false,
+
+                        grace: "5%",
+
+                        ticks: {
+
+                            callback:
+                                function(value) {
+
+                                    return new Intl.NumberFormat(
+                                        "en-GB",
+                                        {
+                                            style: "currency",
+                                            currency: "GBP",
+                                            maximumFractionDigits: 0
+                                        }
+                                    ).format(value);
+
+                                }
+
+                        }
+
+                    }
+
                 }
+
             }
-        }
-    });
 
-    // Calculate growth and multiple
-    let growth = portfolio - contributions;
-    let multiple = portfolio / contributions;
-    let annualReturn = Math.pow(portfolio / contributions, 1 / (investmentPeriod / 12)) - 1;
+        });
 
-    // Display results
-    document.getElementById("contributions").innerHTML = "£" + contributions.toLocaleString();
-    document.getElementById("portfolio").innerHTML = "£" + portfolio.toLocaleString(undefined, { maximumFractionDigits: 0 });
-    document.getElementById("growth").innerHTML = "£" + growth.toLocaleString(undefined, { maximumFractionDigits: 0 });
-    document.getElementById("annual").innerHTML = (annualReturn * 100).toFixed(2) + "%";
-    document.getElementById("multiple").innerHTML = multiple.toFixed(2) + " times";
+
+    /* --------------------------------------------------
+       Results
+    -------------------------------------------------- */
+
+    const growth =
+        portfolio - contributions;
+
+
+    const multiple =
+        portfolio / contributions;
+
+
+    document.getElementById("contributions").innerHTML =
+        "£" +
+        contributions.toLocaleString(
+            "en-GB"
+        );
+
+
+    document.getElementById("portfolio").innerHTML =
+        "£" +
+        portfolio.toLocaleString(
+            "en-GB",
+            {
+                maximumFractionDigits: 0
+            }
+        );
+
+
+    document.getElementById("growth").innerHTML =
+        "£" +
+        growth.toLocaleString(
+            "en-GB",
+            {
+                maximumFractionDigits: 0
+            }
+        );
+
+
+    document.getElementById("multiple").innerHTML =
+        multiple.toFixed(2) +
+        " times";
+
+
+    /* --------------------------------------------------
+       Mathematical explanation
+    -------------------------------------------------- */
 
     document.getElementById("working").innerHTML =
-        "<p><b>Step 1: Regular investment formula</b></p>" +
-        "<p>You invest £" + monthly.toLocaleString() + " every month for " + (investmentPeriod / 12) + " years.</p>" +
-        "<p><b>Step 2: Number of investments</b></p>" +
-        "<p>" + (investmentPeriod / 12) + " years × 12 months = " + investmentPeriod + " investments</p>" +
-        "<p><b>Step 3: Total contributions</b></p>" +
-        "<p>£" + monthly.toLocaleString() + " × " + investmentPeriod + " = £" + contributions.toLocaleString() + "</p>" +
-        "<p><b>Step 4: Applying market returns</b></p>" +
-        "<p>Each month your contribution is added and the portfolio return is applied.</p>" +
-        "<p><b>New Portfolio Value = (Previous Value + Monthly Investment) × (1 + Monthly Return)</b></p>";
+
+        "<p><strong>Step 1: Choose your monthly investment</strong></p>" +
+
+        "<p>You invest £" +
+        monthly.toLocaleString("en-GB") +
+        " every month.</p>" +
+
+
+        "<p><strong>Step 2: Calculate the number of investments</strong></p>" +
+
+        "<p>10 years × 12 months = " +
+        investmentPeriod +
+        " monthly investments.</p>" +
+
+
+        "<p><strong>Step 3: Calculate total contributions</strong></p>" +
+
+        "<p>£" +
+        monthly.toLocaleString("en-GB") +
+        " × " +
+        investmentPeriod +
+        " = £" +
+        contributions.toLocaleString("en-GB") +
+        " contributed.</p>" +
+
+
+        "<p><strong>Step 4: Apply the historical monthly return</strong></p>" +
+
+        "<p>Each month, your contribution is added to the existing portfolio and that month's historical real return is applied.</p>" +
+
+
+        "<p><strong>New Portfolio Value = (Previous Portfolio Value + Monthly Investment) × (1 + Monthly Return)</strong></p>" +
+
+
+        "<p><strong>Step 5: Repeat for 120 months</strong></p>" +
+
+        "<p>The process is repeated for every month in the ten-year historical journey.</p>";
+
 }
 
-// Automatically trigger on page load (Wrapped in safety checks)
-if (typeof globalEquityReturns !== 'undefined' && globalEquityReturns.length >= investmentPeriod) {
-    const yearSelect = document.getElementById("year");
-    let firstYear = Number(globalEquityReturns[0].date.substring(0, 4));
-    let lastAvailableIndex = globalEquityReturns.length - investmentPeriod;
-    let lastYear = Number(globalEquityReturns[lastAvailableIndex].date.substring(0, 4));
 
-    for (let y = firstYear; y <= lastYear; y++) {
-        let option = document.createElement("option");
+/* --------------------------------------------------
+   Build year selector
+-------------------------------------------------- */
+
+if (
+    typeof globalEquityReturns !== "undefined" &&
+    globalEquityReturns.length >= investmentPeriod
+) {
+
+    const yearSelect =
+        document.getElementById("year");
+
+
+    const firstYear =
+        Number(
+            globalEquityReturns[0]
+                .date
+                .substring(0, 4)
+        );
+
+
+    const lastAvailableIndex =
+        globalEquityReturns.length -
+        investmentPeriod;
+
+
+    const lastYear =
+        Number(
+            globalEquityReturns[lastAvailableIndex]
+                .date
+                .substring(0, 4)
+        );
+
+
+    for (
+        let y = firstYear;
+        y <= lastYear;
+        y++
+    ) {
+
+        const option =
+            document.createElement("option");
+
+
         option.value = y;
+
         option.text = y;
+
+
         yearSelect.appendChild(option);
+
     }
 
-    yearSelect.value = 1988; // Default value
+
+    /*
+       Use the first available year rather than
+       hard-coding 1988.
+    */
+
+    yearSelect.value =
+        firstYear;
+
+
+    /* --------------------------------------------------
+       Display data range
+    -------------------------------------------------- */
 
     document.getElementById("dataRange").innerHTML =
-        globalEquityReturns[0].date + " to " +
-        globalEquityReturns[globalEquityReturns.length - 1].date + " (" +
-        globalEquityReturns.length + " monthly returns)";
 
-    calculate(); // Run initial calculation
+        globalEquityReturns[0].date +
+
+        " to " +
+
+        globalEquityReturns[
+            globalEquityReturns.length - 1
+        ].date +
+
+        " (" +
+
+        globalEquityReturns.length +
+
+        " monthly returns)";
+
+
+    /* --------------------------------------------------
+       Run initial calculation
+    -------------------------------------------------- */
+
+    calculate();
+
+
 } else {
-    document.getElementById("dataRange").innerHTML = "No historical data loaded yet, or data is less than 10 years.";
+
+    document.getElementById("dataRange").innerHTML =
+        "Historical data could not be loaded.";
+
 }
 
- </script>  
+</script>
 
 </body>
+
 </html>
