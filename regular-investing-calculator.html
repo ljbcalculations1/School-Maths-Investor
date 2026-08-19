@@ -1123,7 +1123,18 @@ function calculate() {
 
 
     const multiple =
-        portfolio / contributions;
+    portfolio / contributions;
+
+
+    /* Annualised money-weighted return */
+
+    const cashFlows = [];
+
+    for (let i = 0; i < investmentPeriod; i++) {
+    cashFlows.push(-monthly);
+}
+
+cashFlows.push(portfolio);
 
 
     const annualisedReturn =
