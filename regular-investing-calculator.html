@@ -271,7 +271,9 @@
 
 </head>
 
+
 <body>
+
 
 <!-- Navigation -->
 
@@ -294,6 +296,7 @@
 
 
 <div class="box">
+
 
     <div class="branding">
 
@@ -331,6 +334,7 @@
     <!-- Calculator -->
 
     <h2>Try the calculator</h2>
+
 
     <label for="monthly">Monthly Investment (£)</label>
 
@@ -379,49 +383,53 @@
 
         <h2>Your Investment Journey</h2>
 
-       <table class="results-table">
+        <table class="results-table">
 
-    <tr>
-        <td>Total Contributions</td>
-        <td id="contributions">-</td>
-    </tr>
+            <tr>
+                <td>Total Contributions</td>
+                <td id="contributions">-</td>
+            </tr>
 
-    <tr>
-        <td>Starting Date</td>
-        <td id="startDisplay">-</td>
-    </tr>
+            <tr>
+                <td>Starting Date</td>
+                <td id="startDisplay">-</td>
+            </tr>
 
-    <tr>
-        <td>Ending Date</td>
-        <td id="endDisplay">-</td>
-    </tr>
+            <tr>
+                <td>Ending Date</td>
+                <td id="endDisplay">-</td>
+            </tr>
 
-    <tr>
-        <td>Final Portfolio Value</td>
-        <td id="portfolio">-</td>
-    </tr>
+            <tr>
+                <td>Final Portfolio Value</td>
+                <td id="portfolio">-</td>
+            </tr>
 
-    <tr>
-        <td>Investment Growth</td>
-        <td id="growth">-</td>
-    </tr>
+            <tr>
+                <td>Investment Growth</td>
+                <td id="growth">-</td>
+            </tr>
 
-    <tr>
-        <td>Money Multiplied By</td>
-        <td id="multiple">-</td>
-    </tr>
+            <tr>
+                <td>Money Multiplied By</td>
+                <td id="multiple">-</td>
+            </tr>
 
-    <tr>
-        <td>Annualised Return on Your Money</td>
-        <td id="annualisedReturn">-</td>
-    </tr>
+            <tr>
+                <td>Annualised Return on Your Money</td>
+                <td id="annualisedReturn">-</td>
+            </tr>
 
-</table>
+        </table>
 
-<p style="font-size:14px; color:#666; margin-top:15px; text-align:center;">
-    This money-weighted return reflects both investment performance
-    and the timing of your monthly contributions.
-</p>
+
+        <p style="margin-top:15px; font-size:15px; color:#666;">
+
+            This money-weighted return reflects both investment performance
+            and the timing of your monthly contributions.
+
+        </p>
+
     </div>
 
 
@@ -429,9 +437,11 @@
 
     <hr style="margin-top:30px;border:0;border-top:1px solid #eee;">
 
+
     <h2>The Mathematical Steps</h2>
 
     <div id="working" class="working"></div>
+
 
 </div>
 
@@ -474,6 +484,7 @@
         monthly return for each month in the investment journey.
     </p>
 
+
     <div class="formula">
 
         <strong>New Portfolio Value</strong>
@@ -485,9 +496,11 @@
 
     </div>
 
+
     <p>
         This calculation is repeated every month for ten years.
     </p>
+
 
     <div class="example">
 
@@ -524,48 +537,47 @@
 
 <div class="section">
 
-    <h2>What does the annualised return mean?</h2>
+    <h2>What does "Annualised Return on Your Money" mean?</h2>
 
     <p>
-        Because you are investing money every month rather than investing
-        the whole amount at the beginning, the final portfolio value cannot
-        be converted into an annual return using a simple compound-interest
-        formula.
+        Because you are investing money every month, there isn't a single
+        lump sum invested for the whole ten-year period.
     </p>
 
     <p>
-        The calculator therefore calculates the annualised return using the
-        actual timing of each monthly investment.
+        Your first £200 has been invested for almost ten years, while your
+        final £200 has only been invested for one month.
+    </p>
+
+    <p>
+        The <strong>Annualised Return on Your Money</strong> therefore takes
+        account of the timing of every contribution as well as the final
+        value of the portfolio.
+    </p>
+
+    <p>
+        It is calculated as the annual rate of return that would produce the
+        same final portfolio value from the actual series of monthly
+        contributions.
     </p>
 
     <div class="formula">
 
-        <strong>Annualised Return</strong>
+        <strong>
+            This is a money-weighted return.
+        </strong>
 
         <br><br>
 
-        The annual return that would produce the same final portfolio value
-        from the same sequence of monthly investments.
+        It reflects both <strong>investment performance</strong> and the
+        <strong>timing of your contributions</strong>.
 
     </div>
 
     <p>
-        In other words, it answers the question:
-    </p>
-
-    <div class="example">
-
-        <strong>
-            "What constant annual return would have produced the same result
-            from these monthly investments?"
-        </strong>
-
-    </div>
-
-    <p>
-        This is different from simply taking the average of the monthly
-        returns. It also takes account of the fact that each contribution
-        was invested for a different length of time.
+        This can be more informative than simply calculating the average
+        annual return of the stock market because it describes the return
+        actually achieved by this particular pattern of investing.
     </p>
 
 </div>
@@ -606,6 +618,7 @@
 
     <h2>About the Historical Data</h2>
 
+
     <div class="data-box">
 
         <p>
@@ -633,10 +646,12 @@
 
     <h3>How are the real returns calculated?</h3>
 
+
     <p>
         For each month, the nominal investment return is calculated from
         the change in the MSCI ACWI Total Return Index.
     </p>
+
 
     <div class="formula">
 
@@ -645,9 +660,11 @@
 
     </div>
 
+
     <p>
         Monthly inflation is calculated from the change in the UK CPIH index.
     </p>
+
 
     <div class="formula">
 
@@ -656,9 +673,11 @@
 
     </div>
 
+
     <p>
         The nominal return is then adjusted for inflation:
     </p>
+
 
     <div class="formula">
 
@@ -667,6 +686,7 @@
 
     </div>
 
+
     <p>
         The resulting monthly real return is then applied to the investment
         portfolio.
@@ -674,6 +694,7 @@
 
 
     <h3>Why start in February 1988?</h3>
+
 
     <p>
         A monthly return requires the previous month's index value.
@@ -688,6 +709,7 @@
         prediction of future investment returns.
     </p>
 
+
     <p>
         <strong>Past performance does not guarantee future results.</strong>
     </p>
@@ -701,10 +723,12 @@
 
     <h2>What can this calculator teach us?</h2>
 
+
     <p>
         Regular investing demonstrates several important ideas from
         mathematics and investing.
     </p>
+
 
     <ul>
 
@@ -730,11 +754,12 @@
         </li>
 
         <li>
-            The annualised return depends on both investment performance
-            and the timing of contributions.
+            The return you actually achieve depends not only on market
+            performance but also on when you invest your money.
         </li>
 
     </ul>
+
 
     <p>
         The aim is not simply to produce a number. It is to use mathematics
@@ -750,10 +775,12 @@
 
     <h2>About School Maths Investor</h2>
 
+
     <p>
         I'm Lee Bailey, a former maths teacher with 26 years of classroom
         experience and more than 30 years as a private investor.
     </p>
+
 
     <p>
         I trained as an actuary before becoming a maths teacher, and I have
@@ -761,11 +788,13 @@
         compound growth, risk, returns and investment costs.
     </p>
 
+
     <p>
         School Maths Investor aims to show that the mathematics learned
         at school isn't just abstract theory. It can provide a useful
         foundation for understanding real financial decisions.
     </p>
+
 
     <p>
         The calculators on this site are designed to show the mathematics
@@ -783,13 +812,16 @@
         <strong>Explore more School Maths Investor calculators</strong>
     </p>
 
+
     <p>
         <a href="calculators.html">
             View all calculators
         </a>
     </p>
 
+
     <p>
+
         <a
             href="https://schoolmathsinvestor.substack.com/"
             target="_blank"
@@ -797,6 +829,7 @@
         >
             Read The School Maths Investor on Substack
         </a>
+
     </p>
 
 </div>
@@ -814,6 +847,7 @@
 
 <script>
 
+
 let investmentPeriod = 120;
 
 let investmentChart = null;
@@ -825,9 +859,15 @@ let investmentChart = null;
 
 function getStartingIndex(startDate) {
 
-    for (let i = 0; i < globalEquityReturns.length; i++) {
+    for (
+        let i = 0;
+        i < globalEquityReturns.length;
+        i++
+    ) {
 
-        if (globalEquityReturns[i].date === startDate) {
+        if (
+            globalEquityReturns[i].date === startDate
+        ) {
 
             return i;
 
@@ -841,155 +881,85 @@ function getStartingIndex(startDate) {
 
 
 /* --------------------------------------------------
-   Calculate annualised return
-   using the actual timing of monthly contributions
+   Calculate money-weighted annualised return
 -------------------------------------------------- */
 
-function calculateAnnualisedReturn(
-    monthly,
-    startIndex,
-    portfolio
+function calculateMoneyWeightedReturn(
+    monthlyInvestment,
+    finalValue
 ) {
 
     /*
-       Each monthly contribution is treated as a cash flow
-       occurring on the first day of its month.
+       We need to find the monthly return which makes:
 
-       The final portfolio value is treated as money received
-       at the end of the final month.
+       Final Value =
+       monthly investment ×
+       [(1+r)^119 + (1+r)^118 + ... + 1]
 
-       We then solve for the annual rate that makes the
-       present value of the cash flows equal to the final
-       portfolio value.
+       Because contributions are made at the beginning
+       of each month in the calculator.
 
-       This is essentially an XIRR calculation.
+       We use a binary search to find r.
     */
 
-    const cashFlows = [];
 
-    for (
-        let i = startIndex;
-        i < startIndex + investmentPeriod;
-        i++
-    ) {
+    let low = -0.99;
 
-        const dateParts =
-            globalEquityReturns[i].date.split("-");
-
-        const year =
-            Number(dateParts[0]);
-
-        const month =
-            Number(dateParts[1]) - 1;
-
-        cashFlows.push({
-
-            date:
-                new Date(year, month, 1),
-
-            amount:
-                -monthly
-
-        });
-
-    }
+    let high = 1.00;
 
 
-    const finalDateParts =
-        globalEquityReturns[
-            startIndex + investmentPeriod - 1
-        ].date.split("-");
+    for (let iteration = 0; iteration < 100; iteration++) {
 
-
-    const finalDate =
-        new Date(
-            Number(finalDateParts[0]),
-            Number(finalDateParts[1]) - 1,
-            1
-        );
-
-
-    cashFlows.push({
-
-        date:
-            finalDate,
-
-        amount:
-            portfolio
-
-    });
-
-
-    /*
-       Net present value for a particular annual rate.
-    */
-
-    function npv(rate) {
-
-        const firstDate =
-            cashFlows[0].date;
-
-        return cashFlows.reduce(
-            function(total, cashFlow) {
-
-                const days =
-                    (cashFlow.date - firstDate) /
-                    (1000 * 60 * 60 * 24);
-
-                const years =
-                    days / 365;
-
-                return total +
-                    cashFlow.amount /
-                    Math.pow(
-                        1 + rate,
-                        years
-                    );
-
-            },
-            0
-        );
-
-    }
-
-
-    /*
-       Use binary search to find the rate where NPV = 0.
-
-       The range -99.99% to +1000% is more than sufficient
-       for this calculator.
-    */
-
-    let low =
-        -0.9999;
-
-    let high =
-        10;
-
-
-    for (let i = 0; i < 100; i++) {
-
-        const mid =
+        const monthlyRate =
             (low + high) / 2;
 
-        const value =
-            npv(mid);
+
+        let calculatedValue = 0;
 
 
-        if (value > 0) {
+        for (
+            let month = 0;
+            month < investmentPeriod;
+            month++
+        ) {
 
-            low = mid;
+            calculatedValue +=
+                monthlyInvestment *
+                Math.pow(
+                    1 + monthlyRate,
+                    investmentPeriod - 1 - month
+                );
+
+        }
+
+
+        if (
+            calculatedValue < finalValue
+        ) {
+
+            low = monthlyRate;
 
         } else {
 
-            high = mid;
+            high = monthlyRate;
 
         }
 
     }
 
 
-    return (low + high) / 2;
+    const monthlyRate =
+        (low + high) / 2;
+
+
+    const annualRate =
+        Math.pow(
+            1 + monthlyRate,
+            12
+        ) - 1;
+
+
+    return annualRate;
 
 }
 
@@ -1000,17 +970,29 @@ function calculateAnnualisedReturn(
 
 function calculate() {
 
+
     const monthly =
-        Number(document.getElementById("monthly").value);
+        Number(
+            document.getElementById("monthly").value
+        );
+
 
     const monthValue =
-        Number(document.getElementById("month").value);
+        Number(
+            document.getElementById("month").value
+        );
+
 
     const startYear =
-        Number(document.getElementById("year").value);
+        Number(
+            document.getElementById("year").value
+        );
 
 
-    if (isNaN(monthly) || monthly <= 0) {
+    if (
+        isNaN(monthly) ||
+        monthly <= 0
+    ) {
 
         document.getElementById("working").innerHTML =
             "<p>Please enter a valid monthly investment.</p>";
@@ -1027,7 +1009,9 @@ function calculate() {
     const startDate =
         startYear +
         "-" +
-        String(monthValue + 1).padStart(2, "0");
+        String(
+            monthValue + 1
+        ).padStart(2, "0");
 
 
     const startIndex =
@@ -1058,15 +1042,20 @@ function calculate() {
 
 
     const endingIndex =
-        startIndex + investmentPeriod - 1;
+        startIndex +
+        investmentPeriod -
+        1;
 
 
     const endingDate =
-        globalEquityReturns[endingIndex].date;
+        globalEquityReturns[
+            endingIndex
+        ].date;
 
 
     document.getElementById("startDisplay").innerHTML =
         startDate;
+
 
     document.getElementById("endDisplay").innerHTML =
         endingDate;
@@ -1086,6 +1075,7 @@ function calculate() {
         i < startIndex + investmentPeriod;
         i++
     ) {
+
 
         const monthlyReturn =
             globalEquityReturns[i].return;
@@ -1115,7 +1105,7 @@ function calculate() {
 
 
     /* --------------------------------------------------
-       Calculate growth, multiple and annualised return
+       Results calculations
     -------------------------------------------------- */
 
     const growth =
@@ -1123,273 +1113,14 @@ function calculate() {
 
 
     const multiple =
-    portfolio / contributions;
-
-
-    /* Annualised money-weighted return */
-
-    const cashFlows = [];
-
-    for (let i = 0; i < investmentPeriod; i++) {
-    cashFlows.push(-monthly);
-}
-
-cashFlows.push(portfolio);
+        portfolio / contributions;
 
 
     const annualisedReturn =
-        calculateAnnualisedReturn(
+        calculateMoneyWeightedReturn(
             monthly,
-            startIndex,
             portfolio
         );
-
-
-    /* --------------------------------------------------
-       Chart
-    -------------------------------------------------- */
-
-    if (investmentChart) {
-
-        investmentChart.destroy();
-
-    }
-
-
-    const ctx =
-        document
-            .getElementById("investmentChart")
-            .getContext("2d");
-
-
-    investmentChart =
-        new Chart(ctx, {
-
-            type: "line",
-
-            data: {
-
-                labels:
-                    chartData.map(
-                        p => p.date
-                    ),
-
-                datasets: [
-
-                    {
-
-                        label:
-                            "Portfolio Value (£)",
-
-                        data:
-                            chartData.map(
-                                p => p.portfolio
-                            ),
-
-                        borderColor:
-                            "#005EB8",
-
-                        backgroundColor:
-                            "#005EB8",
-
-                        borderWidth: 3,
-
-                        pointRadius: 0,
-
-                        tension: 0.25
-
-                    },
-
-                    {
-
-                        label:
-                            "Total Contributions (£)",
-
-                        data:
-                            chartData.map(
-                                p => p.contributions
-                            ),
-
-                        borderColor:
-                            "#999999",
-
-                        backgroundColor:
-                            "#999999",
-
-                        borderWidth: 3,
-
-                        pointRadius: 0,
-
-                        tension: 0,
-
-                        borderDash:
-                            [8, 5]
-
-                    }
-
-                ]
-
-            },
-
-            options: {
-
-                responsive: true,
-
-                maintainAspectRatio: true,
-
-                plugins: {
-
-                    title: {
-
-                        display: true,
-
-                        text:
-                            "Your Historical Investment Journey"
-
-                    },
-
-                    tooltip: {
-
-                        callbacks: {
-
-                            afterBody:
-                                function(context) {
-
-                                    const index =
-                                        context[0].dataIndex;
-
-                                    const portfolio =
-                                        chartData[index].portfolio;
-
-                                    const contributions =
-                                        chartData[index].contributions;
-
-                                    const growth =
-                                        portfolio -
-                                        contributions;
-
-                                    return [
-
-                                        "",
-
-                                        "Investment Growth: £" +
-                                        growth.toLocaleString(
-                                            "en-GB",
-                                            {
-                                                maximumFractionDigits: 0
-                                            }
-                                        )
-
-                                    ];
-
-                                }
-
-                        }
-
-                    }
-
-                },
-
-                scales: {
-
-                    x: {
-
-                        ticks: {
-
-                            autoSkip: false,
-
-                            maxRotation: 45,
-
-                            minRotation: 45,
-
-                            callback:
-                                function(value, index) {
-
-                                    /*
-                                       Show the first date.
-                                    */
-
-                                    if (index === 0) {
-
-                                        return chartData[index].date;
-
-                                    }
-
-
-                                    /*
-                                       Show one label per year,
-                                       using the starting month.
-                                    */
-
-                                    if (
-                                        chartData[index].date.endsWith("-" +
-                                        String(monthValue + 1).padStart(2, "0"))
-                                    ) {
-
-                                        return chartData[index].date;
-
-                                    }
-
-
-                                    /*
-                                       Always show the final date.
-                                    */
-
-                                    if (
-                                        index ===
-                                        chartData.length - 1
-                                    ) {
-
-                                        return chartData[index].date;
-
-                                    }
-
-
-                                    return "";
-
-                                }
-
-                        },
-
-                        grid: {
-
-                            display: false
-
-                        }
-
-                    },
-
-                    y: {
-
-                        beginAtZero: false,
-
-                        grace: "5%",
-
-                        ticks: {
-
-                            callback:
-                                function(value) {
-
-                                    return new Intl.NumberFormat(
-                                        "en-GB",
-                                        {
-                                            style: "currency",
-                                            currency: "GBP",
-                                            maximumFractionDigits: 0
-                                        }
-                                    ).format(value);
-
-                                }
-
-                        }
-
-                    }
-
-                }
-
-            }
-
-        });
 
 
     /* --------------------------------------------------
@@ -1428,9 +1159,286 @@ cashFlows.push(portfolio);
         " times";
 
 
-    document.getElementById("annualReturn").innerHTML =
+    document.getElementById("annualisedReturn").innerHTML =
         (annualisedReturn * 100).toFixed(2) +
         "% a year";
+
+
+    /* --------------------------------------------------
+       Chart
+    -------------------------------------------------- */
+
+    if (investmentChart) {
+
+        investmentChart.destroy();
+
+    }
+
+
+    const ctx =
+        document
+            .getElementById("investmentChart")
+            .getContext("2d");
+
+
+    investmentChart =
+        new Chart(
+            ctx,
+            {
+
+                type: "line",
+
+
+                data: {
+
+                    labels:
+                        chartData.map(
+                            p => p.date
+                        ),
+
+
+                    datasets: [
+
+                        {
+
+                            label:
+                                "Portfolio Value (£)",
+
+                            data:
+                                chartData.map(
+                                    p => p.portfolio
+                                ),
+
+                            borderColor:
+                                "#005EB8",
+
+                            backgroundColor:
+                                "#005EB8",
+
+                            borderWidth: 3,
+
+                            pointRadius: 0,
+
+                            tension: 0.25
+
+                        },
+
+
+                        {
+
+                            label:
+                                "Total Contributions (£)",
+
+                            data:
+                                chartData.map(
+                                    p => p.contributions
+                                ),
+
+                            borderColor:
+                                "#999999",
+
+                            backgroundColor:
+                                "#999999",
+
+                            borderWidth: 3,
+
+                            pointRadius: 0,
+
+                            tension: 0,
+
+                            borderDash:
+                                [8, 5]
+
+                        }
+
+                    ]
+
+                },
+
+
+                options: {
+
+                    responsive: true,
+
+                    maintainAspectRatio: true,
+
+
+                    plugins: {
+
+                        title: {
+
+                            display: true,
+
+                            text:
+                                "Your Historical Investment Journey"
+
+                        },
+
+
+                        tooltip: {
+
+                            callbacks: {
+
+                                afterBody:
+                                    function(context) {
+
+
+                                        const index =
+                                            context[0].dataIndex;
+
+
+                                        const portfolio =
+                                            chartData[index].portfolio;
+
+
+                                        const contributions =
+                                            chartData[index].contributions;
+
+
+                                        const growth =
+                                            portfolio -
+                                            contributions;
+
+
+                                        return [
+
+                                            "",
+
+                                            "Investment Growth: £" +
+
+                                            growth.toLocaleString(
+                                                "en-GB",
+                                                {
+                                                    maximumFractionDigits: 0
+                                                }
+                                            )
+
+                                        ];
+
+                                    }
+
+                            }
+
+                        }
+
+                    },
+
+
+                    scales: {
+
+                        x: {
+
+                            ticks: {
+
+                                autoSkip: false,
+
+                                maxRotation: 45,
+
+                                minRotation: 45,
+
+
+                                callback:
+                                    function(value, index) {
+
+
+                                        /* First date */
+
+                                        if (
+                                            index === 0
+                                        ) {
+
+                                            return chartData[
+                                                index
+                                            ].date;
+
+                                        }
+
+
+                                        /* One label per year */
+
+                                        if (
+                                            chartData[
+                                                index
+                                            ].date.endsWith("-02")
+                                        ) {
+
+                                            return chartData[
+                                                index
+                                            ].date;
+
+                                        }
+
+
+                                        /* Always show final date */
+
+                                        if (
+                                            index ===
+                                            chartData.length - 1
+                                        ) {
+
+                                            return chartData[
+                                                index
+                                            ].date;
+
+                                        }
+
+
+                                        return "";
+
+                                    }
+
+                            },
+
+
+                            grid: {
+
+                                display: false
+
+                            }
+
+                        },
+
+
+                        y: {
+
+                            beginAtZero: false,
+
+                            grace: "5%",
+
+
+                            ticks: {
+
+                                callback:
+                                    function(value) {
+
+                                        return new Intl.NumberFormat(
+                                            "en-GB",
+                                            {
+
+                                                style:
+                                                    "currency",
+
+                                                currency:
+                                                    "GBP",
+
+                                                maximumFractionDigits:
+                                                    0
+
+                                            }
+                                        ).format(value);
+
+                                    }
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+        );
 
 
     /* --------------------------------------------------
@@ -1442,25 +1450,35 @@ cashFlows.push(portfolio);
         "<p><strong>Step 1: Choose your monthly investment</strong></p>" +
 
         "<p>You invest £" +
+
         monthly.toLocaleString("en-GB") +
+
         " every month.</p>" +
 
 
         "<p><strong>Step 2: Calculate the number of investments</strong></p>" +
 
         "<p>10 years × 12 months = " +
+
         investmentPeriod +
+
         " monthly investments.</p>" +
 
 
         "<p><strong>Step 3: Calculate total contributions</strong></p>" +
 
         "<p>£" +
+
         monthly.toLocaleString("en-GB") +
+
         " × " +
+
         investmentPeriod +
+
         " = £" +
+
         contributions.toLocaleString("en-GB") +
+
         " contributed.</p>" +
 
 
@@ -1477,14 +1495,12 @@ cashFlows.push(portfolio);
         "<p>The process is repeated for every month in the ten-year historical journey.</p>" +
 
 
-        "<p><strong>Step 6: Calculate the annualised return</strong></p>" +
+        "<p><strong>Step 6: Calculate the annualised return on your money</strong></p>" +
 
-        "<p>The calculator then finds the annual return that would produce the same final portfolio value from the same sequence and timing of monthly investments.</p>" +
+        "<p>The calculator then finds the annual rate of return that would turn the actual series of monthly contributions into the final portfolio value.</p>" +
 
 
-        "<p><strong>Annualised Return = " +
-        (annualisedReturn * 100).toFixed(2) +
-        "% a year</strong></p>";
+        "<p>This is a <strong>money-weighted return</strong>, so it reflects both investment performance and the timing of your contributions.</p>";
 
 }
 
@@ -1497,6 +1513,7 @@ if (
     typeof globalEquityReturns !== "undefined" &&
     globalEquityReturns.length >= investmentPeriod
 ) {
+
 
     const yearSelect =
         document.getElementById("year");
@@ -1517,7 +1534,9 @@ if (
 
     const lastYear =
         Number(
-            globalEquityReturns[lastAvailableIndex]
+            globalEquityReturns[
+                lastAvailableIndex
+            ]
                 .date
                 .substring(0, 4)
         );
@@ -1529,23 +1548,29 @@ if (
         y++
     ) {
 
+
         const option =
             document.createElement("option");
 
 
-        option.value = y;
+        option.value =
+            y;
 
-        option.text = y;
+
+        option.text =
+            y;
 
 
-        yearSelect.appendChild(option);
+        yearSelect.appendChild(
+            option
+        );
 
     }
 
 
     /*
-       Use the first available year rather than
-       hard-coding 1988.
+       Use the first available year
+       rather than hard-coding 1988.
     */
 
     yearSelect.value =
@@ -1576,55 +1601,12 @@ if (
     /* --------------------------------------------------
        Run initial calculation
     -------------------------------------------------- */
-function calculateIRR(cashFlows) {
 
-    let rate = 0.01;
-
-    for (let iteration = 0; iteration < 100; iteration++) {
-
-        let npv = 0;
-        let derivative = 0;
-
-        for (let t = 0; t < cashFlows.length; t++) {
-
-            npv +=
-                cashFlows[t] /
-                Math.pow(1 + rate, t);
-
-            if (t > 0) {
-
-                derivative -=
-                    t *
-                    cashFlows[t] /
-                    Math.pow(1 + rate, t + 1);
-
-            }
-
-        }
-
-        const newRate =
-            rate -
-            npv / derivative;
-
-        if (
-            Math.abs(newRate - rate) < 0.000000001
-        ) {
-
-            return newRate;
-
-        }
-
-        rate = newRate;
-
-    }
-
-    return rate;
-
-}
     calculate();
 
 
 } else {
+
 
     document.getElementById("dataRange").innerHTML =
         "Historical data could not be loaded.";
@@ -1632,6 +1614,7 @@ function calculateIRR(cashFlows) {
 }
 
 </script>
+
 
 </body>
 
