@@ -166,6 +166,11 @@
             border: 1px solid #666666;
         }
 
+        .card-allowance {
+            background: #edf7ed;
+            border: 1px solid #2e7d32;
+        }
+
         .result-card h3 {
             margin: 0 0 8px 0;
             color: #003366;
@@ -230,14 +235,29 @@
         <!-- ABOUT THIS CALCULATOR -->
         <div class="about">
             <strong>About this calculator: The "Indexation" Trap</strong>
-            <p>When Capital Gains Tax (CGT) is charged on investments without adjusting for inflation (indexation allowance), you can be taxed on "paper gains" that represent no real increase in purchasing power.</p>
-            <p>This calculator illustrates how tax on inflationary growth erodes your real wealth over time.</p>
+
+            <p>
+                When Capital Gains Tax (CGT) is charged on investments without
+                adjusting for inflation (indexation allowance), you can be taxed
+                on "paper gains" that represent no real increase in purchasing power.
+            </p>
+
+            <p>
+                This calculator illustrates how tax on inflationary growth can
+                erode your real wealth over time.
+            </p>
+
+            <p>
+                The Capital Gains Allowance is included so you can see how a
+                tax-free allowance reduces the amount of gain subject to CGT.
+            </p>
         </div>
 
         <h1>The Indexation & Stealth Tax Calculator</h1>
 
         <!-- INPUTS -->
         <div class="input-grid">
+
             <div>
                 <label for="principal">Initial Investment (£)</label>
                 <input id="principal" type="number" min="1" value="100">
@@ -250,17 +270,22 @@
 
             <div>
                 <label for="rate">Annual Investment Return (%)</label>
-                <input id="rate" type="number" step="0.1" value="7.18">
+                <input id="rate" type="number" step="0.1" value="8.5">
             </div>
 
             <div>
                 <label for="inflation">Annual Inflation Rate (%)</label>
-                <input id="inflation" type="number" step="0.1" value="7.18">
+                <input id="inflation" type="number" step="0.1" value="2.5">
             </div>
 
             <div>
                 <label for="taxRate">Capital Gains Tax Rate (%)</label>
                 <input id="taxRate" type="number" step="1" value="40">
+            </div>
+
+            <div>
+                <label for="allowance">Capital Gains Allowance (£)</label>
+                <input id="allowance" type="number" min="0" step="100" value="3000">
             </div>
 
             <div>
@@ -272,6 +297,7 @@
                 <label for="itemPrice">Starting Price per Item (£)</label>
                 <input id="itemPrice" type="number" step="0.01" value="1.00">
             </div>
+
         </div>
 
         <!-- CALCULATE BUTTON -->
@@ -286,10 +312,28 @@
                 <div id="grossItems" class="result-subtext">0 items</div>
             </div>
 
+            <div class="result-card card-gross">
+                <h3>Nominal Gain</h3>
+                <div id="gainVal" class="result-value">£0</div>
+                <div id="gainSub" class="result-subtext">Gross gain</div>
+            </div>
+
+            <div class="result-card card-allowance">
+                <h3>Capital Gains Allowance</h3>
+                <div id="allowanceVal" class="result-value">£3,000</div>
+                <div id="allowanceSub" class="result-subtext">Tax-free gain</div>
+            </div>
+
             <div class="result-card card-tax">
-                <h3>Tax on Paper Gains</h3>
+                <h3>Capital Gains Tax</h3>
                 <div id="taxVal" class="result-value">£0</div>
                 <div id="taxSub" class="result-subtext">40% CGT</div>
+            </div>
+
+            <div class="result-card card-allowance">
+                <h3>Tax Saved by Allowance</h3>
+                <div id="taxSavedVal" class="result-value">£0</div>
+                <div id="taxSavedSub" class="result-subtext">Compared with no allowance</div>
             </div>
 
             <div class="result-card card-purchasing">
@@ -299,9 +343,9 @@
             </div>
 
             <div class="result-card card-loss">
-                <h3>Real Wealth Loss</h3>
+                <h3 id="realWealthTitle">Real Wealth Loss</h3>
                 <div id="lossItems" class="result-value">0 items</div>
-                <div id="lossPct" class="result-subtext">0% loss</div>
+                <div id="lossPct" class="result-subtext">0% real wealth loss</div>
             </div>
 
         </div>
@@ -311,7 +355,9 @@
 
         <hr style="margin-top: 30px; border: 0; border-top: 1px solid #dddddd;">
 
-        <h2 style="color:#003366; text-align: center; margin-top: 20px;">The Decline of Real Wealth</h2>
+        <h2 style="color:#003366; text-align: center; margin-top: 20px;">
+            The Impact of CGT on Real Wealth
+        </h2>
 
         <!-- GRAPH CANVAS -->
         <canvas id="growthChart"></canvas>
@@ -321,8 +367,11 @@
     <!-- FOOTER -->
     <div class="footer">
         <p>Read more articles and insights</p>
+
         <p>
-            <a href="https://schoolmathsinvestor.substack.com/" target="_blank" rel="noopener">
+            <a href="https://schoolmathsinvestor.substack.com/"
+               target="_blank"
+               rel="noopener">
                 The School Maths Investor Substack
             </a>
         </p>
@@ -332,118 +381,477 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
+
         let growthChart = null;
 
+        function money(value) {
+            return "£" + value.toLocaleString(undefined, {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+        }
+
         function calculate() {
+
             // Read inputs
             let P = Number(document.getElementById("principal").value);
             let years = Number(document.getElementById("years").value);
             let returnRate = Number(document.getElementById("rate").value) / 100;
             let inflationRate = Number(document.getElementById("inflation").value) / 100;
             let taxRate = Number(document.getElementById("taxRate").value) / 100;
-            
-            let itemName = document.getElementById("itemName").value || "items";
-            let itemPrice0 = Number(document.getElementById("itemPrice").value);
+            let allowance = Number(document.getElementById("allowance").value);
+
+            let itemName =
+                document.getElementById("itemName").value.trim() || "items";
+
+            let itemPrice0 =
+                Number(document.getElementById("itemPrice").value);
 
             // Validation
-            if (isNaN(P) || P <= 0 || isNaN(years) || years <= 0 || isNaN(itemPrice0) || itemPrice0 <= 0) {
-                alert("Please enter valid positive numbers.");
+            if (
+                isNaN(P) ||
+                P <= 0 ||
+                isNaN(years) ||
+                years <= 0 ||
+                isNaN(returnRate) ||
+                isNaN(inflationRate) ||
+                isNaN(taxRate) ||
+                isNaN(allowance) ||
+                allowance < 0 ||
+                isNaN(itemPrice0) ||
+                itemPrice0 <= 0
+            ) {
+                alert("Please enter valid values.");
                 return;
             }
 
-            // Calculations
+            // Starting purchasing power
             let initialItems = P / itemPrice0;
-            
-            // Final values after T years
-            let grossValue = P * Math.pow(1 + returnRate, years);
-            let finalItemPrice = itemPrice0 * Math.pow(1 + inflationRate, years);
-            
-            let nominalGain = Math.max(0, grossValue - P);
-            let taxOwed = nominalGain * taxRate;
-            let netValue = grossValue - taxOwed;
 
-            let grossItemsCount = grossValue / finalItemPrice;
-            let netItemsCount = netValue / finalItemPrice;
-            let itemsLost = initialItems - netItemsCount;
-            let pctLoss = (itemsLost / initialItems) * 100;
+            // Final nominal values
+            let grossValue =
+                P * Math.pow(1 + returnRate, years);
 
-            // Update Result Cards UI
-            document.getElementById("grossVal").innerText = "£" + grossValue.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
-            document.getElementById("grossItems").innerText = Math.round(grossItemsCount).toLocaleString() + " " + itemName;
+            let finalItemPrice =
+                itemPrice0 * Math.pow(1 + inflationRate, years);
 
-            document.getElementById("taxVal").innerText = "£" + taxOwed.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
-            document.getElementById("taxSub").innerText = (taxRate * 100).toFixed(0) + "% tax on £" + Math.round(nominalGain).toLocaleString() + " gain";
+            // Nominal gain
+            let nominalGain =
+                Math.max(0, grossValue - P);
 
-            document.getElementById("netItems").innerText = Math.round(netItemsCount).toLocaleString() + " " + itemName;
-            document.getElementById("netVal").innerText = "£" + netValue.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) + " net";
+            /*
+             * CGT WITHOUT allowance
+             */
+            let taxableGainWithoutAllowance =
+                nominalGain;
 
-            document.getElementById("lossItems").innerText = "-" + Math.round(itemsLost).toLocaleString() + " " + itemName;
-            document.getElementById("lossPct").innerText = "-" + pctLoss.toFixed(1) + "% real wealth loss";
+            let taxWithoutAllowance =
+                taxableGainWithoutAllowance * taxRate;
 
-            // Mathematical Breakdown Text
-            document.getElementById("working").innerHTML = `
-                <h2 style="color:#003366; margin-top:0;">The Mathematical Steps</h2>
+            /*
+             * CGT WITH allowance
+             */
+            let taxableGain =
+                Math.max(0, nominalGain - allowance);
 
-                <p><b>Step 1: Starting Purchasing Power</b></p>
-                <p>Your £${P.toLocaleString()} starting wealth buys <b>${initialItems.toLocaleString(undefined, {maximumFractionDigits: 1})} ${itemName}</b> at £${itemPrice0.toFixed(2)} each.</p>
+            let taxOwed =
+                taxableGain * taxRate;
 
-                <hr>
+            /*
+             * Tax saving produced by allowance
+             */
+            let taxSaved =
+                taxWithoutAllowance - taxOwed;
 
-                <p><b>Step 2: Nominal Growth vs Inflation over ${years} Years</b></p>
-                <p>• Portfolio Value: £${P.toLocaleString()} × (1 + ${(returnRate*100).toFixed(2)}%)<sup>${years}</sup> = <b>£${grossValue.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</b></p>
-                <p>• Price of ${itemName}: £${itemPrice0.toFixed(2)} × (1 + ${(inflationRate*100).toFixed(2)}%)<sup>${years}</sup> = <b>£${finalItemPrice.toFixed(2)}</b> per item.</p>
+            // Net portfolio values
+            let netValueWithoutAllowance =
+                grossValue - taxWithoutAllowance;
 
-                <hr>
+            let netValue =
+                grossValue - taxOwed;
 
-                <p><b>Step 3: Capital Gains Tax on "Paper Gains"</b></p>
-                <p>The government treats your entire £${nominalGain.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} nominal growth as profit, even though it merely matches inflation:</p>
-                <p><b>Tax Owed = £${nominalGain.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} × ${(taxRate*100).toFixed(0)}% = £${taxOwed.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</b></p>
-                <p>Net Portfolio Value = £${netValue.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</p>
+            // Convert to purchasing power
+            let grossItemsCount =
+                grossValue / finalItemPrice;
 
-                <hr>
+            let netItemsWithoutAllowance =
+                netValueWithoutAllowance / finalItemPrice;
 
-                <p><b>Step 4: Real Purchasing Power Deficit</b></p>
-                <p>After paying tax, your £${netValue.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} can now only purchase:</p>
-                <p><b>£${netValue.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} ÷ £${finalItemPrice.toFixed(2)} = ${netItemsCount.toFixed(1)} ${itemName}</b></p>
-                <p>You have lost <b>${itemsLost.toFixed(1)} ${itemName} (${pctLoss.toFixed(1)}% of your purchasing power)</b> purely due to tax on inflation!</p>
-            `;
+            let netItemsCount =
+                netValue / finalItemPrice;
 
-            // Year-by-year dataset for Chart IN TERMS OF ITEMS
-            let labels = [];
-            let dataGrossItems = [];
-            let dataTargetItems = [];
-            let dataNetItems = [];
+            // Real purchasing power change
+            let itemsChange =
+                netItemsCount - initialItems;
 
-            for (let year = 0; year <= years; year++) {
-                labels.push("Year " + year);
-                
-                // Money values for this year
-                let valG = P * Math.pow(1 + returnRate, year);
-                let priceT = itemPrice0 * Math.pow(1 + inflationRate, year);
-                
-                let gainT = Math.max(0, valG - P);
-                let taxT = gainT * taxRate;
-                let valN = valG - taxT;
+            let pctChange =
+                (itemsChange / initialItems) * 100;
 
-                // Convert money to items (purchasing power)
-                dataGrossItems.push(valG / priceT);
-                dataTargetItems.push(initialItems); // Target is always the starting amount of items
-                dataNetItems.push(valN / priceT);
+            // -----------------------------
+            // RESULT CARDS
+            // -----------------------------
+
+            document.getElementById("grossVal").innerText =
+                money(grossValue);
+
+            document.getElementById("grossItems").innerText =
+                Math.round(grossItemsCount).toLocaleString()
+                + " " + itemName;
+
+            document.getElementById("gainVal").innerText =
+                money(nominalGain);
+
+            document.getElementById("gainSub").innerText =
+                "Nominal gain";
+
+            document.getElementById("allowanceVal").innerText =
+                money(allowance);
+
+            if (nominalGain <= allowance) {
+                document.getElementById("allowanceSub").innerText =
+                    "Entire gain covered";
+            } else {
+                document.getElementById("allowanceSub").innerText =
+                    money(Math.min(allowance, nominalGain))
+                    + " used";
             }
 
-            // Destroy existing chart instance
+            document.getElementById("taxVal").innerText =
+                money(taxOwed);
+
+            document.getElementById("taxSub").innerText =
+                (taxRate * 100).toFixed(0)
+                + "% tax on "
+                + money(taxableGain)
+                + " taxable gain";
+
+            document.getElementById("taxSavedVal").innerText =
+                money(taxSaved);
+
+            document.getElementById("taxSavedSub").innerText =
+                "Compared with no allowance";
+
+            document.getElementById("netItems").innerText =
+                Math.round(netItemsCount).toLocaleString()
+                + " " + itemName;
+
+            document.getElementById("netVal").innerText =
+                money(netValue) + " net";
+
+            // -----------------------------
+            // GAIN / LOSS DISPLAY
+            // -----------------------------
+
+            if (itemsChange > 0) {
+
+                document.getElementById("realWealthTitle").innerText =
+                    "Real Wealth Gain";
+
+                document.getElementById("lossItems").innerText =
+                    "+" + Math.round(itemsChange).toLocaleString()
+                    + " " + itemName;
+
+                document.getElementById("lossPct").innerText =
+                    "+" + pctChange.toFixed(1)
+                    + "% real wealth gain";
+
+            } else if (itemsChange < 0) {
+
+                document.getElementById("realWealthTitle").innerText =
+                    "Real Wealth Loss";
+
+                document.getElementById("lossItems").innerText =
+                    Math.round(itemsChange).toLocaleString()
+                    + " " + itemName;
+
+                document.getElementById("lossPct").innerText =
+                    pctChange.toFixed(1)
+                    + "% real wealth loss";
+
+            } else {
+
+                document.getElementById("realWealthTitle").innerText =
+                    "Real Wealth Change";
+
+                document.getElementById("lossItems").innerText =
+                    "0 " + itemName;
+
+                document.getElementById("lossPct").innerText =
+                    "No change in purchasing power";
+            }
+
+            // -----------------------------
+            // MATHEMATICAL BREAKDOWN
+            // -----------------------------
+
+            document.getElementById("working").innerHTML = `
+
+                <h2 style="color:#003366; margin-top:0;">
+                    The Mathematical Steps
+                </h2>
+
+                <p><b>Step 1: Starting Purchasing Power</b></p>
+
+                <p>
+                    Your ${money(P)} starting wealth buys
+                    <b>
+                        ${initialItems.toLocaleString(undefined, {
+                            maximumFractionDigits: 1
+                        })} ${itemName}
+                    </b>
+                    at ${money(itemPrice0)} each.
+                </p>
+
+                <hr>
+
+                <p><b>
+                    Step 2: Nominal Growth vs Inflation over ${years} Years
+                </b></p>
+
+                <p>
+                    • Portfolio Value:
+                    ${money(P)}
+                    × (1 + ${(returnRate * 100).toFixed(2)}%)<sup>${years}</sup>
+                    =
+                    <b>${money(grossValue)}</b>
+                </p>
+
+                <p>
+                    • Price of ${itemName}:
+                    ${money(itemPrice0)}
+                    × (1 + ${(inflationRate * 100).toFixed(2)}%)<sup>${years}</sup>
+                    =
+                    <b>${money(finalItemPrice)}</b>
+                    per item.
+                </p>
+
+                <p>
+                    • Nominal gain:
+                    <b>${money(nominalGain)}</b>
+                </p>
+
+                <hr>
+
+                <p><b>
+                    Step 3: Capital Gains Tax Before the Allowance
+                </b></p>
+
+                <p>
+                    Without a Capital Gains Allowance, the entire
+                    ${money(nominalGain)} nominal gain would be subject
+                    to the ${ (taxRate * 100).toFixed(0) }% CGT rate.
+                </p>
+
+                <p>
+                    Tax without allowance:
+                    <b>
+                        ${money(taxWithoutAllowance)}
+                    </b>
+                </p>
+
+                <hr>
+
+                <p><b>
+                    Step 4: Apply the Capital Gains Allowance
+                </b></p>
+
+                <p>
+                    Capital Gains Allowance:
+                    <b>${money(allowance)}</b>
+                </p>
+
+                <p>
+                    Taxable gain =
+                    ${money(nominalGain)}
+                    −
+                    ${money(Math.min(allowance, nominalGain))}
+                    =
+                    <b>${money(taxableGain)}</b>
+                </p>
+
+                <p>
+                    Capital Gains Tax:
+                    ${money(taxableGain)}
+                    ×
+                    ${(taxRate * 100).toFixed(0)}%
+                    =
+                    <b>${money(taxOwed)}</b>
+                </p>
+
+                <p>
+                    The allowance therefore reduces the tax bill by
+                    <b>${money(taxSaved)}</b>.
+                </p>
+
+                <hr>
+
+                <p><b>
+                    Step 5: Real Purchasing Power
+                </b></p>
+
+                <p>
+                    After tax, your portfolio is worth
+                    <b>${money(netValue)}</b>.
+                </p>
+
+                <p>
+                    At ${money(finalItemPrice)} per ${itemName},
+                    this buys:
+                </p>
+
+                <p>
+                    <b>
+                        ${money(netValue)}
+                        ÷
+                        ${money(finalItemPrice)}
+                        =
+                        ${netItemsCount.toFixed(1)}
+                        ${itemName}
+                    </b>
+                </p>
+
+                ${
+                    itemsChange > 0
+                    ?
+                    `<p>
+                        Your purchasing power has therefore increased by
+                        <b>
+                            ${itemsChange.toFixed(1)} ${itemName}
+                            (${pctChange.toFixed(1)}%)
+                        </b>.
+                    </p>`
+                    :
+                    itemsChange < 0
+                    ?
+                    `<p>
+                        Your purchasing power has therefore fallen by
+                        <b>
+                            ${Math.abs(itemsChange).toFixed(1)} ${itemName}
+                            (${Math.abs(pctChange).toFixed(1)}%)
+                        </b>.
+                    </p>`
+                    :
+                    `<p>
+                        Your purchasing power is unchanged.
+                    </p>`
+                }
+
+                <hr>
+
+                <p><b>
+                    Step 6: Effect of the Capital Gains Allowance
+                </b></p>
+
+                <p>
+                    With no allowance, the after-tax portfolio would be
+                    <b>${money(netValueWithoutAllowance)}</b>.
+                </p>
+
+                <p>
+                    With the ${money(allowance)} allowance, it is
+                    <b>${money(netValue)}</b>.
+                </p>
+
+                <p>
+                    The allowance therefore leaves you with an additional
+                    <b>${money(taxSaved)}</b>
+                    of wealth, equivalent to approximately
+                    <b>
+                        ${(taxSaved / finalItemPrice).toFixed(1)}
+                        ${itemName}
+                    </b>
+                    of additional purchasing power.
+                </p>
+            `;
+
+            // -----------------------------
+            // YEAR-BY-YEAR GRAPH DATA
+            // -----------------------------
+
+            let labels = [];
+
+            let dataGrossItems = [];
+            let dataTargetItems = [];
+            let dataNetItemsWithoutAllowance = [];
+            let dataNetItemsWithAllowance = [];
+
+            for (let year = 0; year <= years; year++) {
+
+                labels.push("Year " + year);
+
+                // Portfolio value
+                let valG =
+                    P * Math.pow(1 + returnRate, year);
+
+                // Price of benchmark item
+                let priceT =
+                    itemPrice0 * Math.pow(1 + inflationRate, year);
+
+                // Nominal gain
+                let gainT =
+                    Math.max(0, valG - P);
+
+                // Tax without allowance
+                let taxNoAllowanceT =
+                    gainT * taxRate;
+
+                // Tax with allowance
+                let taxableGainT =
+                    Math.max(0, gainT - allowance);
+
+                let taxWithAllowanceT =
+                    taxableGainT * taxRate;
+
+                // Net values
+                let valWithoutAllowance =
+                    valG - taxNoAllowanceT;
+
+                let valWithAllowance =
+                    valG - taxWithAllowanceT;
+
+                // Convert to purchasing power
+                dataGrossItems.push(
+                    valG / priceT
+                );
+
+                dataTargetItems.push(
+                    initialItems
+                );
+
+                dataNetItemsWithoutAllowance.push(
+                    valWithoutAllowance / priceT
+                );
+
+                dataNetItemsWithAllowance.push(
+                    valWithAllowance / priceT
+                );
+            }
+
+            // -----------------------------
+            // DESTROY OLD CHART
+            // -----------------------------
+
             if (growthChart !== null) {
                 growthChart.destroy();
             }
 
-            // Render Chart.js
-            const ctx = document.getElementById("growthChart").getContext("2d");
+            // -----------------------------
+            // RENDER CHART
+            // -----------------------------
+
+            const ctx =
+                document.getElementById("growthChart").getContext("2d");
 
             growthChart = new Chart(ctx, {
+
                 type: "line",
+
                 data: {
+
                     labels: labels,
+
                     datasets: [
+
                         {
                             label: "Gross Purchasing Power (Before Tax)",
                             data: dataGrossItems,
@@ -453,6 +861,7 @@
                             tension: 0.2,
                             borderWidth: 2
                         },
+
                         {
                             label: "Wealth Maintenance Benchmark",
                             data: dataTargetItems,
@@ -463,55 +872,92 @@
                             borderDash: [5, 5],
                             borderWidth: 2
                         },
+
                         {
-                            label: "Actual Wealth (After-Tax Purchasing Power)",
-                            data: dataNetItems,
+                            label: "After-Tax Purchasing Power (No Allowance)",
+                            data: dataNetItemsWithoutAllowance,
                             borderColor: "#c62828",
                             backgroundColor: "#c62828",
                             fill: false,
                             tension: 0.2,
+                            borderWidth: 2
+                        },
+
+                        {
+                            label: "After-Tax Purchasing Power (With Allowance)",
+                            data: dataNetItemsWithAllowance,
+                            borderColor: "#2e7d32",
+                            backgroundColor: "#2e7d32",
+                            fill: false,
+                            tension: 0.2,
                             borderWidth: 3
                         }
+
                     ]
                 },
+
                 options: {
+
                     responsive: true,
+
                     plugins: {
+
                         legend: {
                             position: "top"
                         },
+
                         tooltip: {
+
                             callbacks: {
+
                                 label: function(context) {
-                                    let label = context.dataset.label || '';
+
+                                    let label =
+                                        context.dataset.label || '';
+
                                     if (label) {
                                         label += ': ';
                                     }
+
                                     if (context.parsed.y !== null) {
-                                        // Display as items instead of £
-                                        label += Math.round(context.parsed.y).toLocaleString() + ' ' + itemName;
+
+                                        label +=
+                                            Math.round(
+                                                context.parsed.y
+                                            ).toLocaleString()
+                                            + ' '
+                                            + itemName;
                                     }
+
                                     return label;
                                 }
                             }
                         }
                     },
+
                     scales: {
+
                         x: {
+
                             title: {
                                 display: true,
                                 text: "Time Period"
                             }
                         },
+
                         y: {
+
                             title: {
                                 display: true,
-                                // Dynamic Y-axis title
-                                text: "Purchasing Power (" + itemName + ")"
+                                text:
+                                    "Purchasing Power ("
+                                    + itemName
+                                    + ")"
                             },
+
                             ticks: {
+
                                 callback: function(value) {
-                                    // Remove the £ sign from ticks
                                     return value.toLocaleString();
                                 }
                             }
@@ -523,6 +969,7 @@
 
         // Run calculation automatically on page load
         calculate();
+
     </script>
 
 </body>
