@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ljbcalculations1.github.io/School-Maths-Investor/sitemap.xml
